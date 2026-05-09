@@ -901,6 +901,39 @@ footer p{font-size:.78rem;color:var(--muted);}
         <div id="loginError" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
       </div>
       <button onclick="adminLogin()" style="width:100%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:13px;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Login to Admin Panel</button>
+      <button onclick="showForgotPanel()" style="width:100%;margin-top:.7rem;background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:Outfit,sans-serif;text-decoration:underline;">🔑 Password bhool gaye? Reset karein</button>
+    </div>
+
+    <!-- FORGOT PASSWORD PANEL -->
+    <div id="forgotPanel" style="display:none;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔑</div>
+        <div>
+          <div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;letter-spacing:.06em;color:white;">Password Reset</div>
+          <div style="font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">Secret question se verify karein</div>
+        </div>
+      </div>
+
+      <!-- Step 1: Secret Question -->
+      <div id="forgotStep1">
+        <div style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.83rem;color:#fcd34d;">
+          ❓ <strong>Secret Question:</strong> Aapka pehla mobile number kya tha? (last 4 digits)
+        </div>
+        <input id="secretAnswerInput" type="text" placeholder="Answer likho..." style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.8rem;"/>
+        <div id="forgotStep1Error" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;margin-bottom:.8rem;"></div>
+        <button onclick="checkSecretAnswer()" style="width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:12px;font-family:Outfit,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Verify Answer</button>
+      </div>
+
+      <!-- Step 2: Set New Password -->
+      <div id="forgotStep2" style="display:none;">
+        <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1rem;font-size:.82rem;color:#6ee7b7;">✅ Identity verify ho gayi! Ab naya password set karein.</div>
+        <input id="newPassReset" type="password" placeholder="Naya password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.7rem;"/>
+        <input id="newPassResetConfirm" type="password" placeholder="Confirm naya password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.8rem;"/>
+        <div id="forgotStep2Error" style="display:none;font-size:.8rem;border-radius:6px;padding:.6rem 1rem;margin-bottom:.8rem;"></div>
+        <button onclick="resetPasswordNow()" style="width:100%;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:8px;padding:12px;font-family:Outfit,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">🔐 Password Reset Karein</button>
+      </div>
+
+      <button onclick="backToLogin()" style="width:100%;margin-top:.8rem;background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:Outfit,sans-serif;">← Login page par wapas jao</button>
     </div>
     <div id="adminDash" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.8rem;">
@@ -1551,6 +1584,83 @@ window.addEventListener('load', function() {
 
   window.addEventListener('load', () => { animate(); });
 })();
+
+// ============================================================
+// FORGOT PASSWORD SYSTEM
+// ============================================================
+// Secret answer — aap isko change kar sakte ho (lowercase mein likho)
+const SECRET_ANSWER = '0402'; // ← Yahan apna secret answer change karo
+
+function showForgotPanel() {
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('forgotPanel').style.display = 'block';
+  document.getElementById('forgotStep1').style.display = 'block';
+  document.getElementById('forgotStep2').style.display = 'none';
+  document.getElementById('secretAnswerInput').value = '';
+  document.getElementById('forgotStep1Error').style.display = 'none';
+}
+
+function backToLogin() {
+  document.getElementById('forgotPanel').style.display = 'none';
+  document.getElementById('adminLogin').style.display = 'block';
+  document.getElementById('adminPassInput').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+
+function checkSecretAnswer() {
+  const ans = document.getElementById('secretAnswerInput').value.trim().toLowerCase();
+  const err = document.getElementById('forgotStep1Error');
+  if (!ans) {
+    err.style.display = 'block';
+    err.textContent = '⚠️ Answer khali nahi chhod sakte.';
+    return;
+  }
+  if (ans === SECRET_ANSWER) {
+    document.getElementById('forgotStep1').style.display = 'none';
+    document.getElementById('forgotStep2').style.display = 'block';
+    document.getElementById('newPassReset').value = '';
+    document.getElementById('newPassResetConfirm').value = '';
+    document.getElementById('forgotStep2Error').style.display = 'none';
+  } else {
+    err.style.display = 'block';
+    err.textContent = '❌ Galat answer. Phir try karein.';
+    document.getElementById('secretAnswerInput').value = '';
+    document.getElementById('secretAnswerInput').focus();
+  }
+}
+
+function resetPasswordNow() {
+  const np = document.getElementById('newPassReset').value;
+  const nc = document.getElementById('newPassResetConfirm').value;
+  const err = document.getElementById('forgotStep2Error');
+  if (np.length < 4) {
+    err.style.display = 'block';
+    err.style.background = 'rgba(239,68,68,.1)';
+    err.style.border = '1px solid rgba(239,68,68,.2)';
+    err.style.color = '#fca5a5';
+    err.textContent = '❌ Password kam se kam 4 characters ka hona chahiye.';
+    return;
+  }
+  if (np !== nc) {
+    err.style.display = 'block';
+    err.style.background = 'rgba(239,68,68,.1)';
+    err.style.border = '1px solid rgba(239,68,68,.2)';
+    err.style.color = '#fca5a5';
+    err.textContent = '❌ Dono passwords match nahi kar rahe.';
+    return;
+  }
+  // Set new password
+  adminPassword = np;
+  localStorage.setItem('rohit_admin_pass', np);
+  err.style.display = 'block';
+  err.style.background = 'rgba(16,185,129,.1)';
+  err.style.border = '1px solid rgba(16,185,129,.2)';
+  err.style.color = '#6ee7b7';
+  err.textContent = '✅ Password reset ho gaya! Ab login karein.';
+  setTimeout(() => {
+    backToLogin();
+  }, 1800);
+}
 
 // ADMIN PANEL
 let adminPassword = localStorage.getItem('rohit_admin_pass') || 'rohit2024';
