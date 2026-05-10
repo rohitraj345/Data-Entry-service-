@@ -893,11 +893,33 @@ footer p{font-size:.78rem;color:var(--muted);}
       <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem;">
         <div>
           <label style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.4rem;">Password</label>
-          <input id="adminPassInput" type="password" placeholder="Enter admin password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
+          <div style="position:relative;">
+            <input id="adminPassInput" type="password" placeholder="Enter admin password" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 44px 12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
+            <button onclick="togglePassView('adminPassInput',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--muted);" title="Show/Hide">👁️</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="rememberPass" style="accent-color:var(--blue);width:15px;height:15px;cursor:pointer;" onchange="handleRemember()"/>
+          <label for="rememberPass" style="font-size:.78rem;color:var(--muted);cursor:pointer;letter-spacing:.04em;">Remember password on this device</label>
         </div>
         <div id="loginError" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
       </div>
       <button onclick="adminLogin()" style="width:100%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:13px;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Login to Admin Panel</button>
+      <div style="text-align:center;margin-top:1rem;">
+        <button onclick="showForgotPassword()" style="background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;text-decoration:underline;font-family:Outfit,sans-serif;">🔑 Forgot Password?</button>
+      </div>
+      <!-- FORGOT PASSWORD PANEL -->
+      <div id="forgotPanel" style="display:none;margin-top:1.2rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:1.2rem;">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;">🔑 Reset Password</div>
+        <div style="display:flex;flex-direction:column;gap:.7rem;">
+          <input id="secretKeyInput" type="password" placeholder="Enter secret recovery key" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          <input id="resetNewPass" type="password" placeholder="New password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          <input id="resetConfPass" type="password" placeholder="Confirm new password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          <div id="resetMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
+          <button onclick="resetPassword()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;">Reset Password</button>
+          <div style="font-size:.72rem;color:var(--muted);text-align:center;">Secret key: <span style="color:var(--cyan);">rohit@admin2024</span></div>
+        </div>
+      </div>
     </div>
     <div id="adminDash" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.8rem;">
@@ -905,6 +927,22 @@ footer p{font-size:.78rem;color:var(--muted);}
         <div>
           <div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;letter-spacing:.06em;color:white;">Admin Panel</div>
           <div style="font-size:.72rem;color:#10b981;letter-spacing:.1em;text-transform:uppercase;">Logged in as Rohit Raj</div>
+        </div>
+      </div>
+      <!-- LOGO / SITE TITLE CHANGE SECTION -->
+      <div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;">🏷️ Change Logo / Site Name</div>
+        <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Site Title (Navbar)</label>
+            <input id="logoTextInput" type="text" placeholder="e.g. Rohit Raj" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          </div>
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Subtitle (below name)</label>
+            <input id="logoSubInput" type="text" placeholder="e.g. Data Entry Expert" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          </div>
+          <div id="logoMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
+          <button onclick="applyLogoChange()" style="background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Logo Change</button>
         </div>
       </div>
       <!-- PROFILE PHOTO SECTION -->
@@ -1262,6 +1300,108 @@ function previewPhoto(event) {
 
 // ADMIN PANEL
 let adminPassword = localStorage.getItem('rohit_admin_pass') || 'rohit2024';
+const SECRET_RECOVERY_KEY = 'rohit@admin2024';
+
+// ── Auto-fill saved password on page load ──
+(function initLoginState(){
+  const saved = localStorage.getItem('rohit_remember_pass');
+  if(saved === '1'){
+    const savedPw = localStorage.getItem('rohit_saved_password');
+    if(savedPw){
+      document.getElementById('adminPassInput').value = savedPw;
+      document.getElementById('rememberPass').checked = true;
+    }
+  }
+})();
+
+function handleRemember(){
+  const cb = document.getElementById('rememberPass');
+  if(!cb.checked){
+    localStorage.removeItem('rohit_saved_password');
+    localStorage.setItem('rohit_remember_pass','0');
+  }
+}
+
+function togglePassView(inputId, btn){
+  const inp = document.getElementById(inputId);
+  if(inp.type === 'password'){ inp.type='text'; btn.textContent='🙈'; }
+  else { inp.type='password'; btn.textContent='👁️'; }
+}
+
+function showForgotPassword(){
+  const fp = document.getElementById('forgotPanel');
+  fp.style.display = fp.style.display === 'none' ? 'block' : 'none';
+}
+
+function resetPassword(){
+  const key   = document.getElementById('secretKeyInput').value.trim();
+  const nw    = document.getElementById('resetNewPass').value;
+  const conf  = document.getElementById('resetConfPass').value;
+  const msg   = document.getElementById('resetMsg');
+  msg.style.display='none';
+  if(key !== SECRET_RECOVERY_KEY){
+    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Wrong recovery key.';return;
+  }
+  if(nw.length < 4){
+    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Password too short (min 4 chars).';return;
+  }
+  if(nw !== conf){
+    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Passwords do not match.';return;
+  }
+  adminPassword = nw;
+  localStorage.setItem('rohit_admin_pass', nw);
+  if(localStorage.getItem('rohit_remember_pass')==='1'){
+    localStorage.setItem('rohit_saved_password', nw);
+  }
+  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Password reset! You can now login.';
+  document.getElementById('secretKeyInput').value='';
+  document.getElementById('resetNewPass').value='';
+  document.getElementById('resetConfPass').value='';
+}
+
+function applyLogoChange(){
+  const titleVal = document.getElementById('logoTextInput').value.trim();
+  const subVal   = document.getElementById('logoSubInput').value.trim();
+  const msg      = document.getElementById('logoMsg');
+  msg.style.display='none';
+  if(!titleVal && !subVal){
+    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Kuch toh enter karo!';return;
+  }
+  // Update all logo-text-main and logo-text-sub elements on page
+  if(titleVal){
+    document.querySelectorAll('.logo-text-main,.lmt-main,.f-logo-text').forEach(el=>{
+      if(el.classList.contains('f-logo-text')){
+        el.innerHTML = titleVal + '<span>.</span>' + (el.innerHTML.split('<span>').length>1?el.innerHTML.split('<span>')[1].replace(/^[^>]+>/,'').replace('</span>',''):'');
+        el.innerHTML = titleVal + '<span>.</span>Raj';
+      } else {
+        el.textContent = titleVal;
+      }
+    });
+    document.title = titleVal + ' — Data Entry Expert';
+    localStorage.setItem('rohit_logo_title', titleVal);
+  }
+  if(subVal){
+    document.querySelectorAll('.logo-text-sub,.lmt-sub').forEach(el=>{
+      el.textContent = subVal;
+    });
+    localStorage.setItem('rohit_logo_sub', subVal);
+  }
+  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Logo updated on page!';
+}
+
+// ── Restore saved logo on page load ──
+(function restoreLogo(){
+  const t = localStorage.getItem('rohit_logo_title');
+  const s = localStorage.getItem('rohit_logo_sub');
+  if(t){
+    document.querySelectorAll('.logo-text-main,.lmt-main').forEach(el=>el.textContent=t);
+    document.title = t + ' — Data Entry Expert';
+  }
+  if(s){
+    document.querySelectorAll('.logo-text-sub,.lmt-sub').forEach(el=>el.textContent=s);
+  }
+})();
+
 function adminLogin(){
   const inp = document.getElementById('adminPassInput').value;
   const err = document.getElementById('loginError');
@@ -1269,9 +1409,21 @@ function adminLogin(){
     document.getElementById('adminLogin').style.display='none';
     document.getElementById('adminDash').style.display='block';
     err.style.display='none';
+    // Save password if "Remember" is checked
+    const cb = document.getElementById('rememberPass');
+    if(cb && cb.checked){
+      localStorage.setItem('rohit_saved_password', inp);
+      localStorage.setItem('rohit_remember_pass','1');
+    }
+    // Pre-fill logo inputs with current values
+    const t = localStorage.getItem('rohit_logo_title');
+    const s = localStorage.getItem('rohit_logo_sub');
+    if(t) document.getElementById('logoTextInput').value = t;
+    if(s) document.getElementById('logoSubInput').value = s;
   } else {
     err.style.display='block';
     err.textContent='❌ Incorrect password. Try again.';
+    document.getElementById('adminPassInput').value='';
   }
 }
 function changePassword(){
@@ -1284,6 +1436,12 @@ function changePassword(){
   if(nw.length<4){msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Password too short (min 4 chars).';return;}
   adminPassword=nw;
   localStorage.setItem('rohit_admin_pass',nw);
+  // Update saved password too if remember is enabled
+  if(localStorage.getItem('rohit_remember_pass')==='1'){
+    localStorage.setItem('rohit_saved_password',nw);
+    const inp=document.getElementById('adminPassInput');
+    if(inp) inp.value=nw;
+  }
   msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Password updated!';
 }
 // updatePrices — handled by Firebase module above
@@ -1291,7 +1449,16 @@ function updatePrices_OLD_REMOVED(){}
 function adminLogout(){
   document.getElementById('adminDash').style.display='none';
   document.getElementById('adminLogin').style.display='block';
-  document.getElementById('adminPassInput').value='';
+  document.getElementById('forgotPanel').style.display='none';
+  // Restore saved password if remember is enabled
+  const saved = localStorage.getItem('rohit_remember_pass');
+  const inp   = document.getElementById('adminPassInput');
+  if(saved === '1'){
+    inp.value = localStorage.getItem('rohit_saved_password') || '';
+    document.getElementById('rememberPass').checked = true;
+  } else {
+    inp.value = '';
+  }
   document.getElementById('adminOverlay').style.display='none';
 }
 </script>
