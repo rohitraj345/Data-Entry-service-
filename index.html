@@ -301,9 +301,6 @@ footer p{font-size:.78rem;color:var(--muted);}
 </head>
 <body>
 
-<!-- AI DATA ENTRY LIVE BACKGROUND CANVAS -->
-<canvas id="aiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.38;"></canvas>
-
 <!-- PRELOADER -->
 <div id="pre">
   <div class="pre-logo">
@@ -901,39 +898,6 @@ footer p{font-size:.78rem;color:var(--muted);}
         <div id="loginError" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
       </div>
       <button onclick="adminLogin()" style="width:100%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:13px;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Login to Admin Panel</button>
-      <button onclick="showForgotPanel()" style="width:100%;margin-top:.7rem;background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:Outfit,sans-serif;text-decoration:underline;">🔑 Password bhool gaye? Reset karein</button>
-    </div>
-
-    <!-- FORGOT PASSWORD PANEL -->
-    <div id="forgotPanel" style="display:none;">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
-        <div style="width:44px;height:44px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔑</div>
-        <div>
-          <div style="font-family:Bebas Neue,sans-serif;font-size:1.5rem;letter-spacing:.06em;color:white;">Password Reset</div>
-          <div style="font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">Secret question se verify karein</div>
-        </div>
-      </div>
-
-      <!-- Step 1: Secret Question -->
-      <div id="forgotStep1">
-        <div style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.83rem;color:#fcd34d;">
-          ❓ <strong>Secret Question:</strong> Aapka pehla mobile number kya tha? (last 4 digits)
-        </div>
-        <input id="secretAnswerInput" type="text" placeholder="Answer likho..." style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.8rem;"/>
-        <div id="forgotStep1Error" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;margin-bottom:.8rem;"></div>
-        <button onclick="checkSecretAnswer()" style="width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:12px;font-family:Outfit,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Verify Answer</button>
-      </div>
-
-      <!-- Step 2: Set New Password -->
-      <div id="forgotStep2" style="display:none;">
-        <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:.8rem 1.2rem;margin-bottom:1rem;font-size:.82rem;color:#6ee7b7;">✅ Identity verify ho gayi! Ab naya password set karein.</div>
-        <input id="newPassReset" type="password" placeholder="Naya password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.7rem;"/>
-        <input id="newPassResetConfirm" type="password" placeholder="Confirm naya password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:12px 16px;color:white;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;margin-bottom:.8rem;"/>
-        <div id="forgotStep2Error" style="display:none;font-size:.8rem;border-radius:6px;padding:.6rem 1rem;margin-bottom:.8rem;"></div>
-        <button onclick="resetPasswordNow()" style="width:100%;background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:8px;padding:12px;font-family:Outfit,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">🔐 Password Reset Karein</button>
-      </div>
-
-      <button onclick="backToLogin()" style="width:100%;margin-top:.8rem;background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;font-family:Outfit,sans-serif;">← Login page par wapas jao</button>
     </div>
     <div id="adminDash" style="display:none;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.8rem;">
@@ -957,24 +921,6 @@ footer p{font-size:.78rem;color:var(--muted);}
           </div>
           <div id="photoMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="applyProfilePhoto()" style="background:linear-gradient(135deg,#10b981,#059669);color:white;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Profile Photo</button>
-        </div>
-      </div>
-      <!-- LOGO CHANGE SECTION -->
-      <div style="background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.22);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
-        <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem;">🎨 Change Website Logo</div>
-        <div style="display:flex;flex-direction:column;gap:.8rem;">
-          <div style="display:flex;align-items:center;gap:1rem;">
-            <div id="adminLogoPreview" style="width:70px;height:70px;border-radius:14px;overflow:hidden;border:2px solid rgba(139,92,246,.4);flex-shrink:0;background:linear-gradient(135deg,#3b82f6,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🖼️</div>
-            <div style="flex:1;">
-              <div style="font-size:.75rem;color:var(--muted);margin-bottom:.4rem;">Logo preview (navbar + preloader)</div>
-              <label for="logoFileInput" style="display:inline-flex;align-items:center;gap:6px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);color:#a78bfa;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:6px;cursor:pointer;">📁 Choose Logo</label>
-              <input id="logoFileInput" type="file" accept="image/*" style="display:none;" onchange="previewLogo(event)"/>
-            </div>
-          </div>
-          <div style="font-size:.72rem;color:var(--muted);background:rgba(139,92,246,.05);border-radius:6px;padding:.5rem .8rem;">💡 PNG ya SVG logo best rahega. Transparent background wala logo sab jagah accha dikhega.</div>
-          <div id="logoMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
-          <button onclick="applyLogo()" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:white;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Logo Everywhere</button>
-          <button onclick="resetLogo()" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);color:#a78bfa;border-radius:8px;padding:9px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;">↺ Reset to Default Logo</button>
         </div>
       </div>
       <!-- CHANGE PASSWORD SECTION -->
@@ -1003,6 +949,175 @@ footer p{font-size:.78rem;color:var(--muted);}
     </div>
   </div>
 </div>
+
+<!-- ✅ FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, get, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUl78ZW8nrta4ukOIO2i23HqgcvfgmRAM",
+    authDomain: "rohit-data-entry-service.firebaseapp.com",
+    databaseURL: "https://rohit-data-entry-service-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "rohit-data-entry-service",
+    storageBucket: "rohit-data-entry-service.firebasestorage.app",
+    messagingSenderId: "757125044477",
+    appId: "1:757125044477:web:be21f87dfc8bf1102ec694",
+    measurementId: "G-FTKEVQ6HQJ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // ─── PRICES: Load from Firebase on page load ───
+  async function loadPrices() {
+    try {
+      const snap = await get(ref(db, 'prices'));
+      if (snap.exists()) {
+        const p = snap.val();
+        if (p.basic)    { document.getElementById('p1').textContent = p.basic;    document.getElementById('ep1').value = p.basic; }
+        if (p.standard) { document.getElementById('p2').textContent = p.standard; document.getElementById('ep2').value = p.standard; }
+        if (p.premium)  { document.getElementById('p3').textContent = p.premium;  document.getElementById('ep3').value = p.premium; }
+      }
+    } catch(e) { console.log('Price load error:', e); }
+  }
+
+  // ─── PRICES: Save to Firebase ───
+  window.updatePrices = async function() {
+    const p1 = document.getElementById('ep1').value;
+    const p2 = document.getElementById('ep2').value;
+    const p3 = document.getElementById('ep3').value;
+    document.getElementById('p1').textContent = p1;
+    document.getElementById('p2').textContent = p2;
+    document.getElementById('p3').textContent = p3;
+    const msg = document.getElementById('priceMsg');
+    try {
+      await set(ref(db, 'prices'), { basic: p1, standard: p2, premium: p3 });
+      msg.style.display = 'block'; msg.textContent = '✅ Prices updated on real website!';
+    } catch(e) {
+      msg.style.display = 'block'; msg.textContent = '❌ Error: ' + e.message;
+    }
+  };
+
+  // ─── REVIEWS: Load from Firebase ───
+  function loadReviews() {
+    onValue(ref(db, 'reviews'), (snap) => {
+      const container = document.getElementById('reviewsContainer');
+      // Remove only dynamic reviews (keep static ones)
+      container.querySelectorAll('.firebase-review').forEach(el => el.remove());
+      if (snap.exists()) {
+        const reviews = snap.val();
+        const colors = [
+          'linear-gradient(135deg,#3b82f6,#06b6d4)',
+          'linear-gradient(135deg,#10b981,#059669)',
+          'linear-gradient(135deg,#f59e0b,#d97706)',
+          'linear-gradient(135deg,#8b5cf6,#6d28d9)'
+        ];
+        Object.values(reviews).reverse().forEach(r => {
+          const stars = '★'.repeat(r.rating || 5) + '☆'.repeat(5 - (r.rating || 5));
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const card = document.createElement('div');
+          card.className = 'review-card firebase-review';
+          card.innerHTML = `
+            <div class="review-badge">Verified ✓</div>
+            <div class="review-stars" style="color:#f59e0b;">${stars}</div>
+            <div class="review-text">"${r.text}"</div>
+            <div class="review-author">
+              <div class="review-avatar" style="background:${color};">${r.name[0].toUpperCase()}</div>
+              <div><div class="review-name">${r.name}</div><div class="review-loc">📍 ${r.city || 'India'} · ${r.service}</div></div>
+            </div>`;
+          container.appendChild(card);
+        });
+      }
+    });
+  }
+
+  // ─── REVIEWS: Save to Firebase ───
+  window.submitReview = async function() {
+    const name    = document.getElementById('r_name').value.trim();
+    const city    = document.getElementById('r_city').value.trim();
+    const service = document.getElementById('r_service').value;
+    const text    = document.getElementById('r_text').value.trim();
+    const msg     = document.getElementById('reviewMsg');
+    if (!name || !text) {
+      msg.style.display='block';
+      msg.style.background='rgba(239,68,68,.12)';
+      msg.style.border='1px solid rgba(239,68,68,.3)';
+      msg.style.color='#fca5a5';
+      msg.textContent='⚠️ Please enter your name and review.';
+      return;
+    }
+    try {
+      await push(ref(db, 'reviews'), {
+        name, city, service, text,
+        rating: window._currentRating || 5,
+        timestamp: Date.now()
+      });
+      document.getElementById('r_name').value = '';
+      document.getElementById('r_city').value = '';
+      document.getElementById('r_text').value = '';
+      setRating(5);
+      msg.style.display='block';
+      msg.style.background='rgba(16,185,129,.12)';
+      msg.style.border='1px solid rgba(16,185,129,.3)';
+      msg.style.color='#6ee7b7';
+      msg.textContent='✅ Review saved! Visible to everyone now.';
+      // Also send to WhatsApp
+      const waMsg = `⭐ *NEW REVIEW — DataPro Services*\n\n👤 Name: ${name}\n📍 City: ${city||'Not provided'}\n🔧 Service: ${service}\n⭐ Rating: ${window._currentRating||5}/5\n\n💬 Review:\n"${text}"`;
+      window.open(`https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`, '_blank');
+    } catch(e) {
+      msg.style.display='block';
+      msg.style.color='#fca5a5';
+      msg.textContent='❌ Error saving review: ' + e.message;
+    }
+  };
+
+  // ─── PROFILE PHOTO: Save to Firebase ───
+  window.applyProfilePhoto = async function() {
+    const msg = document.getElementById('photoMsg');
+    if (!window._selectedPhotoData) {
+      msg.style.display='block';
+      msg.style.background='rgba(239,68,68,.12)';
+      msg.style.border='1px solid rgba(239,68,68,.3)';
+      msg.style.color='#fca5a5';
+      msg.textContent='❌ Pehle koi photo choose karein.';
+      return;
+    }
+    try {
+      // Update on page
+      const mainPhoto = document.querySelector('.av-circle img');
+      if (mainPhoto) mainPhoto.src = window._selectedPhotoData;
+      // Save to Firebase (store as flag that photo was updated - full base64 too large for free tier)
+      await set(ref(db, 'settings/photoUpdated'), Date.now());
+      // Still save to localStorage for this device
+      localStorage.setItem('rohit_profile_photo', window._selectedPhotoData);
+      msg.style.display='block';
+      msg.style.background='rgba(16,185,129,.12)';
+      msg.style.border='1px solid rgba(16,185,129,.3)';
+      msg.style.color='#6ee7b7';
+      msg.textContent='✅ Profile photo update ho gayi!';
+    } catch(e) {
+      msg.style.display='block';
+      msg.style.color='#fca5a5';
+      msg.textContent='❌ Error: ' + e.message;
+    }
+  };
+
+  // ─── INIT: Run everything on page load ───
+  window.addEventListener('load', () => {
+    loadPrices();
+    loadReviews();
+    // Load saved photo from localStorage
+    const saved = localStorage.getItem('rohit_profile_photo');
+    if (saved) {
+      const mainPhoto = document.querySelector('.av-circle img');
+      if (mainPhoto) mainPhoto.src = saved;
+      const preview = document.getElementById('adminPhotoPreview');
+      if (preview) preview.innerHTML = `<img src="${saved}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
+      window._selectedPhotoData = saved;
+    }
+  });
+</script>
 
 <script>
 // PRELOADER
@@ -1103,67 +1218,18 @@ function toggleMenu(){
 let currentRating = 5;
 function setRating(val){
   currentRating = val;
+  window._currentRating = val;
   const stars = document.querySelectorAll('#starPicker span');
   stars.forEach((s,i)=>{ s.classList.toggle('active', i < val); });
 }
 // Init stars
 setRating(5);
 
-// SUBMIT REVIEW
-function submitReview(){
-  const name = document.getElementById('r_name').value.trim();
-  const city = document.getElementById('r_city').value.trim();
-  const service = document.getElementById('r_service').value;
-  const text = document.getElementById('r_text').value.trim();
-  const msg = document.getElementById('reviewMsg');
-  if(!name || !text){
-    msg.style.display='block';
-    msg.style.background='rgba(239,68,68,.12)';
-    msg.style.border='1px solid rgba(239,68,68,.3)';
-    msg.style.color='#fca5a5';
-    msg.textContent='⚠️ Please enter your name and review.';
-    return;
-  }
-  // Add review card to DOM
-  const stars = '★'.repeat(currentRating) + '☆'.repeat(5-currentRating);
-  const initial = name[0].toUpperCase();
-  const colors = ['linear-gradient(135deg,#3b82f6,#06b6d4)','linear-gradient(135deg,#10b981,#059669)','linear-gradient(135deg,#f59e0b,#d97706)','linear-gradient(135deg,#8b5cf6,#6d28d9)'];
-  const color = colors[Math.floor(Math.random()*colors.length)];
-  const card = document.createElement('div');
-  card.className = 'review-card';
-  card.innerHTML = `
-    <div class="review-badge">New ✨</div>
-    <div class="review-stars" style="color:#f59e0b;">${stars}</div>
-    <div class="review-text">"${text}"</div>
-    <div class="review-author">
-      <div class="review-avatar" style="background:${color};">${initial}</div>
-      <div><div class="review-name">${name}</div><div class="review-loc">📍 ${city||'India'} · ${service}</div></div>
-    </div>`;
-  document.getElementById('reviewsContainer').appendChild(card);
-  // Clear form
-  document.getElementById('r_name').value='';
-  document.getElementById('r_city').value='';
-  document.getElementById('r_text').value='';
-  setRating(5);
-  msg.style.display='block';
-  msg.style.background='rgba(16,185,129,.12)';
-  msg.style.border='1px solid rgba(16,185,129,.3)';
-  msg.style.color='#6ee7b7';
-  msg.textContent='✅ Thank you for your review! It has been added.';
-  // Send to WhatsApp
-  const waMsg = `⭐ *NEW REVIEW — DataPro Services*
+// SUBMIT REVIEW — handled by Firebase module above
+function submitReview_OLD_REMOVED(){}
+// (rest removed - handled by Firebase)
 
-👤 Name: ${name}
-📍 City: ${city||'Not provided'}
-🔧 Service: ${service}
-⭐ Rating: ${currentRating}/5
-
-💬 Review:
-"${text}"`;
-  window.open(`https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`,'_blank');
-}
-
-// PROFILE PHOTO
+// PROFILE PHOTO - preview function (apply handled by Firebase module)
 let selectedPhotoData = null;
 
 function previewPhoto(event) {
@@ -1181,6 +1247,7 @@ function previewPhoto(event) {
   const reader = new FileReader();
   reader.onload = function(e) {
     selectedPhotoData = e.target.result;
+    window._selectedPhotoData = e.target.result;
     const preview = document.getElementById('adminPhotoPreview');
     preview.innerHTML = `<img src="${selectedPhotoData}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
     const msg = document.getElementById('photoMsg');
@@ -1191,475 +1258,6 @@ function previewPhoto(event) {
     msg.textContent = '✅ Photo ready! "Apply" button dabao.';
   };
   reader.readAsDataURL(file);
-}
-
-function applyProfilePhoto() {
-  const msg = document.getElementById('photoMsg');
-  if (!selectedPhotoData) {
-    msg.style.display = 'block';
-    msg.style.background = 'rgba(239,68,68,.12)';
-    msg.style.border = '1px solid rgba(239,68,68,.3)';
-    msg.style.color = '#fca5a5';
-    msg.textContent = '❌ Pehle koi photo choose karein.';
-    return;
-  }
-  // Update main profile photo in About section
-  const mainPhoto = document.querySelector('.av-circle img');
-  if (mainPhoto) {
-    mainPhoto.src = selectedPhotoData;
-  }
-  // Update hero logo mark if it uses initials
-  // Save to localStorage so it persists
-  localStorage.setItem('rohit_profile_photo', selectedPhotoData);
-  msg.style.display = 'block';
-  msg.style.background = 'rgba(16,185,129,.12)';
-  msg.style.border = '1px solid rgba(16,185,129,.3)';
-  msg.style.color = '#6ee7b7';
-  msg.textContent = '✅ Profile photo update ho gayi!';
-}
-
-// Load saved photo on page load
-window.addEventListener('load', function() {
-  const saved = localStorage.getItem('rohit_profile_photo');
-  if (saved) {
-    const mainPhoto = document.querySelector('.av-circle img');
-    if (mainPhoto) mainPhoto.src = saved;
-    const preview = document.getElementById('adminPhotoPreview');
-    if (preview) preview.innerHTML = `<img src="${saved}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;"/>`;
-    selectedPhotoData = saved;
-  }
-});
-
-// ============================================================
-// LOGO CHANGE FUNCTIONS
-// ============================================================
-let selectedLogoData = null;
-
-function previewLogo(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) {
-    showLogoMsg('❌ Sirf image file select karein (PNG, JPG, SVG)', 'error');
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    selectedLogoData = e.target.result;
-    const preview = document.getElementById('adminLogoPreview');
-    preview.innerHTML = `<img src="${selectedLogoData}" style="width:100%;height:100%;object-fit:contain;border-radius:12px;padding:4px;"/>`;
-    showLogoMsg('✅ Logo ready! "Apply" button dabao.', 'success');
-  };
-  reader.readAsDataURL(file);
-}
-
-function applyLogo() {
-  if (!selectedLogoData) {
-    showLogoMsg('❌ Pehle koi logo choose karein.', 'error');
-    return;
-  }
-  // Replace all .logo-icon and .pre-icon SVGs with img
-  const logoIconContainers = document.querySelectorAll('.logo-icon, .pre-icon, .logo-mark-icon');
-  logoIconContainers.forEach(el => {
-    el.innerHTML = `<img src="${selectedLogoData}" style="width:85%;height:85%;object-fit:contain;border-radius:8px;"/>`;
-  });
-  localStorage.setItem('rohit_site_logo', selectedLogoData);
-  showLogoMsg('✅ Logo sab jagah update ho gaya!', 'success');
-}
-
-function resetLogo() {
-  localStorage.removeItem('rohit_site_logo');
-  selectedLogoData = null;
-  const preview = document.getElementById('adminLogoPreview');
-  preview.innerHTML = '🖼️';
-  // Reload page to restore default SVG logos
-  if (confirm('Default logo restore karne ke liye page reload hoga. OK?')) {
-    location.reload();
-  }
-}
-
-function showLogoMsg(text, type) {
-  const msg = document.getElementById('logoMsg');
-  msg.style.display = 'block';
-  if (type === 'error') {
-    msg.style.background = 'rgba(239,68,68,.12)';
-    msg.style.border = '1px solid rgba(239,68,68,.3)';
-    msg.style.color = '#fca5a5';
-  } else {
-    msg.style.background = 'rgba(16,185,129,.12)';
-    msg.style.border = '1px solid rgba(16,185,129,.3)';
-    msg.style.color = '#6ee7b7';
-  }
-  msg.textContent = text;
-}
-
-// Load saved logo on page load
-window.addEventListener('load', function() {
-  const savedLogo = localStorage.getItem('rohit_site_logo');
-  if (savedLogo) {
-    selectedLogoData = savedLogo;
-    const logoIconContainers = document.querySelectorAll('.logo-icon, .pre-icon, .logo-mark-icon');
-    logoIconContainers.forEach(el => {
-      el.innerHTML = `<img src="${savedLogo}" style="width:85%;height:85%;object-fit:contain;border-radius:8px;"/>`;
-    });
-    const preview = document.getElementById('adminLogoPreview');
-    if (preview) preview.innerHTML = `<img src="${savedLogo}" style="width:100%;height:100%;object-fit:contain;border-radius:12px;padding:4px;"/>`;
-  }
-});
-
-// ============================================================
-// AI DATA ENTRY LIVE BACKGROUND ANIMATION
-// ============================================================
-(function() {
-  const canvas = document.getElementById('aiCanvas');
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // --- Floating Data Cells (spreadsheet rows) ---
-  const ROWS = [];
-  const ROW_COUNT = 18;
-  const COLS = ['Name', 'City', 'Amount', 'Date', 'Status', 'ID', 'Email', 'Qty', 'Rate'];
-  const SAMPLE_DATA = [
-    ['Amit Sharma','Delhi','₹4,200','12/05','Active','#1042','amit@x.com','50','₹84'],
-    ['Priya Verma','Mumbai','₹7,800','11/05','Done','#1041','priya@x.com','100','₹78'],
-    ['Rahul K','Pune','₹3,100','10/05','Pending','#1040','rk@x.com','40','₹77.5'],
-    ['Sneha Roy','Kolkata','₹9,500','09/05','Active','#1039','sn@x.com','120','₹79.2'],
-    ['Vikram S','Chennai','₹5,600','08/05','Done','#1038','vs@x.com','70','₹80'],
-    ['Neha G','Hyderabad','₹2,200','07/05','Active','#1037','ng@x.com','30','₹73'],
-    ['Arjun P','Jaipur','₹6,700','06/05','Done','#1036','ap@x.com','85','₹78.8'],
-    ['Kavya M','Lucknow','₹1,800','05/05','Pending','#1035','km@x.com','25','₹72'],
-  ];
-
-  for (let i = 0; i < ROW_COUNT; i++) {
-    const row = SAMPLE_DATA[i % SAMPLE_DATA.length];
-    ROWS.push({
-      x: Math.random() * window.innerWidth * 1.2 - 100,
-      y: Math.random() * window.innerHeight * 1.5 - 200,
-      speed: 0.18 + Math.random() * 0.22,
-      alpha: 0.07 + Math.random() * 0.13,
-      scale: 0.55 + Math.random() * 0.55,
-      data: row,
-      highlight: Math.floor(Math.random() * row.length),
-      blinkT: Math.random() * 100,
-    });
-  }
-
-  // --- Floating Numbers / Values ---
-  const FLOATS = [];
-  const FLOAT_VALUES = ['99.8%','2,450','₹7,800','Excel','✓','PDF','4.9★','100%','Entry','Data','Sheet','CSV','Done','Fast','Acc.'];
-  for (let i = 0; i < 28; i++) {
-    FLOATS.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: -0.12 - Math.random() * 0.2,
-      alpha: 0.06 + Math.random() * 0.1,
-      size: 9 + Math.random() * 11,
-      val: FLOAT_VALUES[Math.floor(Math.random() * FLOAT_VALUES.length)],
-      color: ['#3b82f6','#06b6d4','#10b981','#f59e0b','#8b5cf6'][Math.floor(Math.random()*5)],
-    });
-  }
-
-  // --- Animated Graph Bars ---
-  const BARS = [];
-  const BAR_COUNT = 7;
-  for (let i = 0; i < BAR_COUNT; i++) {
-    BARS.push({
-      x: (window.innerWidth / (BAR_COUNT + 1)) * (i + 1),
-      y: window.innerHeight * 0.78,
-      targetH: 40 + Math.random() * 120,
-      h: 10,
-      w: 18 + Math.random() * 14,
-      color: `hsl(${200 + i * 20}, 80%, 55%)`,
-      alpha: 0.13,
-      growing: true,
-    });
-  }
-
-  // --- Cursor Line (typing effect) ---
-  const typingLines = [
-    'Entering data... Row 1042',
-    'Validating: Amount = ₹4,200 ✓',
-    'PDF → Excel conversion... 98%',
-    'Formatting cells... Done ✓',
-    'Uploading: data_final.xlsx',
-    'Accuracy check: 99.8% ✓',
-    'Bulk entry: 500 rows complete',
-  ];
-  let typingIdx = 0;
-  let typingCharIdx = 0;
-  let typingLine = '';
-  let typingTimer = 0;
-
-  // --- Pulse Rings (data processing) ---
-  const PULSES = [];
-  function spawnPulse() {
-    PULSES.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: 0,
-      maxR: 60 + Math.random() * 80,
-      alpha: 0.18,
-      color: ['#3b82f6','#06b6d4','#10b981'][Math.floor(Math.random()*3)],
-    });
-  }
-  spawnPulse(); spawnPulse();
-
-  let frame = 0;
-
-  function drawRow(row) {
-    ctx.save();
-    ctx.globalAlpha = row.alpha;
-    ctx.translate(row.x, row.y);
-    ctx.scale(row.scale, row.scale);
-
-    const cellW = 88, cellH = 22, pad = 6;
-    const cols = Math.min(row.data.length, 5);
-
-    // Header row
-    ctx.fillStyle = 'rgba(59,130,246,0.18)';
-    ctx.beginPath();
-    ctx.roundRect(0, 0, cellW * cols, cellH, 4);
-    ctx.fill();
-    for (let c = 0; c < cols; c++) {
-      ctx.fillStyle = '#06b6d4';
-      ctx.font = `bold ${10}px Outfit, sans-serif`;
-      ctx.fillText(COLS[c], c * cellW + pad, 14);
-      if (c > 0) {
-        ctx.strokeStyle = 'rgba(99,179,237,0.2)';
-        ctx.lineWidth = 0.7;
-        ctx.beginPath(); ctx.moveTo(c * cellW, 0); ctx.lineTo(c * cellW, cellH); ctx.stroke();
-      }
-    }
-
-    // Data row
-    ctx.fillStyle = 'rgba(13,21,38,0.7)';
-    ctx.strokeStyle = 'rgba(59,130,246,0.22)';
-    ctx.lineWidth = 0.8;
-    ctx.beginPath();
-    ctx.roundRect(0, cellH + 2, cellW * cols, cellH, 4);
-    ctx.fill();
-    ctx.stroke();
-
-    for (let c = 0; c < cols; c++) {
-      const isHL = c === row.highlight && Math.sin(row.blinkT * 0.05) > 0.3;
-      ctx.fillStyle = isHL ? '#f59e0b' : '#e8f0fe';
-      ctx.font = `${9.5}px Outfit, sans-serif`;
-      ctx.fillText(row.data[c], c * cellW + pad, cellH + 16);
-      if (c > 0) {
-        ctx.strokeStyle = 'rgba(99,179,237,0.15)';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath(); ctx.moveTo(c * cellW, cellH + 2); ctx.lineTo(c * cellW, cellH * 2 + 2); ctx.stroke();
-      }
-    }
-
-    // Typing cursor on highlight cell
-    if (Math.sin(row.blinkT * 0.08) > 0) {
-      const cx = row.highlight * cellW + pad + ctx.measureText(row.data[row.highlight] || '').width + 2;
-      ctx.fillStyle = '#06b6d4';
-      ctx.fillRect(cx, cellH + 5, 1.5, 12);
-    }
-    ctx.restore();
-  }
-
-  function drawBars() {
-    const bx = window.innerWidth * 0.72;
-    const by = window.innerHeight * 0.82;
-    ctx.save();
-    ctx.globalAlpha = 0.11;
-
-    // Title
-    ctx.fillStyle = '#06b6d4';
-    ctx.font = 'bold 10px Outfit, sans-serif';
-    ctx.fillText('ENTRY PROGRESS', bx - 30, by - 145);
-
-    BARS.forEach((b, i) => {
-      // Animate bar height
-      if (b.growing) { b.h += 0.4; if (b.h >= b.targetH) { b.growing = false; } }
-      else { b.h -= 0.15; if (b.h < 10) { b.targetH = 40 + Math.random() * 130; b.growing = true; } }
-
-      const gradient = ctx.createLinearGradient(bx + i * 28, by, bx + i * 28, by - b.h);
-      gradient.addColorStop(0, b.color);
-      gradient.addColorStop(1, '#06b6d4');
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.roundRect(bx + i * 28, by - b.h, 18, b.h, 3);
-      ctx.fill();
-
-      // Value label
-      ctx.fillStyle = '#e8f0fe';
-      ctx.font = '8px Outfit, sans-serif';
-      ctx.fillText(Math.floor(b.h * 5) + '', bx + i * 28 + 2, by - b.h - 3);
-    });
-    ctx.restore();
-  }
-
-  function drawTypingLine() {
-    ctx.save();
-    ctx.globalAlpha = 0.18;
-    ctx.fillStyle = 'rgba(6,10,20,0.6)';
-    ctx.beginPath();
-    ctx.roundRect(28, window.innerHeight - 52, 340, 28, 6);
-    ctx.fill();
-
-    ctx.globalAlpha = 0.55;
-    ctx.fillStyle = '#10b981';
-    ctx.font = '11px monospace';
-    ctx.fillText('> ' + typingLine + (Math.sin(frame * 0.09) > 0 ? '█' : ''), 38, window.innerHeight - 32);
-    ctx.restore();
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    frame++;
-
-    // Typing animation
-    typingTimer++;
-    if (typingTimer % 3 === 0) {
-      const full = typingLines[typingIdx];
-      if (typingCharIdx < full.length) {
-        typingLine = full.slice(0, ++typingCharIdx);
-      } else if (typingTimer % 80 === 0) {
-        typingCharIdx = 0;
-        typingLine = '';
-        typingIdx = (typingIdx + 1) % typingLines.length;
-      }
-    }
-
-    // Floating data rows
-    ROWS.forEach(row => {
-      row.y -= row.speed;
-      row.blinkT++;
-      if (row.y < -80) {
-        row.y = window.innerHeight + 60;
-        row.x = Math.random() * window.innerWidth * 1.1 - 80;
-        row.highlight = Math.floor(Math.random() * row.data.length);
-      }
-      drawRow(row);
-    });
-
-    // Floating values
-    FLOATS.forEach(f => {
-      f.x += f.vx; f.y += f.vy;
-      if (f.y < -20) { f.y = window.innerHeight + 10; f.x = Math.random() * window.innerWidth; }
-      if (f.x < -60) f.x = window.innerWidth + 10;
-      if (f.x > window.innerWidth + 60) f.x = -10;
-      ctx.save();
-      ctx.globalAlpha = f.alpha * (0.7 + 0.3 * Math.sin(frame * 0.015 + f.x));
-      ctx.fillStyle = f.color;
-      ctx.font = `bold ${f.size}px Outfit, sans-serif`;
-      ctx.fillText(f.val, f.x, f.y);
-      ctx.restore();
-    });
-
-    // Pulse rings
-    if (frame % 90 === 0) spawnPulse();
-    for (let i = PULSES.length - 1; i >= 0; i--) {
-      const p = PULSES[i];
-      p.r += 0.7; p.alpha -= 0.0018;
-      if (p.alpha <= 0 || p.r > p.maxR) { PULSES.splice(i, 1); continue; }
-      ctx.save();
-      ctx.globalAlpha = p.alpha;
-      ctx.strokeStyle = p.color;
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Bar chart
-    drawBars();
-
-    // Typing status line
-    drawTypingLine();
-
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('load', () => { animate(); });
-})();
-
-// ============================================================
-// FORGOT PASSWORD SYSTEM
-// ============================================================
-// Secret answer — aap isko change kar sakte ho (lowercase mein likho)
-const SECRET_ANSWER = '0402'; // ← Yahan apna secret answer change karo
-
-function showForgotPanel() {
-  document.getElementById('adminLogin').style.display = 'none';
-  document.getElementById('forgotPanel').style.display = 'block';
-  document.getElementById('forgotStep1').style.display = 'block';
-  document.getElementById('forgotStep2').style.display = 'none';
-  document.getElementById('secretAnswerInput').value = '';
-  document.getElementById('forgotStep1Error').style.display = 'none';
-}
-
-function backToLogin() {
-  document.getElementById('forgotPanel').style.display = 'none';
-  document.getElementById('adminLogin').style.display = 'block';
-  document.getElementById('adminPassInput').value = '';
-  document.getElementById('loginError').style.display = 'none';
-}
-
-function checkSecretAnswer() {
-  const ans = document.getElementById('secretAnswerInput').value.trim().toLowerCase();
-  const err = document.getElementById('forgotStep1Error');
-  if (!ans) {
-    err.style.display = 'block';
-    err.textContent = '⚠️ Answer khali nahi chhod sakte.';
-    return;
-  }
-  if (ans === SECRET_ANSWER) {
-    document.getElementById('forgotStep1').style.display = 'none';
-    document.getElementById('forgotStep2').style.display = 'block';
-    document.getElementById('newPassReset').value = '';
-    document.getElementById('newPassResetConfirm').value = '';
-    document.getElementById('forgotStep2Error').style.display = 'none';
-  } else {
-    err.style.display = 'block';
-    err.textContent = '❌ Galat answer. Phir try karein.';
-    document.getElementById('secretAnswerInput').value = '';
-    document.getElementById('secretAnswerInput').focus();
-  }
-}
-
-function resetPasswordNow() {
-  const np = document.getElementById('newPassReset').value;
-  const nc = document.getElementById('newPassResetConfirm').value;
-  const err = document.getElementById('forgotStep2Error');
-  if (np.length < 4) {
-    err.style.display = 'block';
-    err.style.background = 'rgba(239,68,68,.1)';
-    err.style.border = '1px solid rgba(239,68,68,.2)';
-    err.style.color = '#fca5a5';
-    err.textContent = '❌ Password kam se kam 4 characters ka hona chahiye.';
-    return;
-  }
-  if (np !== nc) {
-    err.style.display = 'block';
-    err.style.background = 'rgba(239,68,68,.1)';
-    err.style.border = '1px solid rgba(239,68,68,.2)';
-    err.style.color = '#fca5a5';
-    err.textContent = '❌ Dono passwords match nahi kar rahe.';
-    return;
-  }
-  // Set new password
-  adminPassword = np;
-  localStorage.setItem('rohit_admin_pass', np);
-  err.style.display = 'block';
-  err.style.background = 'rgba(16,185,129,.1)';
-  err.style.border = '1px solid rgba(16,185,129,.2)';
-  err.style.color = '#6ee7b7';
-  err.textContent = '✅ Password reset ho gaya! Ab login karein.';
-  setTimeout(() => {
-    backToLogin();
-  }, 1800);
 }
 
 // ADMIN PANEL
@@ -1688,16 +1286,8 @@ function changePassword(){
   localStorage.setItem('rohit_admin_pass',nw);
   msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Password updated!';
 }
-function updatePrices(){
-  const p1=document.getElementById('ep1').value;
-  const p2=document.getElementById('ep2').value;
-  const p3=document.getElementById('ep3').value;
-  document.getElementById('p1').textContent=p1;
-  document.getElementById('p2').textContent=p2;
-  document.getElementById('p3').textContent=p3;
-  const msg=document.getElementById('priceMsg');
-  msg.style.display='block';msg.textContent='✅ Prices updated live!';
-}
+// updatePrices — handled by Firebase module above
+function updatePrices_OLD_REMOVED(){}
 function adminLogout(){
   document.getElementById('adminDash').style.display='none';
   document.getElementById('adminLogin').style.display='block';
