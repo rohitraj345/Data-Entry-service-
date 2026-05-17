@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rohitraj345.github.io/Data-Entry-service-/sitemap.xml
