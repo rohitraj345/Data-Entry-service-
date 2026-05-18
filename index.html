@@ -378,6 +378,184 @@ footer p{font-size:.78rem;color:var(--muted);}
 </head>
 <body>
 
+<!-- ═══ AI FUTURISTIC BACKGROUND ═══ -->
+<canvas id="aiBg" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+<style>
+  body > *:not(#aiBg) { position:relative; z-index:1; }
+  #pre  { z-index:9999!important; }
+  #waFloat { z-index:9999!important; }
+</style>
+<script>
+(function(){
+  const cv = document.getElementById('aiBg');
+  const cx = cv.getContext('2d');
+  let W, H, t = 0;
+
+  /* ── Neural network nodes ── */
+  let nodes, pulses;
+  function buildNodes(){
+    nodes = Array.from({length:55},()=>({
+      x: Math.random()*W, y: Math.random()*H,
+      vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+      r: .8+Math.random()*2.2,
+      hue: [210,185,160,140][Math.floor(Math.random()*4)],
+      bright: .4+Math.random()*.6
+    }));
+    pulses = [];
+  }
+
+  /* ── Hexagonal grid ── */
+  function drawHexGrid(){
+    const S=52, rows=Math.ceil(H/S)+2, cols2=Math.ceil(W/(S*1.73))+2;
+    cx.lineWidth=.4;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols2;c++){
+        const ox=c*S*1.73 + (r%2)*S*.865;
+        const oy=r*S*.75;
+        const pulse=Math.sin(t*.018+c*.4+r*.6)*.5+.5;
+        cx.strokeStyle=`hsla(${190+pulse*40},80%,55%,${.03+pulse*.05})`;
+        cx.beginPath();
+        for(let i=0;i<6;i++){
+          const a=Math.PI/3*i - Math.PI/6;
+          const px=ox+Math.cos(a)*S*.48, py=oy+Math.sin(a)*S*.48;
+          i===0?cx.moveTo(px,py):cx.lineTo(px,py);
+        }
+        cx.closePath(); cx.stroke();
+      }
+    }
+  }
+
+  /* ── Deep glow orbs ── */
+  const orbs=[
+    {x:.2,y:.25,r:.38,h:220},{x:.75,y:.6,r:.32,h:190},
+    {x:.5,y:.88,r:.28,h:170},{x:.88,y:.15,r:.22,h:260}
+  ];
+  function drawOrbs(){
+    orbs.forEach((o,i)=>{
+      const px=o.x*W+Math.sin(t*.007+i)*W*.04;
+      const py=o.y*H+Math.cos(t*.009+i)*H*.04;
+      const r=o.r*Math.min(W,H);
+      const g=cx.createRadialGradient(px,py,0,px,py,r);
+      const a=.055+Math.sin(t*.011+i)*.025;
+      g.addColorStop(0,`hsla(${o.h},85%,55%,${a})`);
+      g.addColorStop(.5,`hsla(${o.h},75%,45%,${a*.4})`);
+      g.addColorStop(1,'transparent');
+      cx.fillStyle=g;
+      cx.beginPath();cx.arc(px,py,r,0,Math.PI*2);cx.fill();
+    });
+  }
+
+  /* ── Neural connections ── */
+  function drawNeural(){
+    /* move nodes */
+    nodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    });
+    /* connections */
+    const CONN=160;
+    for(let a=0;a<nodes.length;a++){
+      for(let b=a+1;b<nodes.length;b++){
+        const dx=nodes[a].x-nodes[b].x, dy=nodes[a].y-nodes[b].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<CONN){
+          const alpha=(1-d/CONN)*.14;
+          const hue=190+Math.sin(t*.008+a)* 30;
+          cx.strokeStyle=`hsla(${hue},85%,60%,${alpha})`;
+          cx.lineWidth=.7;
+          cx.beginPath();cx.moveTo(nodes[a].x,nodes[a].y);
+          cx.lineTo(nodes[b].x,nodes[b].y);cx.stroke();
+        }
+      }
+    }
+    /* data pulses travelling along edges */
+    if(Math.random()<.04 && nodes.length>1){
+      const a=Math.floor(Math.random()*nodes.length);
+      const b=Math.floor(Math.random()*nodes.length);
+      pulses.push({ax:nodes[a].x,ay:nodes[a].y,bx:nodes[b].x,by:nodes[b].y,p:0,spd:.012+Math.random()*.018});
+    }
+    pulses=pulses.filter(p=>{
+      p.p+=p.spd;
+      const x=p.ax+(p.bx-p.ax)*p.p, y=p.ay+(p.by-p.ay)*p.p;
+      const g2=cx.createRadialGradient(x,y,0,x,y,6);
+      g2.addColorStop(0,'rgba(6,182,212,.9)');
+      g2.addColorStop(1,'transparent');
+      cx.fillStyle=g2; cx.beginPath();cx.arc(x,y,6,0,Math.PI*2);cx.fill();
+      return p.p<1;
+    });
+    /* nodes */
+    nodes.forEach(n=>{
+      const glow=cx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*5);
+      glow.addColorStop(0,`hsla(${n.hue},90%,65%,${n.bright*.7})`);
+      glow.addColorStop(1,'transparent');
+      cx.fillStyle=glow; cx.beginPath();cx.arc(n.x,n.y,n.r*5,0,Math.PI*2);cx.fill();
+      cx.fillStyle=`hsla(${n.hue},90%,80%,${n.bright})`;
+      cx.beginPath();cx.arc(n.x,n.y,n.r,0,Math.PI*2);cx.fill();
+    });
+  }
+
+  /* ── Floating binary streams ── */
+  const BITS='10 AI ML 01 ∑ ⟨⟩ ∞ π λ DATA NN GPT 0x1F'.split(' ');
+  const streams=Array.from({length:18},()=>({
+    x:Math.random()*1.2-.1, y:Math.random(),
+    spd:.00015+Math.random()*.0003,
+    word:BITS[Math.floor(Math.random()*BITS.length)],
+    alpha:.06+Math.random()*.1,
+    size:10+Math.random()*8
+  }));
+  function drawStreams(){
+    cx.font=''; 
+    streams.forEach(s=>{
+      s.y+=s.spd;
+      if(s.y>1.05){ s.y=-.05; s.word=BITS[Math.floor(Math.random()*BITS.length)]; }
+      const flicker=Math.sin(t*.05+s.x*10)*.5+.5;
+      cx.fillStyle=`rgba(6,182,212,${s.alpha*(.5+flicker*.5)})`;
+      cx.font=`${s.size}px monospace`;
+      cx.fillText(s.word, s.x*W, s.y*H);
+    });
+  }
+
+  /* ── Scan lines ── */
+  function drawScan(){
+    const y=(t*.6)%H;
+    const sg=cx.createLinearGradient(0,y-30,0,y+30);
+    sg.addColorStop(0,'transparent');
+    sg.addColorStop(.5,`rgba(6,182,212,.04)`);
+    sg.addColorStop(1,'transparent');
+    cx.fillStyle=sg; cx.fillRect(0,y-30,W,60);
+
+    /* corner brackets */
+    const b=28, lw=2.5, col='rgba(6,182,212,.25)';
+    cx.strokeStyle=col; cx.lineWidth=lw;
+    [[0,0,1,1],[W,0,-1,1],[0,H,1,-1],[W,H,-1,-1]].forEach(([x,y,sx,sy])=>{
+      cx.beginPath();cx.moveTo(x+sx*b,y);cx.lineTo(x,y);cx.lineTo(x,y+sy*b);cx.stroke();
+    });
+  }
+
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+    buildNodes();
+  }
+
+  function frame(){
+    cx.clearRect(0,0,W,H);
+    drawOrbs();
+    drawHexGrid();
+    drawStreams();
+    drawNeural();
+    drawScan();
+    t++;
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize',resize);
+  frame();
+})();
+</script>
+
 <!-- PRELOADER -->
 <div id="pre">
   <div class="pre-logo">
@@ -415,9 +593,9 @@ footer p{font-size:.78rem;color:var(--muted);}
 <!-- NAVBAR -->
 <nav id="nav">
   <a href="#hero" class="nav-logo">
-    <div class="logo-icon">
-      <!-- RR Monogram Logo -->
-      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="logo-icon" id="navLogoIconWrap">
+      <!-- RR Monogram Logo — replaced by custom image if uploaded -->
+      <svg id="navLogoSVG" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="logoGrad" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stop-color="#3b82f6"/>
@@ -428,18 +606,14 @@ footer p{font-size:.78rem;color:var(--muted);}
             <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.1"/>
           </linearGradient>
         </defs>
-        <!-- Outer rounded square bg -->
         <rect x="1" y="1" width="40" height="40" rx="11" fill="#0d1526" stroke="url(#logoGrad)" stroke-width="1.5"/>
-        <!-- Inner glow -->
         <rect x="3" y="3" width="36" height="36" rx="9" fill="url(#glowGrad)"/>
-        <!-- R letter left -->
         <path d="M9 10h8a5 5 0 0 1 5 5v1a5 5 0 0 1-3.5 4.8L23 32h-4l-3.8-10.5H13V32H9V10z" fill="url(#logoGrad)"/>
         <rect x="13" y="13.5" width="6" height="6" rx="1" fill="none"/>
-        <!-- R letter right (mirrored, data arrow) -->
         <path d="M25 10h6v5h-4v3h4v3h-4v5l5 6h-4.5l-4.5-6V10z" fill="url(#logoGrad)" opacity=".85"/>
-        <!-- Accent dot -->
         <circle cx="33" cy="10.5" r="2" fill="#06b6d4"/>
       </svg>
+      <img id="navLogoImg" src="" alt="Logo" style="display:none;width:42px;height:42px;border-radius:11px;object-fit:cover;"/>
     </div>
     <div class="logo-text">
       <div class="logo-text-main">ROHIT RAJ</div>
@@ -1010,6 +1184,21 @@ footer p{font-size:.78rem;color:var(--muted);}
       <div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
         <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:1rem;">🏷️ Change Logo / Site Name</div>
         <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <!-- LOGO ICON IMAGE UPLOAD -->
+          <div style="background:rgba(255,255,255,.03);border:1px dashed rgba(6,182,212,.25);border-radius:10px;padding:1rem;">
+            <label style="font-size:.7rem;color:var(--cyan);font-weight:700;display:block;margin-bottom:.6rem;letter-spacing:.08em;text-transform:uppercase;">🖼️ Logo Icon (Top Left Square)</label>
+            <div style="display:flex;align-items:center;gap:1rem;">
+              <div id="logoIconPreview" style="width:54px;height:54px;border-radius:12px;overflow:hidden;border:2px solid rgba(6,182,212,.3);flex-shrink:0;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.4rem;">RE</div>
+              <div style="flex:1;">
+                <label for="logoIconFileInput" style="display:inline-flex;align-items:center;gap:6px;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3);color:var(--cyan);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:6px;cursor:pointer;">📁 Choose Image</label>
+                <input id="logoIconFileInput" type="file" accept="image/*" style="display:none;" onchange="previewLogoIcon(event)"/>
+                <div style="font-size:.68rem;color:var(--muted);margin-top:.4rem;">PNG/JPG · Best size: 100×100px</div>
+              </div>
+            </div>
+            <button onclick="applyLogoIcon()" style="width:100%;margin-top:.8rem;background:linear-gradient(135deg,#0891b2,#06b6d4);color:white;border:none;border-radius:7px;padding:9px;font-family:Outfit,sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Logo Icon</button>
+            <div id="logoIconMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;margin-top:.5rem;"></div>
+          </div>
+          <!-- TEXT INPUTS -->
           <div>
             <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Site Title (Navbar)</label>
             <input id="logoTextInput" type="text" placeholder="e.g. Rohit Raj" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
@@ -1019,7 +1208,7 @@ footer p{font-size:.78rem;color:var(--muted);}
             <input id="logoSubInput" type="text" placeholder="e.g. Data Entry Expert" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           </div>
           <div id="logoMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
-          <button onclick="applyLogoChange()" style="background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Logo Change</button>
+          <button onclick="applyLogoChange()" style="background:linear-gradient(135deg,var(--blue),var(--cyan));color:white;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Name Change</button>
         </div>
       </div>
       <!-- PROFILE PHOTO SECTION -->
@@ -1466,16 +1655,59 @@ function applyLogoChange(){
   msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Logo updated on page!';
 }
 
+// ── Logo Icon (image) functions ──
+let _logoIconData = null;
+
+function previewLogoIcon(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    _logoIconData = ev.target.result;
+    const prev = document.getElementById('logoIconPreview');
+    prev.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = _logoIconData;
+    img.style.cssText = 'width:54px;height:54px;border-radius:10px;object-fit:cover;';
+    prev.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+}
+
+function applyLogoIcon(){
+  const msg = document.getElementById('logoIconMsg');
+  if(!_logoIconData){ msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Pehle image choose karo!';return; }
+  // Apply to navbar
+  document.getElementById('navLogoSVG').style.display='none';
+  const navImg = document.getElementById('navLogoImg');
+  navImg.src = _logoIconData;
+  navImg.style.display='block';
+  // Save to localStorage
+  try{ localStorage.setItem('rohit_logo_icon', _logoIconData); }catch(e){}
+  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Logo icon updated!';
+}
+
 // ── Restore saved logo on page load ──
 (function restoreLogo(){
   const t = localStorage.getItem('rohit_logo_title');
   const s = localStorage.getItem('rohit_logo_sub');
+  const ic = localStorage.getItem('rohit_logo_icon');
   if(t){
     document.querySelectorAll('.logo-text-main,.lmt-main').forEach(el=>el.textContent=t);
     document.title = t + ' — Data Entry Expert';
   }
   if(s){
     document.querySelectorAll('.logo-text-sub,.lmt-sub').forEach(el=>el.textContent=s);
+  }
+  if(ic){
+    const svg = document.getElementById('navLogoSVG');
+    const navImg = document.getElementById('navLogoImg');
+    if(svg) svg.style.display='none';
+    if(navImg){ navImg.src=ic; navImg.style.display='block'; }
+    // Also update admin preview
+    const prev = document.getElementById('logoIconPreview');
+    if(prev){ prev.innerHTML=''; const img=document.createElement('img'); img.src=ic; img.style.cssText='width:54px;height:54px;border-radius:10px;object-fit:cover;'; prev.appendChild(img); }
+    _logoIconData = ic;
   }
 })();
 
@@ -1539,5 +1771,14 @@ function adminLogout(){
   document.getElementById('adminOverlay').style.display='none';
 }
 </script>
+<!-- ═══ WHATSAPP FLOATING BUTTON ═══ -->
+<a href="https://wa.me/917456830402?text=Hi%20Rohit%2C%20I%20need%20data%20entry%20work.%20Please%20share%20details." target="_blank" id="waFloat" style="position:fixed;bottom:24px;right:20px;z-index:9999;display:flex;align-items:center;gap:10px;background:#25D366;color:white;text-decoration:none;border-radius:50px;padding:12px 20px 12px 14px;box-shadow:0 4px 20px rgba(37,211,102,.5);font-family:Outfit,sans-serif;font-weight:700;font-size:.88rem;letter-spacing:.04em;animation:waPulse 2s infinite;">
+  <svg width="26" height="26" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.478.675 4.797 1.848 6.786L2 30l7.43-1.818A13.94 13.94 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.45 11.45 0 0 1-5.852-1.604l-.42-.25-4.41 1.08 1.12-4.3-.274-.44A11.46 11.46 0 0 1 4.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.62c-.344-.172-2.037-1.003-2.352-1.118-.316-.115-.546-.172-.776.172-.23.344-.892 1.118-1.093 1.348-.2.23-.402.258-.746.086-.344-.172-1.452-.535-2.767-1.707-1.022-.912-1.712-2.038-1.912-2.382-.2-.344-.021-.53.15-.701.155-.154.344-.402.516-.603.172-.2.23-.344.344-.574.115-.23.058-.431-.028-.603-.086-.172-.776-1.87-1.063-2.56-.28-.672-.564-.581-.776-.592l-.66-.012c-.23 0-.603.086-.919.431-.316.344-1.207 1.18-1.207 2.877s1.236 3.335 1.408 3.565c.172.23 2.432 3.71 5.893 5.204.824.355 1.466.568 1.967.727.826.263 1.578.226 2.172.137.663-.1 2.037-.832 2.323-1.635.287-.803.287-1.49.2-1.635-.085-.144-.315-.23-.66-.402z"/></svg>
+  Order on WhatsApp
+</a>
+<style>
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.5);}50%{box-shadow:0 4px 30px rgba(37,211,102,.85);}}
+</style>
+
 </body>
 </html>
