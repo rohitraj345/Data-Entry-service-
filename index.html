@@ -749,12 +749,10 @@ footer p{font-size:.78rem;color:var(--muted);}
       </div>
     </div>
     <div class="rv d2">
-      <div class="upi-id">rohit0402@ptyes</div>
-      <div class="upi-note">Rohit Raj · Data Entry Services<br/>Scan with any UPI App</div>
       <div class="secure-badge"><span class="lock-icon">🔒</span> 100% Secure · Instant Transfer</div>
       <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem;">
-        <button class="copy-btn" onclick="copyUPI()">📋 Copy UPI ID: rohit0402@ptyes</button>
-        <a href="upi://pay?pa=rohit0402@ptyes&pn=RohitRaj&cu=INR" class="btn btn-primary" style="justify-content:center;">Open UPI App ↗</a>
+        <button class="btn btn-primary" onclick="openPaymentSection()" style="justify-content:center;cursor:pointer;">💳 Proceed to Secure Payment ↗</button>
+        <p style="text-align:center;font-size:.75rem;color:var(--muted);">Powered by Razorpay · Fast & Safe</p>
       </div>
     </div>
   </div>
@@ -1109,9 +1107,8 @@ footer p{font-size:.78rem;color:var(--muted);}
       <div class="m-upi-note">Rohit Raj · PhonePe · GPay · Paytm</div>
     </div>
     <div class="modal-btns">
-      <button class="copy-btn" onclick="copyUPI()">📋 Copy UPI ID</button>
-      <a href="upi://pay?pa=rohit0402@ptyes&pn=RohitRaj&cu=INR" class="btn btn-primary" style="justify-content:center;">Open UPI App ↗</a>
-      <a id="modalWALink" href="https://wa.me/917456830402" target="_blank" class="btn btn-green" style="justify-content:center;">📲 Send Screenshot on WhatsApp</a>
+      <button class="btn btn-primary" onclick="initiateSecurePayment()" style="justify-content:center;width:100%;">🔒 Pay with Razorpay</button>
+      <a id="modalWALink" href="https://wa.me/917456830402" target="_blank" class="btn btn-green" style="justify-content:center;">📲 Need Help? WhatsApp</a>
     </div>
   </div>
 </div>
@@ -1477,12 +1474,138 @@ function selectPkg(name,price){
   document.getElementById('order').scrollIntoView({behavior:'smooth'});
 }
 
-// COPY UPI
-function copyUPI(){
-  navigator.clipboard.writeText('rohit0402@ptyes').then(()=>{
-    const btn = document.querySelector('.copy-btn');
-    if(btn){ const orig=btn.textContent; btn.textContent='✅ Copied!'; setTimeout(()=>btn.textContent=orig,2000); }
-  });
+// PAYMENT SYSTEM - Razorpay Integration
+let currentOrderAmount = 0;
+let currentOrderDetails = null;
+
+function openPaymentSection(){
+  document.getElementById('payModal2').classList.add('open');
+}
+
+function initiateSecurePayment(){
+  if(!currentOrderDetails){
+    alert('Please fill order details first');
+    return;
+  }
+  const amt = parseInt(currentOrderDetails.amount) || 0;
+  if(amt <= 0){
+    alert('Invalid payment amount');
+    return;
+  }
+  
+  // Load Razorpay script dynamically
+  const script = document.createElement('script');
+  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+  script.onload = () => {
+    processRazorpayPayment(amt);
+  };
+  document.head.appendChild(script);
+}
+
+function processRazorpayPayment(amount){
+  const options = {
+    key: 'rzp_live_YOUR_KEY_HERE', // Replace with your Razorpay Key
+    amount: amount * 100, // Amount in paise
+    currency: 'INR',
+    name: 'Rohit Raj',
+    description: 'Data Entry Services - ' + (currentOrderDetails?.service || 'Order'),
+    image: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%233b82f6" width="100" height="100" rx="20"/><text x="50" y="65" font-size="50" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">RE</text></svg>',
+    prefill: {
+      name: currentOrderDetails?.name || '',
+      email: currentOrderDetails?.email || '',
+      contact: currentOrderDetails?.phone || ''
+    },
+    handler: function(response){
+      handlePaymentSuccess(response);
+    },
+    modal: {
+      ondismiss: function(){
+        console.log('Payment dismissed');
+      }
+    }
+  };
+  
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+
+function handlePaymentSuccess(response){
+  // Show payment success message
+  const successModal = document.createElement('div');
+  successModal.innerHTML = `
+    <div style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;padding:1rem;">
+      <div style="background:#1a1a2e;border-radius:20px;padding:2.5rem;max-width:420px;text-align:center;border:2px solid #10b981;box-shadow:0 0 50px rgba(16,185,129,.3);">
+        <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
+        <h2 style="color:#10b981;font-size:1.5rem;margin-bottom:.5rem;font-family:'Bebas Neue';">Payment Successful!</h2>
+        <p style="color:#e8f0fe;margin-bottom:1.5rem;font-size:.95rem;">Your payment of <strong>₹${currentOrderAmount}</strong> has been received successfully.</p>
+        <div style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);border-radius:10px;padding:1.2rem;margin-bottom:1.5rem;text-align:left;font-size:.85rem;color:#d0f0ff;line-height:1.6;">
+          <div><strong>Transaction ID:</strong> ${response.razorpay_payment_id}</div>
+          <div style="margin-top:.5rem;"><strong>Service:</strong> ${currentOrderDetails?.service}</div>
+          <div style="margin-top:.5rem;"><strong>Status:</strong> Confirmed ✓</div>
+        </div>
+        <p style="color:#7a90b8;font-size:.8rem;margin-bottom:1.5rem;">Our team will contact you on WhatsApp within 1 hour to start your project.</p>
+        <button onclick="this.parentElement.parentElement.remove()" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:8px;padding:12px 32px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;">✓ Done</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(successModal);
+  
+  // Close modal after success
+  document.getElementById('payModal2').classList.remove('open');
+  
+  // Send notification to WhatsApp
+  const msg = `✅ Payment Confirmed!
+Payment ID: ${response.razorpay_payment_id}
+Amount: ₹${currentOrderAmount}
+Service: ${currentOrderDetails?.service}
+  
+Thank you! We will start your project soon.`;
+  
+  const waUrl = `https://wa.me/917456830402?text=${encodeURIComponent(msg)}`;
+  console.log('Payment confirmed. WhatsApp link:', waUrl);
+}
+
+// Enhanced submitOrder with payment integration
+const originalSubmitOrder = submitOrder;
+function submitOrder(){
+  const name=document.getElementById('f_name').value.trim();
+  const phone=document.getElementById('f_phone').value.trim();
+  const service=document.getElementById('f_service').value;
+  const pkg=document.getElementById('f_pkg').value;
+  const desc=document.getElementById('f_desc').value.trim();
+  const email=document.getElementById('f_email').value.trim();
+  const city=document.getElementById('f_city').value.trim();
+  const pay=document.getElementById('f_pay').value;
+  const msg=document.getElementById('formMsg');
+  
+  if(!name||!phone||!service||!pkg||!desc){
+    msg.style.display='block';
+    msg.style.background='rgba(239,68,68,.12)';
+    msg.style.border='1px solid rgba(239,68,68,.3)';
+    msg.style.color='#fca5a5';
+    msg.textContent='⚠️ Please fill all required fields.';
+    return;
+  }
+  
+  // Extract amount from package
+  const amtMatch = pkg.match(/₹(\d+)/);
+  const amount = amtMatch ? parseInt(amtMatch[1]) : 0;
+  
+  // Store order details for payment
+  currentOrderAmount = amount;
+  currentOrderDetails = {
+    name, phone, service, pkg, desc, email, city, pay, amount
+  };
+  
+  // Show payment modal
+  document.getElementById('modalPkgInfo').textContent = `Package: ${pkg} | Payment Gateway: Razorpay`;
+  document.getElementById('payModal2').classList.add('open');
+  
+  msg.style.display='block';
+  msg.style.background='rgba(16,185,129,.12)';
+  msg.style.border='1px solid rgba(16,185,129,.3)';
+  msg.style.color='#6ee7b7';
+  msg.textContent='✅ Order ready! Proceed to secure payment.';
 }
 
 // MODAL
