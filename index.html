@@ -828,7 +828,54 @@ footer p{font-size:.78rem;color:var(--muted);}
       </div>
       <div class="form-group"><label>Number of Rows / Pages</label><input type="text" id="f_rows" placeholder="e.g. 500 rows / 10 pages"/></div>
       <div class="form-group"><label>Deadline Required</label><input type="date" id="f_deadline"/></div>
+      <div class="form-group full" style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:12px;padding:1.2rem;">
+        <label style="color:var(--cyan);margin-bottom:.8rem;display:block;">⏱️ Kab Chahiye Kaam? (Delivery Time)</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Time Type</label>
+            <select id="f_delivery_type" onchange="updateDeliveryLabel()" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:8px;padding:10px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;cursor:pointer;">
+              <option value="hours">⏰ Ghante mein (Hours)</option>
+              <option value="days">📅 Din mein (Days)</option>
+            </select>
+          </div>
+          <div>
+            <label id="f_delivery_label" style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Kitne Ghante?</label>
+            <select id="f_delivery_value" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:8px;padding:10px 12px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;cursor:pointer;">
+              <option value="2 Hours">2 Ghante</option>
+              <option value="4 Hours">4 Ghante</option>
+              <option value="6 Hours">6 Ghante</option>
+              <option value="12 Hours">12 Ghante</option>
+              <option value="24 Hours" selected>24 Ghante (1 Din)</option>
+              <option value="48 Hours">48 Ghante (2 Din)</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:.8rem;font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px;">
+          <span style="color:#f59e0b;">⚡</span> Express delivery (2-6 hrs) mein extra charge lag sakta hai — WhatsApp pe confirm ho jayega.
+        </div>
+      </div>
       <div class="form-group full"><label>Project Description *</label><textarea id="f_desc" placeholder="Describe your project in detail..."></textarea></div>
+      <div class="form-group full">
+        <label>📎 Project File Upload (Optional)</label>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:.8rem;line-height:1.6;">Apna project se judi koi bhi file yahan upload karo — Excel, PDF, Word, Image, ZIP, ya koi bhi document.</p>
+        <div id="projectFileUploadArea" onclick="document.getElementById('f_project_file').click()" style="border:2px dashed rgba(59,130,246,.35);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(59,130,246,.03);"
+          onmouseover="this.style.borderColor='rgba(59,130,246,.65)';this.style.background='rgba(59,130,246,.07)';"
+          onmouseout="this.style.borderColor='rgba(59,130,246,.35)';this.style.background='rgba(59,130,246,.03)';">
+          <div id="projectFilePlaceholder">
+            <div style="font-size:2rem;margin-bottom:.4rem;">📁</div>
+            <div style="font-size:.82rem;color:var(--blue);font-weight:600;">Yahan click karo file choose karne ke liye</div>
+            <div style="font-size:.72rem;color:var(--muted);margin-top:.3rem;">Excel, PDF, Word, Image, ZIP — Max 10MB</div>
+          </div>
+          <div id="projectFileInfo" style="display:none;margin-top:.5rem;">
+            <div style="font-size:1.8rem;margin-bottom:.3rem;" id="projectFileIcon">📄</div>
+            <div style="font-size:.85rem;color:#6ee7b7;font-weight:600;" id="projectFileName"></div>
+            <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem;" id="projectFileSize"></div>
+            <div style="font-size:.72rem;color:var(--cyan);margin-top:.4rem;cursor:pointer;" onclick="removeProjectFile(event)">❌ Remove file</div>
+          </div>
+        </div>
+        <input type="file" id="f_project_file" accept=".xlsx,.xls,.csv,.pdf,.doc,.docx,.txt,.zip,.rar,.png,.jpg,.jpeg,.webp,.ppt,.pptx" style="display:none;" onchange="handleProjectFileUpload(event)"/>
+        <div id="projectFileMsg" style="display:none;font-size:.78rem;margin-top:.6rem;border-radius:6px;padding:.5rem 1rem;"></div>
+      </div>
       <div class="form-group full"><label>File Format / Output Needed</label><input type="text" id="f_format" placeholder="e.g. Excel .xlsx, Google Sheets, Word .docx"/></div>
       <div class="form-divider"></div>
       <div class="form-section-title">💳 Payment</div>
@@ -840,6 +887,23 @@ footer p{font-size:.78rem;color:var(--muted);}
           <option>Paytm</option>
           <option>Discuss with Rohit</option>
         </select>
+      </div>
+      <div class="form-group full" style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:1.2rem;">
+        <label style="color:#10b981;margin-bottom:.8rem;display:block;">📸 Payment Screenshot Upload (Optional)</label>
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:.8rem;line-height:1.6;">UPI payment karne ke baad screenshot yahan upload kar sakte ho ya WhatsApp pe bhi bhej sakte ho.</p>
+        <div id="screenshotUploadArea" onclick="document.getElementById('f_screenshot').click()" style="border:2px dashed rgba(16,185,129,.35);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(16,185,129,.04);">
+          <div id="screenshotPreviewWrap" style="display:none;margin-bottom:.8rem;">
+            <img id="screenshotPreviewImg" style="max-width:100%;max-height:160px;border-radius:8px;border:1px solid rgba(16,185,129,.3);object-fit:contain;"/>
+          </div>
+          <div id="screenshotPlaceholder">
+            <div style="font-size:2rem;margin-bottom:.4rem;">📷</div>
+            <div style="font-size:.82rem;color:#10b981;font-weight:600;">Yahan click karo screenshot choose karne ke liye</div>
+            <div style="font-size:.72rem;color:var(--muted);margin-top:.3rem;">JPG, PNG, WebP — Max 5MB</div>
+          </div>
+          <div id="screenshotFileName" style="display:none;margin-top:.5rem;font-size:.78rem;color:#6ee7b7;font-weight:600;"></div>
+        </div>
+        <input type="file" id="f_screenshot" accept="image/*" style="display:none;" onchange="handleScreenshotUpload(event)"/>
+        <div id="screenshotMsg" style="display:none;font-size:.78rem;margin-top:.6rem;border-radius:6px;padding:.5rem 1rem;"></div>
       </div>
     </div>
     <div class="submit-row">
@@ -1103,8 +1167,8 @@ footer p{font-size:.78rem;color:var(--muted);}
     <p id="modalPkgInfo">Pay for your selected package to confirm order.</p>
     <div class="modal-upi">
       <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;">UPI ID</div>
-      <div class="m-upi-id">rohit0402@ptyes</div>
-      <div class="m-upi-note">Rohit Raj · PhonePe · GPay · Paytm</div>
+      <div class="m-upi-id" id="modalUpiId2">rohit0402@ptyes</div>
+      <div class="m-upi-note" id="modalUpiName2">Rohit Raj · PhonePe · GPay · Paytm</div>
     </div>
     <div class="modal-btns">
       <button class="btn btn-primary" onclick="initiateSecurePayment()" style="justify-content:center;width:100%;">🔒 Pay with Razorpay</button>
@@ -1263,6 +1327,26 @@ footer p{font-size:.78rem;color:var(--muted);}
           <div style="display:flex;align-items:flex-end;"><button onclick="updatePrices()" style="width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:6px;padding:9px;font-family:Outfit,sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;">Update Prices</button></div>
         </div>
         <div id="priceMsg" style="display:none;font-size:.8rem;margin-top:.8rem;color:#6ee7b7;"></div>
+      </div>
+      <!-- UPI ID CHANGE SECTION -->
+      <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem;">🔷 Change UPI ID</div>
+        <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Current UPI ID</label>
+            <div id="currentUpiDisplay" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--cyan);background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);border-radius:8px;padding:10px 14px;">rohit0402@ptyes</div>
+          </div>
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Naya UPI ID</label>
+            <input id="newUpiInput" type="text" placeholder="e.g. yourname@okaxis" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:white;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/>
+          </div>
+          <div>
+            <label style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:.3rem;">Account Holder Name</label>
+            <input id="newUpiName" type="text" placeholder="e.g. Rohit Raj · PhonePe · GPay" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:white;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          </div>
+          <div id="upiMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
+          <button onclick="updateUpiId()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:white;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ UPI ID Update Karo</button>
+        </div>
       </div>
       <button onclick="adminLogout()" style="width:100%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Logout</button>
     </div>
@@ -1612,6 +1696,59 @@ function submitOrder(){
 function closeModal(){ document.getElementById('payModal').classList.remove('open'); }
 document.getElementById('payModal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
 
+// ── PROJECT FILE UPLOAD ──
+window._projectFileData = null;
+window._projectFileName = null;
+
+function handleProjectFileUpload(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const maxSize = 10 * 1024 * 1024;
+  const msg = document.getElementById('projectFileMsg');
+  if(file.size > maxSize){
+    msg.style.display='block';
+    msg.style.background='rgba(239,68,68,.12)';
+    msg.style.border='1px solid rgba(239,68,68,.3)';
+    msg.style.color='#fca5a5';
+    msg.textContent='❌ File bahut badi hai. Max 10MB allowed hai.';
+    event.target.value='';
+    return;
+  }
+  document.getElementById('projectFilePlaceholder').style.display='none';
+  document.getElementById('projectFileInfo').style.display='block';
+  document.getElementById('projectFileName').textContent = file.name;
+  document.getElementById('projectFileSize').textContent = formatFileSize(file.size);
+  const ext = file.name.split('.').pop().toLowerCase();
+  const icons = {xlsx:'📊',xls:'📊',csv:'📊',pdf:'📕',doc:'📝',docx:'📝',txt:'📄',zip:'🗜️',rar:'🗜️',png:'🖼️',jpg:'🖼️',jpeg:'🖼️',webp:'🖼️',ppt:'📊',pptx:'📊'};
+  document.getElementById('projectFileIcon').textContent = icons[ext] || '📄';
+  window._projectFileName = file.name;
+  const reader = new FileReader();
+  reader.onload = function(e){ window._projectFileData = e.target.result; };
+  reader.readAsDataURL(file);
+  msg.style.display='block';
+  msg.style.background='rgba(59,130,246,.1)';
+  msg.style.border='1px solid rgba(59,130,246,.25)';
+  msg.style.color='#93c5fd';
+  msg.textContent='✅ File attached: '+file.name;
+}
+
+function removeProjectFile(event){
+  event.stopPropagation();
+  window._projectFileData = null;
+  window._projectFileName = null;
+  document.getElementById('f_project_file').value='';
+  document.getElementById('projectFilePlaceholder').style.display='block';
+  document.getElementById('projectFileInfo').style.display='none';
+  const msg = document.getElementById('projectFileMsg');
+  msg.style.display='none';
+}
+
+function formatFileSize(bytes){
+  if(bytes < 1024) return bytes+' B';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1)+' KB';
+  return (bytes/(1024*1024)).toFixed(1)+' MB';
+}
+
 // SUBMIT ORDER
 function submitOrder(){
   const name=document.getElementById('f_name').value.trim();
@@ -1623,6 +1760,8 @@ function submitOrder(){
   const city=document.getElementById('f_city').value.trim();
   const rows=document.getElementById('f_rows').value.trim();
   const deadline=document.getElementById('f_deadline').value;
+  const deliveryType=document.getElementById('f_delivery_type')?.value || 'hours';
+  const deliveryVal=document.getElementById('f_delivery_value')?.value || '24 Hours';
   const format=document.getElementById('f_format').value.trim();
   const pay=document.getElementById('f_pay').value;
   const msg=document.getElementById('formMsg');
@@ -1647,14 +1786,17 @@ function submitOrder(){
 • Package: ${pkg}
 • Rows/Pages: ${rows||'Not specified'}
 • Deadline: ${deadline||'Flexible'}
+• Delivery: ${deliveryVal}
 • Output Format: ${format||'Not specified'}
 
 📝 *Project Description:*
 ${desc}
 
+📎 *Project File:* ${window._projectFileName ? window._projectFileName : 'No file attached — will share on WhatsApp separately'}
 💳 *Payment Method:* ${pay}
+${window._screenshotData ? '📸 *Payment Screenshot:* Attached below (WhatsApp pe bhej raha hoon)' : '📸 *Payment Screenshot:* Not uploaded yet'}
 ━━━━━━━━━━━━━━━━━━━━
-Please confirm & send UPI payment details.`;
+Please confirm & send UPI payment details.${window._projectFileName ? '\n\n📎 *Note:* Project file "'+window._projectFileName+'" WhatsApp pe bhej raha/rahi hoon.' : ''}`;
   const waUrl = `https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`;
   document.getElementById('modalPkgInfo').textContent = `Package: ${pkg} | Pay after confirming on WhatsApp.`;
   document.getElementById('modalWALink').href = waUrl;
@@ -1869,6 +2011,124 @@ function applyLogoChange(){
   if(s){
     document.querySelectorAll('.logo-text-sub,.lmt-sub').forEach(el=>el.textContent=s);
   }
+})();
+
+// ── DELIVERY TIME SELECTOR ──
+function updateDeliveryLabel(){
+  const type = document.getElementById('f_delivery_type').value;
+  const label = document.getElementById('f_delivery_label');
+  const valSel = document.getElementById('f_delivery_value');
+  if(type === 'hours'){
+    label.textContent = 'Kitne Ghante?';
+    valSel.innerHTML = `
+      <option value="2 Hours">2 Ghante</option>
+      <option value="4 Hours">4 Ghante</option>
+      <option value="6 Hours">6 Ghante</option>
+      <option value="12 Hours">12 Ghante</option>
+      <option value="24 Hours" selected>24 Ghante (1 Din)</option>
+      <option value="48 Hours">48 Ghante (2 Din)</option>
+    `;
+  } else {
+    label.textContent = 'Kitne Din?';
+    valSel.innerHTML = `
+      <option value="1 Day">1 Din</option>
+      <option value="2 Days" selected>2 Din</option>
+      <option value="3 Days">3 Din</option>
+      <option value="5 Days">5 Din</option>
+      <option value="7 Days">1 Hafta</option>
+      <option value="15 Days">15 Din</option>
+      <option value="30 Days">1 Mahina</option>
+    `;
+  }
+}
+
+// ── SCREENSHOT UPLOAD ──
+function handleScreenshotUpload(event){
+  const file = event.target.files[0];
+  const msg = document.getElementById('screenshotMsg');
+  const area = document.getElementById('screenshotUploadArea');
+  if(!file) return;
+  if(!file.type.startsWith('image/')){
+    msg.style.display='block';
+    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.textContent='❌ Sirf image file select karein (JPG, PNG, etc.)';
+    return;
+  }
+  if(file.size > 5 * 1024 * 1024){
+    msg.style.display='block';
+    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.textContent='❌ File too large! Max 5MB allowed.';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    window._screenshotData = e.target.result;
+    const preview = document.getElementById('screenshotPreviewImg');
+    const previewWrap = document.getElementById('screenshotPreviewWrap');
+    const placeholder = document.getElementById('screenshotPlaceholder');
+    const fileName = document.getElementById('screenshotFileName');
+    preview.src = e.target.result;
+    previewWrap.style.display = 'block';
+    placeholder.style.display = 'none';
+    fileName.style.display = 'block';
+    fileName.textContent = '✅ ' + file.name;
+    area.style.borderColor = 'rgba(16,185,129,.6)';
+    msg.style.display='block';
+    msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+    msg.textContent='✅ Screenshot ready! Order submit karo.';
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── UPI ID UPDATE (Admin) ──
+function updateUpiId(){
+  const newId = document.getElementById('newUpiInput').value.trim();
+  const newName = document.getElementById('newUpiName').value.trim();
+  const msg = document.getElementById('upiMsg');
+  if(!newId){
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.textContent='❌ UPI ID enter karo!';return;
+  }
+  // Basic UPI validation
+  if(!newId.includes('@')){
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.textContent='❌ Valid UPI ID enter karo (e.g. name@upi)';return;
+  }
+  // Save to localStorage
+  localStorage.setItem('rohit_upi_id', newId);
+  if(newName) localStorage.setItem('rohit_upi_name', newName);
+  // Update all UPI displays on page
+  applyUpiOnPage(newId, newName || 'Rohit Raj · PhonePe · GPay · Paytm');
+  document.getElementById('currentUpiDisplay').textContent = newId;
+  document.getElementById('newUpiInput').value = '';
+  document.getElementById('newUpiName').value = '';
+  msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+  msg.textContent='✅ UPI ID updated! Sab jagah change ho gaya.';
+}
+
+function applyUpiOnPage(upiId, upiName){
+  // Update all .m-upi-id elements
+  document.querySelectorAll('.m-upi-id').forEach(el => el.textContent = upiId);
+  // Update named elements
+  const el1 = document.getElementById('modalUpiId'); if(el1) el1.textContent = upiId;
+  const el2 = document.getElementById('modalUpiId2'); if(el2) el2.textContent = upiId;
+  if(upiName){
+    document.querySelectorAll('.m-upi-note').forEach(el => el.textContent = upiName);
+    const n1 = document.getElementById('modalUpiName'); if(n1) n1.textContent = upiName;
+    const n2 = document.getElementById('modalUpiName2'); if(n2) n2.textContent = upiName;
+  }
+  // Also update .upi-id in payment section
+  document.querySelectorAll('.upi-id').forEach(el => el.textContent = upiId);
+}
+
+// ── Restore UPI on page load ──
+(function restoreUpi(){
+  const saved = localStorage.getItem('rohit_upi_id');
+  const savedName = localStorage.getItem('rohit_upi_name');
+  if(saved) applyUpiOnPage(saved, savedName || '');
+  // Pre-fill admin panel current UPI display
+  const cur = document.getElementById('currentUpiDisplay');
+  if(cur && saved) cur.textContent = saved;
 })();
 
 function adminLogin(){
