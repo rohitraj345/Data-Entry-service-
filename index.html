@@ -150,6 +150,9 @@ body{background:#ffffff;color:#000000;font-family:'Outfit',sans-serif;overflow-x
 .hero-p{color:#666666;font-size:1.05rem;line-height:1.9;max-width:520px;margin:0 auto 2.5rem;animation:fu .8s 2.3s both;}
 .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fu .8s 2.4s both;}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:none;border-radius:8px;cursor:pointer;transition:all .25s;}
+.btn{position:relative;overflow:hidden;}
+.btn::before{content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .6s ease;}
+.btn:hover::before{left:130%;}
 .btn-primary{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#000000;box-shadow:0 4px 20px rgba(59,130,246,.3);}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(59,130,246,.45);}
 .btn-outline{background:transparent;color:#000000;border:1px solid rgba(0,0,0,0.12);}
@@ -202,6 +205,9 @@ body{background:#ffffff;color:#000000;font-family:'Outfit',sans-serif;overflow-x
 .pkg-card:hover{border-color:rgba(59,130,246,.4);transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
 .pkg-card.popular{border-color:rgba(59,130,246,.5);background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(6,182,212,.05));}
 .pop-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#2563eb,#06b6d4);color:#000000;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:50px;}
+.premium-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:50px;box-shadow:0 4px 14px rgba(245,158,11,.4);}
+.pkg-card.premium-tier{border-color:rgba(245,158,11,.35);box-shadow:0 0 0 1px rgba(245,158,11,.12);}
+.pkg-card.premium-tier:hover{border-color:rgba(245,158,11,.6);box-shadow:0 20px 50px rgba(245,158,11,.22);}
 .pkg-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem;}
 .pkg-icon.blue{background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.2);}
 .pkg-icon.cyan{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.2);}
@@ -395,6 +401,81 @@ footer p{font-size:.78rem;color:#666666;}
 
 /* ONLINE STATUS in hero */
 #heroStatusBadge{transition:all .3s;}
+
+/* ═══════════════════════════════════════════
+   PREMIUM FEATURES — QR PAY / LIVE CHAT / PORTFOLIO
+   Dark, multi-glow animated background theme
+═══════════════════════════════════════════ */
+#premiumFeatures{position:relative;background:#05050f;overflow:hidden;padding:6rem 5vw;}
+#premiumFeatures .pf-glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;pointer-events:none;z-index:0;}
+#premiumFeatures .pf-glow.g1{width:420px;height:420px;background:#7c3aed;top:-120px;left:-100px;animation:pfFloat1 14s ease-in-out infinite;}
+#premiumFeatures .pf-glow.g2{width:380px;height:380px;background:#06b6d4;bottom:-140px;right:-80px;animation:pfFloat2 16s ease-in-out infinite;}
+#premiumFeatures .pf-glow.g3{width:320px;height:320px;background:#f59e0b;top:40%;left:45%;animation:pfFloat3 18s ease-in-out infinite;}
+#premiumFeatures .pf-glow.g4{width:280px;height:280px;background:#ec4899;bottom:10%;left:10%;animation:pfFloat1 20s ease-in-out infinite reverse;}
+@keyframes pfFloat1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(60px,40px) scale(1.15);}}
+@keyframes pfFloat2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-50px,-30px) scale(1.2);}}
+@keyframes pfFloat3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-40px,50px) scale(1.1);}}
+#premiumFeatures .pf-inner{position:relative;z-index:2;}
+#premiumFeatures .sec-eye .eye-txt{color:#a78bfa;}
+#premiumFeatures .sec-eye .eye-bar{background:linear-gradient(135deg,#a78bfa,#06b6d4,#f59e0b);background-size:200% 200%;animation:pfGradShift 4s ease infinite;}
+@keyframes pfGradShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+#premiumFeatures .sec-title{color:#ffffff;}
+#premiumFeatures .sec-title em{background:linear-gradient(135deg,#a78bfa,#06b6d4,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:pfGradShift 5s ease infinite;font-style:italic;}
+#premiumFeatures .sec-desc{color:rgba(255,255,255,.65);}
+
+.pf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.8rem;margin-top:3.5rem;}
+.pf-card{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:2rem 1.7rem;backdrop-filter:blur(14px);overflow:hidden;transition:transform .35s,box-shadow .35s;}
+.pf-card::before{content:'';position:absolute;inset:-2px;border-radius:20px;padding:2px;background:linear-gradient(135deg,#a78bfa,#06b6d4,#f59e0b,#ec4899);background-size:300% 300%;animation:pfGradShift 6s linear infinite;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;}
+.pf-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px rgba(124,58,237,.25);}
+.pf-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1.2rem;background:linear-gradient(135deg,rgba(167,139,250,.2),rgba(6,182,212,.15));border:1px solid rgba(167,139,250,.3);}
+.pf-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em;color:#ffffff;margin-bottom:.5rem;}
+.pf-card-desc{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:1.3rem;}
+
+/* QR PAY CARD */
+.pf-qr-box{background:#ffffff;border-radius:14px;padding:.9rem;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;box-shadow:0 0 30px rgba(6,182,212,.35);position:relative;}
+.pf-qr-box img{width:150px;height:150px;display:block;border-radius:6px;}
+.pf-qr-scan-line{position:absolute;left:6%;right:6%;height:2px;background:linear-gradient(90deg,transparent,#06b6d4,transparent);animation:pfScan 2.4s ease-in-out infinite;}
+@keyframes pfScan{0%{top:6%;}50%{top:94%;}100%{top:6%;}}
+.pf-upi-id{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;color:#06b6d4;text-align:center;margin-bottom:1rem;}
+
+/* PORTFOLIO SAMPLES CARD */
+.pf-sample-list{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.2rem;}
+.pf-sample-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem .9rem;transition:border-color .3s,background .3s;}
+.pf-sample-item:hover{border-color:rgba(167,139,250,.5);background:rgba(167,139,250,.08);}
+.pf-sample-item .pf-s-ico{font-size:1.2rem;flex-shrink:0;}
+.pf-sample-item .pf-s-text{flex:1;}
+.pf-sample-item .pf-s-name{font-size:.85rem;font-weight:600;color:#ffffff;}
+.pf-sample-item .pf-s-meta{font-size:.72rem;color:rgba(255,255,255,.5);}
+.pf-s-badge{font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:50px;background:rgba(16,185,129,.18);color:#6ee7b7;border:1px solid rgba(16,185,129,.35);white-space:nowrap;}
+
+/* LIVE CHAT CARD content (inline preview inside grid) */
+.pf-chat-preview{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem;margin-bottom:1.2rem;}
+.pf-chat-bubble{max-width:85%;padding:.6rem .9rem;border-radius:12px;font-size:.8rem;line-height:1.5;margin-bottom:.6rem;}
+.pf-chat-bubble.in{background:rgba(255,255,255,.09);color:rgba(255,255,255,.85);border-bottom-left-radius:3px;}
+.pf-chat-bubble.in .pf-typing-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#06b6d4;margin:0 1px;animation:pfBlinkDot 1.2s infinite;}
+.pf-chat-bubble.in .pf-typing-dot:nth-child(2){animation-delay:.2s;}
+.pf-chat-bubble.in .pf-typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes pfBlinkDot{0%,100%{opacity:.3;}50%{opacity:1;}}
+.pf-online-dot{width:8px;height:8px;border-radius:50%;background:#10b981;display:inline-block;box-shadow:0 0 8px #10b981;animation:blink 2s infinite;margin-right:5px;}
+
+.pf-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:10px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.04em;color:#0a0a12;background:linear-gradient(135deg,#a78bfa,#06b6d4);text-decoration:none;transition:transform .25s,box-shadow .25s;}
+.pf-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(124,58,237,.4);}
+
+/* FLOATING LIVE CHAT WIDGET */
+#liveChatToggle{position:fixed;bottom:2rem;right:5.6rem;z-index:410;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#06b6d4,#f59e0b);background-size:200% 200%;animation:pfGradShift 5s ease infinite;display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;box-shadow:0 6px 24px rgba(124,58,237,.5);border:none;}
+#liveChatToggle .pf-chat-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#ef4444;border:2px solid #05050f;}
+#liveChatPanel{position:fixed;bottom:6.5rem;right:1.8rem;z-index:410;width:300px;max-width:82vw;background:#0d0d1a;border:1px solid rgba(167,139,250,.3);border-radius:18px;box-shadow:0 25px 60px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;}
+#liveChatPanel.open{display:flex;}
+.lc-head{background:linear-gradient(135deg,#7c3aed,#06b6d4);padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+.lc-head-info{display:flex;align-items:center;gap:10px;}
+.lc-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.lc-head-name{font-size:.85rem;font-weight:700;color:#fff;}
+.lc-head-status{font-size:.68rem;color:rgba(255,255,255,.85);display:flex;align-items:center;}
+.lc-close{background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;line-height:1;}
+.lc-body{padding:1rem;display:flex;flex-direction:column;gap:.6rem;max-height:260px;overflow-y:auto;}
+.lc-quick-replies{display:flex;flex-direction:column;gap:.5rem;padding:0 1rem 1rem;}
+.lc-quick-btn{background:rgba(255,255,255,.06);border:1px solid rgba(167,139,250,.35);color:#e5e0ff;font-family:'Outfit',sans-serif;font-size:.78rem;text-align:left;padding:.6rem .8rem;border-radius:10px;cursor:pointer;transition:all .25s;}
+.lc-quick-btn:hover{background:rgba(167,139,250,.18);border-color:rgba(167,139,250,.6);transform:translateX(3px);}
 
 /* RESPONSIVE */
 @media(max-width:900px){
@@ -665,7 +746,8 @@ footer p{font-size:.78rem;color:#666666;}
       </ul>
       <button class="btn btn-primary order-btn" onclick="selectPkg('Standard','499')">Order Standard</button>
     </div>
-    <div class="pkg-card rv d2">
+    <div class="pkg-card premium-tier rv d2">
+      <div class="premium-badge">⚡ Best Value</div>
       <div class="pkg-icon gold">⚡</div>
       <div class="pkg-name">Premium</div>
       <div class="pkg-tagline">Large projects & priority</div>
@@ -736,8 +818,8 @@ footer p{font-size:.78rem;color:#666666;}
     <div class="rv d2">
       <div class="secure-badge"><span class="lock-icon">🔒</span> 100% Secure · Instant Transfer</div>
       <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem;">
-        <button class="btn btn-primary" onclick="openPaymentSection()" style="justify-content:center;cursor:pointer;">💳 Proceed to Secure Payment ↗</button>
-        <p style="text-align:center;font-size:.75rem;color:#666666;">Powered by Razorpay · Fast & Safe</p>
+        <button class="btn btn-primary" onclick="openPaymentSection()" style="justify-content:center;cursor:pointer;">💳 Proceed to Payment ↗</button>
+        <p style="text-align:center;font-size:.75rem;color:#666666;">🔒 100% Direct UPI Transfer · No Middleman · Trusted by 500+ Clients</p>
       </div>
     </div>
   </div>
@@ -751,6 +833,90 @@ footer p{font-size:.78rem;color:#666666;}
   <div class="trust-item"><span>♾️</span> <strong>Unlimited</strong> Revisions</div>
   <div class="trust-item"><span>💬</span> <strong>Direct</strong> WhatsApp Support</div>
   <div class="trust-item"><span>💰</span> Starting <strong>₹199</strong> Only</div>
+</div>
+
+<!-- PREMIUM FEATURES: QR CODE PAY / LIVE CHAT / PORTFOLIO SAMPLES -->
+<section id="premiumFeatures">
+  <div class="pf-glow g1"></div>
+  <div class="pf-glow g2"></div>
+  <div class="pf-glow g3"></div>
+  <div class="pf-glow g4"></div>
+  <div class="pf-inner">
+    <div style="max-width:620px;">
+      <div class="sec-eye rv"><div class="eye-bar"></div><span class="eye-txt">Premium Experience</span></div>
+      <h2 class="sec-title rv d1">Scan, Chat & <em>Explore</em> Instantly</h2>
+      <p class="sec-desc rv d2" style="max-width:560px;">Pay in one scan, chat live with Rohit, and browse real project samples — all built for a smoother, faster experience.</p>
+    </div>
+
+    <div class="pf-grid">
+
+      <!-- QR CODE PAYMENT -->
+      <div class="pf-card rv">
+        <div class="pf-icon-wrap">📲</div>
+        <div class="pf-card-title">Scan & Pay</div>
+        <p class="pf-card-desc">Skip typing the UPI ID — just scan the code below with any UPI app and pay instantly.</p>
+        <div class="pf-qr-box">
+          <img id="pfQrImg" alt="UPI QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi%3A%2F%2Fpay%3Fpa%3Drohit0402%2540ptyes%26pn%3DRohitRaj%26cu%3DINR"/>
+          <div class="pf-qr-scan-line"></div>
+        </div>
+        <div class="pf-upi-id" id="pfUpiIdText">rohit0402@ptyes</div>
+        <a href="upi://pay?pa=rohit0402@ptyes&pn=RohitRaj&cu=INR" class="pf-btn" id="pfUpiAppLink">🔷 Open in UPI App</a>
+      </div>
+
+      <!-- LIVE CHAT PREVIEW -->
+      <div class="pf-card rv d1">
+        <div class="pf-icon-wrap">💬</div>
+        <div class="pf-card-title">Live Chat</div>
+        <p class="pf-card-desc">Get instant replies — chat live with Rohit and pick a quick question or type your own.</p>
+        <div class="pf-chat-preview">
+          <div style="font-size:.72rem;color:rgba(255,255,255,.55);margin-bottom:.6rem;"><span class="pf-online-dot"></span>Rohit is online now</div>
+          <div class="pf-chat-bubble in">👋 Hi! How can I help with your data entry project today?</div>
+          <div class="pf-chat-bubble in"><span class="pf-typing-dot"></span><span class="pf-typing-dot"></span><span class="pf-typing-dot"></span></div>
+        </div>
+        <button class="pf-btn" onclick="toggleLiveChat(true)">💬 Start Live Chat</button>
+      </div>
+
+      <!-- PORTFOLIO SAMPLES -->
+      <div class="pf-card rv d2">
+        <div class="pf-icon-wrap">🗂️</div>
+        <div class="pf-card-title">Portfolio Samples</div>
+        <p class="pf-card-desc">A quick look at the kind of work delivered — real formats, real accuracy.</p>
+        <div class="pf-sample-list">
+          <div class="pf-sample-item"><span class="pf-s-ico">📊</span><div class="pf-s-text"><div class="pf-s-name">Excel Data Cleanup</div><div class="pf-s-meta">2,400 rows · 100% accuracy</div></div><span class="pf-s-badge">✓ Done</span></div>
+          <div class="pf-sample-item"><span class="pf-s-ico">📄</span><div class="pf-s-text"><div class="pf-s-name">PDF → Word Conversion</div><div class="pf-s-meta">85 pages · Formatting preserved</div></div><span class="pf-s-badge">✓ Done</span></div>
+          <div class="pf-sample-item"><span class="pf-s-ico">🌐</span><div class="pf-s-text"><div class="pf-s-name">Web Research Sheet</div><div class="pf-s-meta">600 leads · Verified contacts</div></div><span class="pf-s-badge">✓ Done</span></div>
+        </div>
+        <a href="https://wa.me/917456830402?text=Hi%20Rohit%2C%20can%20you%20share%20some%20portfolio%20samples%20of%20your%20work%3F" target="_blank" class="pf-btn">🗂️ View More Samples</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FLOATING LIVE CHAT WIDGET -->
+<button id="liveChatToggle" onclick="toggleLiveChat()" title="Live Chat">
+  💬<span class="pf-chat-dot" id="liveChatDot"></span>
+</button>
+<div id="liveChatPanel">
+  <div class="lc-head">
+    <div class="lc-head-info">
+      <div class="lc-avatar">RR</div>
+      <div>
+        <div class="lc-head-name">Rohit Raj</div>
+        <div class="lc-head-status"><span class="pf-online-dot"></span>Online — replies fast</div>
+      </div>
+    </div>
+    <button class="lc-close" onclick="toggleLiveChat(false)">✕</button>
+  </div>
+  <div class="lc-body">
+    <div class="pf-chat-bubble in">👋 Hi there! Pick a quick question below or send your own message on WhatsApp.</div>
+  </div>
+  <div class="lc-quick-replies">
+    <button class="lc-quick-btn" onclick="liveChatQuickReply('What are your pricing packages?')">💰 What are your pricing packages?</button>
+    <button class="lc-quick-btn" onclick="liveChatQuickReply('How fast can you deliver my project?')">⚡ How fast can you deliver?</button>
+    <button class="lc-quick-btn" onclick="liveChatQuickReply('Can I see some portfolio samples?')">🗂️ Show me portfolio samples</button>
+    <button class="lc-quick-btn" onclick="liveChatQuickReply('I want to place a custom order.')">🚀 I want a custom order</button>
+  </div>
 </div>
 
 <!-- SERVICES -->
@@ -830,7 +996,7 @@ footer p{font-size:.78rem;color:#666666;}
               <option value="4 Hours">4 Hours</option>
               <option value="6 Hours">6 Hours</option>
               <option value="12 Hours">12 Hours</option>
-              <option value="24 Hours" selected>24 Hours (1 Din)</option>
+              <option value="24 Hours" selected>24 Hours (1 Day)</option>
               <option value="48 Hours">48 Hours (2 Days)</option>
             </select>
           </div>
@@ -875,14 +1041,14 @@ footer p{font-size:.78rem;color:#666666;}
       </div>
       <div class="form-group full" style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:1.2rem;">
         <label style="color:#059669;margin-bottom:.8rem;display:block;">📸 Payment Screenshot Upload (Optional)</label>
-        <p style="font-size:.78rem;color:#666666;margin-bottom:.8rem;line-height:1.6;">UPI payment karne ke baad screenshot yahan upload kar sakte be uploaded here or sent via WhatsApp.</p>
+        <p style="font-size:.78rem;color:#666666;margin-bottom:.8rem;line-height:1.6;">After completing the UPI payment, upload your screenshot here — or send it directly via WhatsApp.</p>
         <div id="screenshotUploadArea" onclick="document.getElementById('f_screenshot').click()" style="border:2px dashed rgba(16,185,129,.35);border-radius:10px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(16,185,129,.04);">
           <div id="screenshotPreviewWrap" style="display:none;margin-bottom:.8rem;">
             <img id="screenshotPreviewImg" style="max-width:100%;max-height:160px;border-radius:8px;border:1px solid rgba(5,150,105,.3);object-fit:contain;"/>
           </div>
           <div id="screenshotPlaceholder">
             <div style="font-size:2rem;margin-bottom:.4rem;">📷</div>
-            <div style="font-size:.82rem;color:#059669;font-weight:600;">Yahan click click here to choose screenshot</div>
+            <div style="font-size:.82rem;color:#059669;font-weight:600;">Click here to choose screenshot</div>
             <div style="font-size:.72rem;color:#666666;margin-top:.3rem;">JPG, PNG, WebP — Max 5MB</div>
           </div>
           <div id="screenshotFileName" style="display:none;margin-top:.5rem;font-size:.78rem;color:#6ee7b7;font-weight:600;"></div>
@@ -1061,7 +1227,7 @@ footer p{font-size:.78rem;color:#666666;}
   <!-- TOOLS I USE -->
   <div style="margin-top:4rem;">
     <div class="sec-eye rv"><div class="eye-bar"></div><span class="eye-txt">Tools & Software</span></div>
-    <h3 class="rv d1" style="font-size:1.3rem;font-weight:700;color:#000000;margin-bottom:.5rem;">Tools Jo Main Use Karta Hoon</h3>
+    <h3 class="rv d1" style="font-size:1.3rem;font-weight:700;color:#000000;margin-bottom:.5rem;">Tools I Use</h3>
     <div class="tools-wrap rv d2">
       <div class="tool-badge"><span>📊</span> Microsoft Excel</div>
       <div class="tool-badge"><span>📋</span> Google Sheets</div>
@@ -1090,12 +1256,12 @@ footer p{font-size:.78rem;color:#666666;}
       <div class="faq-a"><div class="faq-a-inner">100% advance is required for small projects. Large projects (₹999+) require 50% advance with balance after delivery. Payment is secure — via UPI with receipt provided.</div></div>
     </div>
     <div class="faq-item rv d1" onclick="toggleFAQ(this)">
-      <div class="faq-q">Kitne time does the work take? <div class="faq-arrow">▼</div></div>
+      <div class="faq-q">How much time does the work take? <div class="faq-arrow">▼</div></div>
       <div class="faq-a"><div class="faq-a-inner">Basic package (500 rows) delivers in 1 day, Standard (2000 rows) in 2 days, and Premium (5000+ rows) in 3-5 days. Urgent delivery is also available for an extra charge.</div></div>
     </div>
     <div class="faq-item rv d2" onclick="toggleFAQ(this)">
       <div class="faq-q">Will my data be safe? <div class="faq-arrow">▼</div></div>
-      <div class="faq-a"><div class="faq-a-inner">Bilkul! Main aapka data kisi ke saath share not shared with anyone. Files are deleted after project completion. An NDA (Non-Disclosure Agreement) can also be signed if needed.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely! Your data is never shared with anyone. Files are deleted after project completion. An NDA (Non-Disclosure Agreement) can also be signed if needed.</div></div>
     </div>
     <div class="faq-item rv d1" onclick="toggleFAQ(this)">
       <div class="faq-q">Are revisions free? <div class="faq-arrow">▼</div></div>
@@ -1156,7 +1322,8 @@ footer p{font-size:.78rem;color:#666666;}
       <div class="m-upi-note" id="modalUpiName2">Rohit Raj · PhonePe · GPay · Paytm</div>
     </div>
     <div class="modal-btns">
-      <button class="btn btn-primary" onclick="initiateSecurePayment()" style="justify-content:center;width:100%;">🔒 Pay with Razorpay</button>
+      <button class="btn btn-primary" onclick="payViaUPI()" style="justify-content:center;width:100%;">🔷 Open UPI App & Pay</button>
+      <button class="copy-btn" onclick="copyModalUPI()" style="width:100%;text-align:center;">📋 Copy UPI ID</button>
       <a id="modalWALink" href="https://wa.me/917456830402" target="_blank" class="btn btn-green" style="justify-content:center;">📲 Need Help? WhatsApp</a>
     </div>
   </div>
@@ -1377,7 +1544,7 @@ footer p{font-size:.78rem;color:#666666;}
             <div id="currentUpiDisplay" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:#0066cc;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);border-radius:8px;padding:10px 14px;">rohit0402@ptyes</div>
           </div>
           <div>
-            <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Naya UPI ID</label>
+            <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">New UPI ID</label>
             <input id="newUpiInput" type="text" placeholder="e.g. yourname@okaxis" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/>
           </div>
           <div>
@@ -1523,7 +1690,7 @@ footer p{font-size:.78rem;color:#666666;}
       msg.style.background='rgba(239,68,68,.12)';
       msg.style.border='1px solid rgba(239,68,68,.3)';
       msg.style.color='#fca5a5';
-      msg.textContent='❌ Pehle koi photo choose karein.';
+      msg.textContent='❌ Please choose a photo first.';
       return;
     }
     try {
@@ -1651,7 +1818,7 @@ footer p{font-size:.78rem;color:#666666;}
     const size = document.getElementById('gallerySizeInput').value;
     if (!window._selectedGalleryData) {
       msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
-      msg.textContent='❌ Pehle image choose karein.';return;
+      msg.textContent='❌ Please choose an image first.';return;
     }
     try {
       await push(ref(db, 'gallery'), {
@@ -1740,6 +1907,19 @@ function toggleFAQ(el) {
   if (!isOpen) el.classList.add('open');
 }
 
+// ── LIVE CHAT WIDGET ──
+function toggleLiveChat(forceState){
+  const panel = document.getElementById('liveChatPanel');
+  const dot = document.getElementById('liveChatDot');
+  const shouldOpen = typeof forceState === 'boolean' ? forceState : !panel.classList.contains('open');
+  panel.classList.toggle('open', shouldOpen);
+  if(shouldOpen && dot) dot.style.display = 'none';
+}
+function liveChatQuickReply(message){
+  const url = 'https://wa.me/917456830402?text=' + encodeURIComponent(message);
+  window.open(url, '_blank');
+}
+
 // SCROLL REVEAL
 const rvEls = document.querySelectorAll('.rv');
 const obs = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); obs.unobserve(e.target); } }); },{threshold:.1});
@@ -1751,138 +1931,26 @@ function selectPkg(name,price){
   document.getElementById('order').scrollIntoView({behavior:'smooth'});
 }
 
-// PAYMENT SYSTEM - Razorpay Integration
-let currentOrderAmount = 0;
-let currentOrderDetails = null;
-
+// PAYMENT — Direct UPI (real, no third-party gateway)
 function openPaymentSection(){
   document.getElementById('payModal2').classList.add('open');
 }
 
-function initiateSecurePayment(){
-  if(!currentOrderDetails){
-    alert('Please fill order details first');
-    return;
-  }
-  const amt = parseInt(currentOrderDetails.amount) || 0;
-  if(amt <= 0){
-    alert('Invalid payment amount');
-    return;
-  }
-  
-  // Load Razorpay script dynamically
-  const script = document.createElement('script');
-  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-  script.onload = () => {
-    processRazorpayPayment(amt);
-  };
-  document.head.appendChild(script);
+function payViaUPI(){
+  const pkgField = document.getElementById('f_pkg');
+  const pkgVal = pkgField ? pkgField.value : '';
+  const amtMatch = pkgVal.match(/₹(\d+)/);
+  const amt = amtMatch ? amtMatch[1] : '';
+  const upiUrl = `upi://pay?pa=rohit0402@ptyes&pn=RohitRaj${amt ? '&am='+amt : ''}&cu=INR`;
+  window.location.href = upiUrl;
 }
 
-function processRazorpayPayment(amount){
-  const options = {
-    key: 'rzp_live_YOUR_KEY_HERE', // Replace with your Razorpay Key
-    amount: amount * 100, // Amount in paise
-    currency: 'INR',
-    name: 'Rohit Raj',
-    description: 'Data Entry Services - ' + (currentOrderDetails?.service || 'Order'),
-    image: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%233b82f6" width="100" height="100" rx="20"/><text x="50" y="65" font-size="50" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">RE</text></svg>',
-    prefill: {
-      name: currentOrderDetails?.name || '',
-      email: currentOrderDetails?.email || '',
-      contact: currentOrderDetails?.phone || ''
-    },
-    handler: function(response){
-      handlePaymentSuccess(response);
-    },
-    modal: {
-      ondismiss: function(){
-        console.log('Payment dismissed');
-      }
-    }
-  };
-  
-  const rzp = new Razorpay(options);
-  rzp.open();
-}
-
-function handlePaymentSuccess(response){
-  // Show payment success message
-  const successModal = document.createElement('div');
-  successModal.innerHTML = `
-    <div style="position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;padding:1rem;">
-      <div style="background:#1a1a2e;border-radius:20px;padding:2.5rem;max-width:420px;text-align:center;border:2px solid #10b981;box-shadow:0 0 50px rgba(16,185,129,.3);">
-        <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
-        <h2 style="color:#059669;font-size:1.5rem;margin-bottom:.5rem;font-family:'Bebas Neue';">Payment Successful!</h2>
-        <p style="color:#e8f0fe;margin-bottom:1.5rem;font-size:.95rem;">Your payment of <strong>₹${currentOrderAmount}</strong> has been received successfully.</p>
-        <div style="background:rgba(16,185,129,.1);border:1px solid rgba(5,150,105,.3);border-radius:10px;padding:1.2rem;margin-bottom:1.5rem;text-align:left;font-size:.85rem;color:#d0f0ff;line-height:1.6;">
-          <div><strong>Transaction ID:</strong> ${response.razorpay_payment_id}</div>
-          <div style="margin-top:.5rem;"><strong>Service:</strong> ${currentOrderDetails?.service}</div>
-          <div style="margin-top:.5rem;"><strong>Status:</strong> Confirmed ✓</div>
-        </div>
-        <p style="color:#7a90b8;font-size:.8rem;margin-bottom:1.5rem;">Our team will contact you on WhatsApp within 1 hour to start your project.</p>
-        <button onclick="this.parentElement.parentElement.remove()" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);color:#000000;border:none;border-radius:8px;padding:12px 32px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;">✓ Done</button>
-      </div>
-    </div>
-  `;
-  document.body.appendChild(successModal);
-  
-  // Close modal after success
-  document.getElementById('payModal2').classList.remove('open');
-  
-  // Send notification to WhatsApp
-  const msg = `✅ Payment Confirmed!
-Payment ID: ${response.razorpay_payment_id}
-Amount: ₹${currentOrderAmount}
-Service: ${currentOrderDetails?.service}
-  
-Thank you! We will start your project soon.`;
-  
-  const waUrl = `https://wa.me/917456830402?text=${encodeURIComponent(msg)}`;
-  console.log('Payment confirmed. WhatsApp link:', waUrl);
-}
-
-// Enhanced submitOrder with payment integration
-const originalSubmitOrder = submitOrder;
-function submitOrder(){
-  const name=document.getElementById('f_name').value.trim();
-  const phone=document.getElementById('f_phone').value.trim();
-  const service=document.getElementById('f_service').value;
-  const pkg=document.getElementById('f_pkg').value;
-  const desc=document.getElementById('f_desc').value.trim();
-  const email=document.getElementById('f_email').value.trim();
-  const city=document.getElementById('f_city').value.trim();
-  const pay=document.getElementById('f_pay').value;
-  const msg=document.getElementById('formMsg');
-  
-  if(!name||!phone||!service||!pkg||!desc){
-    msg.style.display='block';
-    msg.style.background='rgba(239,68,68,.12)';
-    msg.style.border='1px solid rgba(239,68,68,.3)';
-    msg.style.color='#fca5a5';
-    msg.textContent='⚠️ Please fill all required fields.';
-    return;
-  }
-  
-  // Extract amount from package
-  const amtMatch = pkg.match(/₹(\d+)/);
-  const amount = amtMatch ? parseInt(amtMatch[1]) : 0;
-  
-  // Store order details for payment
-  currentOrderAmount = amount;
-  currentOrderDetails = {
-    name, phone, service, pkg, desc, email, city, pay, amount
-  };
-  
-  // Show payment modal
-  document.getElementById('modalPkgInfo').textContent = `Package: ${pkg} | Payment Gateway: Razorpay`;
-  document.getElementById('payModal2').classList.add('open');
-  
-  msg.style.display='block';
-  msg.style.background='rgba(16,185,129,.12)';
-  msg.style.border='1px solid rgba(16,185,129,.3)';
-  msg.style.color='#6ee7b7';
-  msg.textContent='✅ Order ready! Proceed to secure payment.';
+function copyModalUPI(){
+  navigator.clipboard.writeText('rohit0402@ptyes').then(()=>{
+    alert('✅ UPI ID copied: rohit0402@ptyes');
+  }).catch(()=>{
+    alert('UPI ID: rohit0402@ptyes');
+  });
 }
 
 // MODAL
@@ -1903,7 +1971,7 @@ function handleProjectFileUpload(event){
     msg.style.background='rgba(239,68,68,.12)';
     msg.style.border='1px solid rgba(239,68,68,.3)';
     msg.style.color='#fca5a5';
-    msg.textContent='❌ File bahut badi hai. Max 10MB allowed hai.';
+    msg.textContent='❌ File is too large. Max 10MB allowed.';
     event.target.value='';
     return;
   }
@@ -1989,7 +2057,7 @@ ${desc}
 💳 *Payment Method:* ${pay}
 ${window._screenshotData ? '📸 *Payment Screenshot:* Attached below (WhatsApp sending via WhatsApp)' : '📸 *Payment Screenshot:* Not uploaded yet'}
 ━━━━━━━━━━━━━━━━━━━━
-Please confirm & send UPI payment details.${window._projectFileName ? '\n\n📎 *Note:* Project file "'+window._projectFileName+'" WhatsApp pe bhej raha/rahi hoon.' : ''}`;
+Please confirm & send UPI payment details.${window._projectFileName ? '\n\n📎 *Note:* Project file "'+window._projectFileName+'" will be shared on WhatsApp separately.' : ''}`;
   const waUrl = `https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`;
   document.getElementById('modalPkgInfo').textContent = `Package: ${pkg} | Pay after confirming on WhatsApp.`;
   document.getElementById('modalWALink').href = waUrl;
@@ -2042,7 +2110,7 @@ function previewBackground(event) {
   if (!file.type.startsWith('image/')) {
     const msg = document.getElementById('bgMsg');
     msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
-    msg.textContent='❌ Sirf image file select karein.';return;
+    msg.textContent='❌ Please select an image file only.';return;
   }
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -2094,7 +2162,7 @@ function previewGalleryImage(event) {
   if (!file.type.startsWith('image/')) {
     const msg = document.getElementById('galleryAddMsg');
     msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
-    msg.textContent='❌ Sirf image file select karein.';return;
+    msg.textContent='❌ Please select an image file only.';return;
   }
   const reader = new FileReader();
   reader.onload = function(e) {
@@ -2117,7 +2185,7 @@ function previewPhoto(event) {
     msg.style.background = 'rgba(239,68,68,.12)';
     msg.style.border = '1px solid rgba(239,68,68,.3)';
     msg.style.color = '#fca5a5';
-    msg.textContent = '❌ Sirf image file select karein (JPG, PNG, etc.)';
+    msg.textContent = '❌ Please select an image file only (JPG, PNG, etc.)';
     return;
   }
   const reader = new FileReader();
@@ -2292,19 +2360,19 @@ function updateDeliveryLabel(){
       <option value="4 Hours">4 Hours</option>
       <option value="6 Hours">6 Hours</option>
       <option value="12 Hours">12 Hours</option>
-      <option value="24 Hours" selected>24 Hours (1 Din)</option>
+      <option value="24 Hours" selected>24 Hours (1 Day)</option>
       <option value="48 Hours">48 Hours (2 Days)</option>
     `;
   } else {
-    label.textContent = 'Kitne Din?';
+    label.textContent = 'How Many Days?';
     valSel.innerHTML = `
-      <option value="1 Day">1 Din</option>
-      <option value="2 Days" selected>2 Din</option>
-      <option value="3 Days">3 Din</option>
-      <option value="5 Days">5 Din</option>
-      <option value="7 Days">1 Hafta</option>
-      <option value="15 Days">15 Din</option>
-      <option value="30 Days">1 Mahina</option>
+      <option value="1 Day">1 Day</option>
+      <option value="2 Days" selected>2 Days</option>
+      <option value="3 Days">3 Days</option>
+      <option value="5 Days">5 Days</option>
+      <option value="7 Days">1 Week</option>
+      <option value="15 Days">15 Days</option>
+      <option value="30 Days">1 Month</option>
     `;
   }
 }
@@ -2318,7 +2386,7 @@ function handleScreenshotUpload(event){
   if(!file.type.startsWith('image/')){
     msg.style.display='block';
     msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
-    msg.textContent='❌ Sirf image file select karein (JPG, PNG, etc.)';
+    msg.textContent='❌ Please select an image file only (JPG, PNG, etc.)';
     return;
   }
   if(file.size > 5 * 1024 * 1024){
@@ -2342,7 +2410,7 @@ function handleScreenshotUpload(event){
     area.style.borderColor = 'rgba(16,185,129,.6)';
     msg.style.display='block';
     msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
-    msg.textContent='✅ Screenshot ready! Order submit karo.';
+    msg.textContent='✅ Screenshot ready! Submit your order.';
   };
   reader.readAsDataURL(file);
 }
@@ -2386,6 +2454,21 @@ function applyUpiOnPage(upiId, upiName){
   }
   // Also update .upi-id in payment section
   document.querySelectorAll('.upi-id').forEach(el => el.textContent = upiId);
+  // Update Premium QR Pay card
+  refreshPremiumQr(upiId, upiName);
+}
+
+// ── PREMIUM QR PAY — keeps QR code, UPI text & app link in sync ──
+function refreshPremiumQr(upiId, upiName){
+  const id = upiId || 'rohit0402@ptyes';
+  const name = (upiName || 'RohitRaj').replace(/[^a-zA-Z0-9]/g,'');
+  const upiUrl = `upi://pay?pa=${id}&pn=${name}&cu=INR`;
+  const qrImg = document.getElementById('pfQrImg');
+  if(qrImg) qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + encodeURIComponent(upiUrl);
+  const txt = document.getElementById('pfUpiIdText');
+  if(txt) txt.textContent = id;
+  const link = document.getElementById('pfUpiAppLink');
+  if(link) link.href = upiUrl;
 }
 
 // ── Restore UPI on page load ──
