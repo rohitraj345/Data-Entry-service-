@@ -495,6 +495,174 @@ footer p{font-size:.78rem;color:#666666;}
   .stats-bar{flex-wrap:wrap;}
   .stat-i{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);}
 }
+
+/* ═══════════════════════════════════════════
+   DARK THEME + MULTI-COLOUR GLOW OVERRIDE
+═══════════════════════════════════════════ */
+:root{
+  --bg:#05050f; --surface:#0d0d1a; --card:#11101f;
+  --border:rgba(255,255,255,0.1); --text:#f5f5f7; --muted:#a3a3b8; --white:#ffffff;
+}
+html,body{background:#05050a;color:#f5f5f7;}
+::-webkit-scrollbar-track{background:#05050a;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 8% 12%,rgba(59,130,246,.16),transparent 38%),
+    radial-gradient(circle at 92% 8%,rgba(236,72,153,.13),transparent 38%),
+    radial-gradient(circle at 15% 85%,rgba(16,185,129,.13),transparent 38%),
+    radial-gradient(circle at 88% 78%,rgba(245,158,11,.11),transparent 38%),
+    radial-gradient(circle at 50% 45%,rgba(124,58,237,.09),transparent 55%);
+}
+#nav.sc{background:rgba(5,5,15,.85);border-color:rgba(255,255,255,.08);}
+.logo-text-main{-webkit-text-fill-color:#ffffff;}
+.logo-text-sub{color:#a3a3b8;}
+.nav-links a{color:#c9c9dc;}
+.hamburger span{background:#f5f5f7;}
+
+#hero::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(5,5,15,.55) 0%,rgba(5,5,15,.85) 60%,rgba(5,5,15,.97) 100%);}
+.hero-badge{color:#8ecbff;border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06);}
+.hero-h1 .line-w{color:#ffffff;text-shadow:0 0 30px rgba(59,130,246,.45);}
+.hero-h1 .line-g{-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 18px rgba(6,182,212,.55));}
+.hero-p{color:#c9c9dc;}
+.hero-scroll span{color:#a3a3b8;}
+.logo-mark-icon{box-shadow:0 0 45px rgba(59,130,246,.65);}
+.lmt-main{-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 14px rgba(6,182,212,.5));}
+.lmt-sub{color:#a3a3b8;}
+.btn-primary{color:#050510;box-shadow:0 4px 25px rgba(59,130,246,.55);}
+.btn-outline{color:#ffffff;border-color:rgba(255,255,255,.28);}
+.btn-outline:hover{border-color:#8ecbff;color:#8ecbff;}
+.btn-green{color:#04140d;box-shadow:0 4px 25px rgba(16,185,129,.5);}
+.btn-gold{color:#1a0a00;box-shadow:0 4px 25px rgba(245,158,11,.5);}
+
+.stats-bar{background:linear-gradient(135deg,#0d1b2a,#0a1420);position:relative;}
+.stat-i{border-color:rgba(255,255,255,.1);}
+.stat-n{color:#ffffff;text-shadow:0 0 18px rgba(6,182,212,.55);}
+.stat-l{color:#a3a3b8;}
+
+.eye-txt{color:#8ecbff;}
+.sec-title{color:#ffffff;}
+.sec-title em{-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px rgba(59,130,246,.5));}
+.sec-desc{color:#a3a3b8;}
+.sec{position:relative;}
+.sec::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;filter:blur(110px);opacity:.4;pointer-events:none;z-index:-1;}
+#gallery::before{background:#7c3aed;top:-80px;right:-60px;}
+#demo::before{background:#06b6d4;bottom:-100px;left:-60px;}
+#pricing::before{background:#2563eb;top:-80px;left:15%;}
+#payment::before{background:#a855f7;bottom:-90px;right:10%;}
+#services::before{background:#06b6d4;top:-60px;right:-60px;}
+#about::before{background:#f59e0b;bottom:-80px;left:-60px;}
+#why::before{background:#10b981;top:-70px;right:15%;}
+#reviews::before{background:#ec4899;bottom:-90px;left:10%;}
+#faq::before{background:#3b82f6;top:15%;right:-70px;}
+#order::before{background:#10b981;bottom:-70px;right:-50px;}
+#refund::before{background:#ef4444;top:-70px;left:-60px;}
+
+#gallery{background:#05050f;}
+.gallery-img{border-color:rgba(167,139,250,.25);background:#0d0d1a;}
+.gallery-img:hover{box-shadow:0 20px 55px rgba(167,139,250,.35);border-color:rgba(167,139,250,.6);}
+.gallery-img-label{background:linear-gradient(to top,rgba(0,0,0,.85),transparent);color:#fff;}
+
+#demo{background:#05050f;}
+.video-wrap{border-color:rgba(6,182,212,.3);box-shadow:0 20px 60px rgba(6,182,212,.28);}
+
+#pricing{background:#05050f;}
+.pkg-card{background:#0d0d1a;border-color:rgba(255,255,255,.1);}
+.pkg-card:hover{box-shadow:0 20px 55px rgba(59,130,246,.32);}
+.pkg-card.popular{background:linear-gradient(135deg,rgba(59,130,246,.14),rgba(6,182,212,.08));box-shadow:0 0 40px rgba(59,130,246,.18);}
+.pkg-card.premium-tier{box-shadow:0 0 30px rgba(245,158,11,.16);}
+.pkg-card.premium-tier:hover{box-shadow:0 20px 55px rgba(245,158,11,.38);}
+.pkg-name,.pkg-amt{color:#ffffff;}
+.pkg-tagline,.pkg-unit{color:#a3a3b8;}
+.pkg-features li{color:#c9c9dc;}
+.pkg-icon.blue{box-shadow:0 0 20px rgba(59,130,246,.4);}
+.pkg-icon.cyan{box-shadow:0 0 20px rgba(6,182,212,.4);}
+.pkg-icon.gold{box-shadow:0 0 20px rgba(245,158,11,.4);}
+.pkg-icon.green{box-shadow:0 0 20px rgba(16,185,129,.4);}
+
+#payment{background:#05050f;}
+.pay-card{background:#0d0d1a;border-color:rgba(255,255,255,.1);}
+.pay-card:hover{border-color:rgba(124,58,237,.5);box-shadow:0 10px 30px rgba(124,58,237,.28);}
+.pay-logo{box-shadow:0 0 20px rgba(124,58,237,.4);}
+.pay-info h4{color:#fff;}
+.pay-info p,.upi-note{color:#a3a3b8;}
+.upi-id{color:#8ecbff;}
+
+.trust-bar{background:linear-gradient(135deg,#0c1a12,#0a1622);border-color:rgba(16,185,129,.25);}
+.trust-item{color:#c9c9dc;}
+.trust-item strong{color:#34d399;text-shadow:0 0 10px rgba(52,211,153,.5);}
+
+#services{background:#05050f;}
+.srv-grid{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);}
+.srv-card{background:#0a0a16;}
+.srv-card:hover{background:#11101f;box-shadow:inset 0 0 40px rgba(59,130,246,.1);}
+.srv-title{color:#fff;}
+.srv-desc{color:#a3a3b8;}
+.srv-rate{box-shadow:0 0 14px rgba(6,182,212,.3);}
+
+#about{background:#05050f;}
+.about-id-card{background:#0d0d1a;border-color:rgba(255,255,255,.1);box-shadow:0 0 40px rgba(245,158,11,.12);}
+.av-circle{box-shadow:0 0 0 4px rgba(59,130,246,.2),0 0 30px rgba(59,130,246,.55);}
+.av-name{color:#fff;}
+.about-content p{color:#c9c9dc;}
+.about-content strong{color:#fff;}
+.skill-tag{color:#8ecbff;background:rgba(59,130,246,.12);}
+
+#why{background:#05050f;}
+.why-card{border-color:rgba(255,255,255,.1);}
+.why-card:hover{border-color:rgba(16,185,129,.45);background:rgba(16,185,129,.06);box-shadow:0 0 30px rgba(16,185,129,.22);}
+.why-card h3{color:#fff;}
+.why-card p{color:#a3a3b8;}
+.why-ico-wrap{box-shadow:0 0 18px rgba(16,185,129,.35);}
+
+#reviews{background:#05050f;}
+.review-card{background:#0d0d1a;border-color:rgba(255,255,255,.1);}
+.review-card:hover{box-shadow:0 16px 45px rgba(245,158,11,.28);border-color:rgba(245,158,11,.45);}
+.review-text{color:#c9c9dc;}
+.review-name{color:#fff;}
+.review-avatar{box-shadow:0 0 16px rgba(59,130,246,.55);}
+.add-review-box{background:#0d0d1a;box-shadow:0 0 30px rgba(59,130,246,.14);}
+.add-review-box h4{color:#fff;}
+
+#faq{background:#05050f;}
+.faq-item{background:#0d0d1a;border-color:rgba(255,255,255,.1);}
+.faq-item.open{border-color:rgba(59,130,246,.5);box-shadow:0 0 25px rgba(59,130,246,.18);}
+.faq-q{color:#fff;}
+.faq-a-inner{border-color:rgba(255,255,255,.1);}
+
+#order{background:#05050f;}
+.form-wrap{background:#0d0d1a;border-color:rgba(255,255,255,.1);box-shadow:0 0 45px rgba(236,72,153,.12);}
+label{color:#a3a3b8;}
+input,select,textarea{background:#161426;border-color:rgba(255,255,255,.12);color:#fff;}
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(236,72,153,.22);border-color:#ec4899;}
+select option{background:#161426;color:#fff;}
+.wa-note{color:#a3a3b8;}
+
+.p-step-num{box-shadow:0 0 0 4px #05050f,0 0 25px rgba(59,130,246,.55);color:#fff;}
+.p-step-title{color:#fff;}
+.p-step-desc{color:#a3a3b8;}
+
+.tool-badge{background:#0d0d1a;border-color:rgba(255,255,255,.1);color:#fff;}
+.tool-badge:hover{border-color:rgba(59,130,246,.5);box-shadow:0 0 18px rgba(59,130,246,.3);color:#8ecbff;}
+
+footer{background:#05050a;border-color:rgba(255,255,255,.08);}
+footer p{color:#a3a3b8;}
+.f-logo-text{color:#fff;}
+
+/* REFUND / RETURN POLICY SECTION */
+#refund{background:#05050f;}
+.refund-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem;margin-top:3rem;}
+.refund-card{background:#0d0d1a;border:1px solid rgba(239,68,68,.22);border-radius:16px;padding:1.8rem;transition:all .3s;}
+.refund-card:hover{border-color:rgba(239,68,68,.55);box-shadow:0 0 30px rgba(239,68,68,.25);transform:translateY(-4px);}
+.refund-ico{font-size:1.8rem;margin-bottom:.8rem;}
+.refund-card h3{color:#fff;font-size:1rem;margin-bottom:.5rem;}
+.refund-card p{color:#a3a3b8;font-size:.85rem;line-height:1.8;}
+.refund-note{margin-top:2rem;background:rgba(16,185,129,.09);border:1px solid rgba(16,185,129,.32);border-radius:14px;padding:1.5rem 2rem;color:#c9c9dc;font-size:.88rem;line-height:1.85;}
+.refund-note strong{color:#34d399;}
+.refund-steps{margin-top:2rem;display:flex;flex-direction:column;gap:1rem;}
+.refund-step{display:flex;gap:1rem;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem 1.3rem;}
+.refund-step-n{width:30px;height:30px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,#2563eb,#06b6d4);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.95rem;color:#fff;box-shadow:0 0 14px rgba(59,130,246,.5);}
+.refund-step p{color:#c9c9dc;font-size:.87rem;line-height:1.7;margin:0;}
+.refund-step p strong{color:#fff;}
 </style>
 </head>
 <body>
@@ -573,6 +741,7 @@ footer p{font-size:.78rem;color:#666666;}
     <a href="#reviews">Reviews</a>
     <a href="#process">How It Works</a>
     <a href="#faq">FAQ</a>
+    <a href="#refund">Refund Policy</a>
     <a href="#order" class="nav-hire">Hire Me ↗</a>
   </div>
   <div class="hamburger" id="hamb" onclick="toggleMenu()">
@@ -833,6 +1002,8 @@ footer p{font-size:.78rem;color:#666666;}
   <div class="trust-item"><span>♾️</span> <strong>Unlimited</strong> Revisions</div>
   <div class="trust-item"><span>💬</span> <strong>Direct</strong> WhatsApp Support</div>
   <div class="trust-item"><span>💰</span> Starting <strong>₹199</strong> Only</div>
+  <div class="trust-item"><span>🔁</span> <strong>Easy</strong> Refund Policy</div>
+  <div class="trust-item"><span>🧾</span> <strong>Verified</strong> UPI Payments</div>
 </div>
 
 <!-- PREMIUM FEATURES: QR CODE PAY / LIVE CHAT / PORTFOLIO SAMPLES -->
@@ -1283,6 +1454,46 @@ footer p{font-size:.78rem;color:#666666;}
   <div style="margin-top:2.5rem;text-align:center;" class="rv">
     <p style="color:#666666;font-size:.9rem;margin-bottom:1rem;">Have more questions? Ask me directly!</p>
     <a href="https://wa.me/917456830402?text=Hello%20Rohit%2C%20I%20have%20a%20question%20about%20your%20services." target="_blank" class="btn btn-green">💬 Ask on WhatsApp</a>
+  </div>
+</section>
+
+<!-- REFUND / RETURN POLICY -->
+<section class="sec" id="refund">
+  <div class="sec-eye rv"><div class="eye-bar"></div><span class="eye-txt">Customer Protection</span></div>
+  <h2 class="sec-title rv d1">Refund &amp; <em>Return Policy</em></h2>
+  <p class="sec-desc rv d2">Your trust matters most. Here's exactly how refunds, revisions, and cancellations work — no confusion, no hidden conditions.</p>
+
+  <div class="refund-grid">
+    <div class="refund-card rv">
+      <div class="refund-ico">💸</div>
+      <h3>100% Refund Before Work Starts</h3>
+      <p>Changed your mind right after payment? Get a full refund if work hasn't started yet — no questions asked, processed within 24 hours.</p>
+    </div>
+    <div class="refund-card rv d1">
+      <div class="refund-ico">🔁</div>
+      <h3>Unlimited Free Revisions</h3>
+      <p>Not fully satisfied with the delivered file? Every package includes free revisions until the output matches exactly what was ordered.</p>
+    </div>
+    <div class="refund-card rv d2">
+      <div class="refund-ico">⚖️</div>
+      <h3>Partial Refund for Incomplete Work</h3>
+      <p>If a project is cancelled mid-way, you only pay for the portion of work genuinely completed — the rest is refunded back to your account.</p>
+    </div>
+    <div class="refund-card rv d3">
+      <div class="refund-ico">🛡️</div>
+      <h3>Quality Guarantee</h3>
+      <p>If delivered work has genuine accuracy errors caused by me, it will be corrected free of cost, or refunded fully — your satisfaction is guaranteed.</p>
+    </div>
+  </div>
+
+  <div class="refund-steps">
+    <div class="refund-step rv"><div class="refund-step-n">1</div><p><strong>Raise a request</strong> — Message on WhatsApp within 3 days of delivery explaining the issue.</p></div>
+    <div class="refund-step rv d1"><div class="refund-step-n">2</div><p><strong>Quick review</strong> — Your order and issue are checked within a few hours, keeping you updated throughout.</p></div>
+    <div class="refund-step rv d2"><div class="refund-step-n">3</div><p><strong>Refund or revision</strong> — Eligible refunds are sent to the same UPI ID within 24-48 hours, or the work is revised free of charge.</p></div>
+  </div>
+
+  <div class="refund-note rv">
+    <strong>🤝 Why trust this policy?</strong> Every order, payment and communication happens directly and transparently on WhatsApp with a real, verifiable phone number — no anonymous middlemen. Your money and your data are always safe.
   </div>
 </section>
 
