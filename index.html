@@ -1604,6 +1604,16 @@ footer p{color:#a3a3b8;}
           <div style="font-size:.72rem;color:#059669;letter-spacing:.1em;text-transform:uppercase;">Logged in as Rohit Raj</div>
         </div>
       </div>
+      <!-- ORDERS SECTION -->
+      <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0066cc;">📦 Customer Orders <span id="ordersCountBadge" style="display:none;background:#ef4444;color:#fff;border-radius:50px;padding:2px 8px;font-size:.7rem;margin-left:6px;">0</span></div>
+          <button onclick="loadOrders()" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);color:#0066cc;border-radius:6px;padding:6px 12px;font-size:.72rem;font-weight:700;cursor:pointer;">🔄 Refresh</button>
+        </div>
+        <div id="ordersList" style="display:flex;flex-direction:column;gap:.7rem;max-height:420px;overflow-y:auto;">
+          <div style="font-size:.8rem;color:#666666;">Loading orders...</div>
+        </div>
+      </div>
       <!-- BACKGROUND IMAGE SECTION -->
       <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
         <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem;">🖼️ Change Hero Background</div>
@@ -1774,17 +1784,17 @@ footer p{color:#a3a3b8;}
 <!-- ✅ FIREBASE SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, set, get, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import { getDatabase, ref, set, get, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCUl78ZW8nrta4ukOIO2i23HqgcvfgmRAM",
-    authDomain: "rohit-data-entry-service.firebaseapp.com",
-    databaseURL: "https://rohit-data-entry-service-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "rohit-data-entry-service",
-    storageBucket: "rohit-data-entry-service.firebasestorage.app",
-    messagingSenderId: "757125044477",
-    appId: "1:757125044477:web:be21f87dfc8bf1102ec694",
-    measurementId: "G-FTKEVQ6HQJ"
+    apiKey: "AIzaSyCmP5V0N-kYQiLhpdwac_tky13j0pcEKOM",
+    authDomain: "rohit-raj-data-entry.firebaseapp.com",
+    databaseURL: "https://rohit-raj-data-entry-default-rtdb.firebaseio.com",
+    projectId: "rohit-raj-data-entry",
+    storageBucket: "rohit-raj-data-entry.firebasestorage.app",
+    messagingSenderId: "636256055209",
+    appId: "1:636256055209:web:9b2d47faa4cee6603fdeb8",
+    measurementId: "G-XV5MNSPFEC"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -2058,6 +2068,71 @@ footer p{color:#a3a3b8;}
     } catch(e) { alert('Error deleting: ' + e.message); }
   };
 
+  // ─── ORDERS: Save new order to Firebase ───
+  window.saveOrder = async function(orderData) {
+    try {
+      await push(ref(db, 'orders'), { ...orderData, createdAt: Date.now(), status: 'new' });
+    } catch (e) { console.log('Order save error:', e); }
+  };
+
+  // ─── ORDERS: New-order count badge (checked on every page load, incl. admin) ───
+  onValue(ref(db, 'orders'), (snap) => {
+    const badge = document.getElementById('ordersCountBadge');
+    if (!badge) return;
+    if (snap.exists()) {
+      const orders = snap.val();
+      const newCount = Object.values(orders).filter(o => o.status === 'new').length;
+      if (newCount > 0) { badge.style.display = 'inline-block'; badge.textContent = newCount; }
+      else { badge.style.display = 'none'; }
+    } else {
+      badge.style.display = 'none';
+    }
+  });
+
+  // ─── ORDERS: Load & render list in admin panel ───
+  window.loadOrders = function() {
+    const container = document.getElementById('ordersList');
+    if (!container) return;
+    onValue(ref(db, 'orders'), (snap) => {
+      if (!snap.exists()) { container.innerHTML = '<div style="font-size:.8rem;color:#666666;">No orders yet.</div>'; return; }
+      const orders = snap.val();
+      const keys = Object.keys(orders).sort((a, b) => (orders[b].createdAt || 0) - (orders[a].createdAt || 0));
+      container.innerHTML = keys.map(key => {
+        const o = orders[key];
+        const isNew = o.status === 'new';
+        const date = o.createdAt ? new Date(o.createdAt).toLocaleString('en-IN') : '';
+        return `<div style="background:rgba(255,255,255,.03);border:1px solid ${isNew ? 'rgba(239,68,68,.35)' : 'rgba(0,0,0,.1)'};border-radius:10px;padding:1rem;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;">
+            <div>
+              <div style="font-weight:700;font-size:.85rem;color:#000000;">${o.name || '—'} ${isNew ? '<span style="background:#ef4444;color:#fff;font-size:.6rem;padding:2px 6px;border-radius:50px;margin-left:6px;">NEW</span>' : ''}</div>
+              <div style="font-size:.72rem;color:#666666;margin-top:2px;">📱 ${o.phone || '—'} · ${date}</div>
+            </div>
+            <div style="display:flex;gap:.4rem;flex-shrink:0;">
+              ${isNew ? `<button onclick="markOrderSeen('${key}')" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#059669;border-radius:6px;padding:4px 8px;font-size:.68rem;cursor:pointer;white-space:nowrap;">✓ Seen</button>` : ''}
+              <button onclick="deleteOrder('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:6px;padding:4px 8px;font-size:.68rem;cursor:pointer;">🗑️</button>
+            </div>
+          </div>
+          <div style="font-size:.75rem;margin-top:.6rem;color:#000000;"><b>Service:</b> ${o.service || '—'} &nbsp;·&nbsp; <b>Package:</b> ${o.pkg || '—'}</div>
+          <div style="font-size:.72rem;color:#666666;margin-top:.3rem;">📧 ${o.email || 'Not provided'} · 📍 ${o.city || 'Not provided'}</div>
+          <div style="font-size:.75rem;color:#666666;margin-top:.4rem;line-height:1.5;">${o.desc || ''}</div>
+        </div>`;
+      }).join('');
+    }, { onlyOnce: true });
+  };
+
+  // ─── ORDERS: Mark as seen ───
+  window.markOrderSeen = async function(key) {
+    try { await update(ref(db, 'orders/' + key), { status: 'seen' }); loadOrders(); }
+    catch (e) { console.log('Mark seen error:', e); }
+  };
+
+  // ─── ORDERS: Delete ───
+  window.deleteOrder = async function(key) {
+    if (!confirm('Delete this order?')) return;
+    try { await remove(ref(db, 'orders/' + key)); loadOrders(); }
+    catch (e) { console.log('Delete order error:', e); }
+  };
+
   // ─── PROFILE PHOTO: Listen for Firebase updates ───
   onValue(ref(db, 'settings/photoData'), (snap) => {
     if (snap.exists()) {
@@ -2272,6 +2347,19 @@ Please confirm & send UPI payment details.${window._projectFileName ? '\n\n📎 
   const waUrl = `https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`;
   document.getElementById('modalPkgInfo').textContent = `Package: ${pkg} | Pay after confirming on WhatsApp.`;
   document.getElementById('modalWALink').href = waUrl;
+  // Save order to Firebase so it shows up in Admin Panel
+  if (window.saveOrder) {
+    window.saveOrder({
+      name, phone, email, city, service, pkg, rows,
+      deadline: deadline || 'Flexible',
+      delivery: deliveryVal,
+      format: format || 'Not specified',
+      pay,
+      desc,
+      hasFile: !!window._projectFileName,
+      fileName: window._projectFileName || null
+    });
+  }
   window.open(waUrl,'_blank');
   document.getElementById('payModal2').classList.add('open');
   msg.style.display='block';
@@ -2699,6 +2787,7 @@ function adminLogin(){
     document.getElementById('adminLogin').style.display='none';
     document.getElementById('adminDash').style.display='block';
     err.style.display='none';
+    if(window.loadOrders) window.loadOrders();
     // Save password if "Remember" is checked
     const cb = document.getElementById('rememberPass');
     if(cb && cb.checked){
