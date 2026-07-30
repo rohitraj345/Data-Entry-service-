@@ -1555,15 +1555,15 @@ footer p{color:#a3a3b8;}
       </div>
       <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem;">
         <div>
+          <label style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#666666;display:block;margin-bottom:.4rem;">Email</label>
+          <input id="adminEmailInput" type="email" placeholder="Enter admin email" autocomplete="username" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
+        </div>
+        <div>
           <label style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#666666;display:block;margin-bottom:.4rem;">Password</label>
           <div style="position:relative;">
             <input id="adminPassInput" type="password" placeholder="Enter admin password" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 44px 12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
             <button onclick="togglePassView('adminPassInput',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:#666666;" title="Show/Hide">👁️</button>
           </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input type="checkbox" id="rememberPass" style="accent-color:#2563eb;width:15px;height:15px;cursor:pointer;" onchange="handleRemember()"/>
-          <label for="rememberPass" style="font-size:.78rem;color:#666666;cursor:pointer;letter-spacing:.04em;">Remember password on this device</label>
         </div>
         <div id="loginError" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
       </div>
@@ -1571,28 +1571,14 @@ footer p{color:#a3a3b8;}
       <div style="text-align:center;margin-top:1rem;">
         <button onclick="showForgotPassword()" style="background:none;border:none;color:#666666;font-size:.78rem;cursor:pointer;text-decoration:underline;font-family:Outfit,sans-serif;">🔑 Forgot Password?</button>
       </div>
-      <!-- FORGOT PASSWORD PANEL -->
+      <!-- FORGOT PASSWORD PANEL — real Firebase email reset link -->
       <div id="forgotPanel" style="display:none;margin-top:1.2rem;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:1.2rem;">
         <div style="font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;">🔑 Reset Password</div>
+        <div style="font-size:.75rem;color:#666666;margin-bottom:.8rem;">Enter your admin email — Firebase will send a secure password reset link to it.</div>
         <div style="display:flex;flex-direction:column;gap:.7rem;">
-          <input id="secretKeyInput" type="password" placeholder="Enter secret recovery key" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
-          <input id="resetNewPass" type="password" placeholder="New password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
-          <input id="resetConfPass" type="password" placeholder="Confirm new password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          <input id="resetEmailInput" type="email" placeholder="Your admin email" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           <div id="resetMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
-          <!-- FACE SCAN SECTION (must verify before seeing secret key) -->
-          <div id="faceScanSection" style="background:rgba(99,179,237,.06);border:1px solid rgba(99,179,237,.2);border-radius:8px;padding:1rem;text-align:center;">
-            <div style="font-size:.72rem;color:#666666;margin-bottom:.6rem;">🔒 Secret key will be revealed only after Face Scan</div>
-            <video id="faceVideo" autoplay playsinline style="display:none;width:140px;height:110px;border-radius:8px;object-fit:cover;border:2px solid var(--blue);margin:0 auto .5rem;"></video>
-            <canvas id="faceCanvas" style="display:none;"></canvas>
-            <div id="faceScanMsg" style="font-size:.75rem;color:#666666;margin-bottom:.5rem;"></div>
-            <button id="startFaceBtn" onclick="startFaceScan()" style="background:linear-gradient(135deg,#e3f2fd,#e0f7fa);color:#000000;border:none;border-radius:7px;padding:8px 18px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">📷 Start Face Scan</button>
-          </div>
-          <!-- SECRET KEY (hidden until face scan passes) -->
-          <div id="secretKeyReveal" style="display:none;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:.8rem;text-align:center;">
-            <div style="font-size:.7rem;color:#666666;margin-bottom:.3rem;">✅ Face verified — Your Secret Key:</div>
-            <div style="font-size:1.1rem;font-weight:700;color:#f59e0b;letter-spacing:.1em;">rohit@admin2024</div>
-          </div>
-          <button onclick="resetPassword()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;">Reset Password</button>
+          <button onclick="resetPassword()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;">Send Reset Link</button>
         </div>
       </div>
     </div>
@@ -1781,10 +1767,24 @@ footer p{color:#a3a3b8;}
   </div>
 </div>
 
+<!-- ✅ ORDER FULL-DETAIL STANDALONE TAB (opened via ?order=KEY link from Admin Panel) -->
+<div id="orderFullDetailView" style="display:none;position:fixed;inset:0;z-index:5000;background:#f4f6fb;overflow-y:auto;padding:2rem 1rem;">
+  <div style="max-width:640px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem;">
+      <div style="font-family:Outfit,sans-serif;font-weight:800;font-size:1.05rem;color:#000000;">📄 Order Details</div>
+      <button onclick="window.close()" style="background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.12);color:#000000;border-radius:6px;padding:6px 12px;font-family:Outfit,sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;">✕ Close Tab</button>
+    </div>
+    <div id="orderFullDetailContent" style="background:#ffffff;border-radius:14px;padding:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.08);font-family:Outfit,sans-serif;color:#000000;">
+      Loading order…
+    </div>
+  </div>
+</div>
+
 <!-- ✅ FIREBASE SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, set, get, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCmP5V0N-kYQiLhpdwac_tky13j0pcEKOM",
@@ -1799,6 +1799,26 @@ footer p{color:#a3a3b8;}
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
+  const auth = getAuth(app);
+
+  // ─── REAL ADMIN AUTH (Firebase Authentication) ───
+  window.firebaseAdminSignIn = async function(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+  window.firebaseAdminSignOut = async function() {
+    return signOut(auth);
+  };
+  window.firebaseSendPasswordReset = async function(email) {
+    return sendPasswordResetEmail(auth, email);
+  };
+  // Keep admin panel in sync if session expires/changes in another tab
+  onAuthStateChanged(auth, (user) => {
+    window._isAdminAuthed = !!user;
+    if (!user && document.getElementById('adminDash') && document.getElementById('adminDash').style.display === 'block') {
+      document.getElementById('adminDash').style.display = 'none';
+      document.getElementById('adminLogin').style.display = 'block';
+    }
+  });
 
   // ─── PRICES: Load from Firebase on page load ───
   async function loadPrices() {
@@ -2125,6 +2145,12 @@ footer p{color:#a3a3b8;}
         const o = orders[key];
         const isNew = o.status === 'new';
         const date = o.createdAt ? new Date(o.createdAt).toLocaleString('en-IN') : '';
+        const pv = o.payVerify || 'pending';
+        const pvBadge = pv === 'verified'
+          ? '<span style="background:rgba(16,185,129,.15);color:#059669;border:1px solid rgba(16,185,129,.3);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;">✅ Verified</span>'
+          : pv === 'rejected'
+          ? '<span style="background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.3);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;">❌ Rejected</span>'
+          : '<span style="background:rgba(245,158,11,.12);color:#b45309;border:1px solid rgba(245,158,11,.3);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;">🕓 Pending</span>';
         return `<div style="background:rgba(255,255,255,.03);border:1px solid ${isNew ? 'rgba(239,68,68,.35)' : 'rgba(0,0,0,.1)'};border-radius:10px;padding:1rem;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;">
             <div>
@@ -2139,8 +2165,14 @@ footer p{color:#a3a3b8;}
           <div style="font-size:.75rem;margin-top:.6rem;color:#000000;"><b>Service:</b> ${o.service || '—'} &nbsp;·&nbsp; <b>Package:</b> ${o.pkg || '—'}</div>
           <div style="font-size:.72rem;color:#666666;margin-top:.3rem;">📧 ${o.email || 'Not provided'} · 📍 ${o.city || 'Not provided'}</div>
           <div style="font-size:.75rem;color:#666666;margin-top:.4rem;line-height:1.5;">${o.desc || ''}</div>
-          <div style="font-size:.72rem;color:#666666;margin-top:.3rem;">💳 Payment: ${o.pay || '—'}</div>
+          <div style="font-size:.72rem;color:#666666;margin-top:.3rem;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;">💳 Payment: ${o.pay || '—'} ${pvBadge}</div>
           ${o.screenshot ? `<div style="margin-top:.6rem;"><div style="font-size:.68rem;color:#059669;font-weight:700;margin-bottom:.3rem;">📸 Payment Screenshot:</div><img src="${o.screenshot}" onclick="window.open(this.src,'_blank')" style="max-width:160px;max-height:160px;border-radius:8px;border:1px solid rgba(16,185,129,.3);cursor:pointer;object-fit:cover;" title="Click to view full size"/></div>` : `<div style="font-size:.7rem;color:#f59e0b;margin-top:.4rem;">📸 No payment screenshot uploaded</div>`}
+          <div style="display:flex;gap:.4rem;margin-top:.7rem;flex-wrap:wrap;">
+            <button onclick="window.open(location.pathname + '?order=${key}', '_blank')" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#2563eb;border-radius:6px;padding:5px 10px;font-size:.68rem;font-weight:600;cursor:pointer;">🔍 Full Details ⤢</button>
+            ${pv !== 'verified' ? `<button onclick="setPayVerify('${key}','verified')" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);color:#059669;border-radius:6px;padding:5px 10px;font-size:.68rem;font-weight:600;cursor:pointer;">✅ Verify Payment</button>` : ''}
+            ${pv !== 'rejected' ? `<button onclick="setPayVerify('${key}','rejected')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#dc2626;border-radius:6px;padding:5px 10px;font-size:.68rem;font-weight:600;cursor:pointer;">❌ Reject</button>` : ''}
+            ${pv !== 'pending' ? `<button onclick="setPayVerify('${key}','pending')" style="background:rgba(107,114,128,.1);border:1px solid rgba(107,114,128,.25);color:#4b5563;border-radius:6px;padding:5px 10px;font-size:.68rem;font-weight:600;cursor:pointer;">🕓 Reset</button>` : ''}
+          </div>
         </div>`;
       }).join('');
     }, { onlyOnce: true });
@@ -2158,6 +2190,73 @@ footer p{color:#a3a3b8;}
     try { await remove(ref(db, 'orders/' + key)); loadOrders(); }
     catch (e) { console.log('Delete order error:', e); }
   };
+
+  // ─── ORDERS: Set / update payment verification status ───
+  window.setPayVerify = async function(key, status, fromDetailView) {
+    try {
+      await update(ref(db, 'orders/' + key), { payVerify: status });
+      if (fromDetailView) { renderOrderFullDetail(key); }
+      else if (typeof loadOrders === 'function') { loadOrders(); }
+    } catch (e) { console.log('Payment verify update error:', e); }
+  };
+
+  // ─── ORDER FULL DETAIL: renders one order's complete info in the standalone tab ───
+  window.renderOrderFullDetail = async function(key) {
+    const box = document.getElementById('orderFullDetailContent');
+    if (!box) return;
+    try {
+      const snap = await get(ref(db, 'orders/' + key));
+      if (!snap.exists()) { box.innerHTML = '<div style="color:#dc2626;font-size:.85rem;">Order not found. It may have been deleted.</div>'; return; }
+      const o = snap.val();
+      const date = o.createdAt ? new Date(o.createdAt).toLocaleString('en-IN') : '—';
+      const pv = o.payVerify || 'pending';
+      const pvBadge = pv === 'verified'
+        ? '<span style="background:rgba(16,185,129,.15);color:#059669;border:1px solid rgba(16,185,129,.3);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;">✅ Payment Verified</span>'
+        : pv === 'rejected'
+        ? '<span style="background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.3);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;">❌ Payment Rejected</span>'
+        : '<span style="background:rgba(245,158,11,.12);color:#b45309;border:1px solid rgba(245,158,11,.3);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:50px;">🕓 Payment Pending</span>';
+      box.innerHTML = `
+        <div style="margin-bottom:1rem;">${pvBadge}</div>
+        <div style="font-size:1.05rem;font-weight:800;color:#000000;">${o.name || '—'}</div>
+        <div style="font-size:.8rem;color:#666666;margin-top:2px;">📱 ${o.phone || '—'} &nbsp;·&nbsp; 🕓 ${date}</div>
+        <hr style="border:none;border-top:1px solid rgba(0,0,0,.08);margin:1rem 0;"/>
+        <div style="font-size:.85rem;color:#000000;line-height:1.9;">
+          <div><b>Service:</b> ${o.service || '—'}</div>
+          <div><b>Package:</b> ${o.pkg || '—'}</div>
+          <div><b>Email:</b> ${o.email || 'Not provided'}</div>
+          <div><b>City:</b> ${o.city || 'Not provided'}</div>
+          <div><b>Payment Method:</b> ${o.pay || '—'}</div>
+        </div>
+        ${o.desc ? `<div style="margin-top:1rem;font-size:.85rem;color:#333333;background:rgba(0,0,0,.03);padding:.8rem;border-radius:8px;line-height:1.6;"><b>Notes:</b><br/>${o.desc}</div>` : ''}
+        ${o.screenshot ? `<div style="margin-top:1.2rem;"><div style="font-size:.78rem;color:#059669;font-weight:700;margin-bottom:.5rem;">📸 Payment Screenshot</div><img src="${o.screenshot}" onclick="window.open(this.src,'_blank')" style="max-width:100%;border-radius:10px;border:1px solid rgba(16,185,129,.3);cursor:pointer;" title="Click to view full size"/></div>` : '<div style="margin-top:1rem;font-size:.78rem;color:#f59e0b;">📸 No payment screenshot uploaded</div>'}
+        <div style="display:flex;gap:.5rem;margin-top:1.5rem;flex-wrap:wrap;">
+          ${pv !== 'verified' ? `<button onclick="setPayVerify('${key}','verified',true)" style="background:#059669;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:.78rem;font-weight:700;cursor:pointer;">✅ Verify Payment</button>` : ''}
+          ${pv !== 'rejected' ? `<button onclick="setPayVerify('${key}','rejected',true)" style="background:#dc2626;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:.78rem;font-weight:700;cursor:pointer;">❌ Reject Payment</button>` : ''}
+          ${pv !== 'pending' ? `<button onclick="setPayVerify('${key}','pending',true)" style="background:rgba(0,0,0,.08);color:#000000;border:none;border-radius:8px;padding:9px 16px;font-size:.78rem;font-weight:700;cursor:pointer;">🕓 Reset to Pending</button>` : ''}
+        </div>
+      `;
+    } catch (e) {
+      box.innerHTML = '<div style="color:#dc2626;font-size:.85rem;">Error loading order: ' + e.message + '</div>';
+    }
+  };
+
+  // ─── ORDER FULL DETAIL: activate standalone view when URL has ?order=KEY (opened in new tab) ───
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const orderKey = params.get('order');
+    if (!orderKey) return;
+    document.title = 'Order Details — DataPro Services';
+    const view = document.getElementById('orderFullDetailView');
+    if (!view) return;
+    onAuthStateChanged(auth, (user) => {
+      view.style.display = 'block';
+      if (user) {
+        renderOrderFullDetail(orderKey);
+      } else {
+        document.getElementById('orderFullDetailContent').innerHTML = '<div style="font-size:.85rem;color:#dc2626;">🔒 Please login to the Admin Panel first (in your other tab), then reopen this link.</div>';
+      }
+    });
+  })();
 
   // ─── PROFILE PHOTO: Listen for Firebase updates ───
   onValue(ref(db, 'settings/photoData'), (snap) => {
@@ -2530,29 +2629,7 @@ function previewPhoto(event) {
   reader.readAsDataURL(file);
 }
 
-// ADMIN PANEL
-let adminPassword = localStorage.getItem('rohit_admin_pass') || 'rohit2024';
-const SECRET_RECOVERY_KEY = 'rohit@admin2024';
-
-// ── Auto-fill saved password on page load ──
-(function initLoginState(){
-  const saved = localStorage.getItem('rohit_remember_pass');
-  if(saved === '1'){
-    const savedPw = localStorage.getItem('rohit_saved_password');
-    if(savedPw){
-      document.getElementById('adminPassInput').value = savedPw;
-      document.getElementById('rememberPass').checked = true;
-    }
-  }
-})();
-
-function handleRemember(){
-  const cb = document.getElementById('rememberPass');
-  if(!cb.checked){
-    localStorage.removeItem('rohit_saved_password');
-    localStorage.setItem('rohit_remember_pass','0');
-  }
-}
+// ADMIN PANEL — real Firebase Authentication (no plaintext password in code anymore)
 
 function togglePassView(inputId, btn){
   const inp = document.getElementById(inputId);
@@ -2563,72 +2640,23 @@ function togglePassView(inputId, btn){
 function showForgotPassword(){
   const fp = document.getElementById('forgotPanel');
   fp.style.display = fp.style.display === 'none' ? 'block' : 'none';
-  // Reset face scan state every time panel opens
-  document.getElementById('faceScanSection').style.display='block';
-  document.getElementById('secretKeyReveal').style.display='none';
-  document.getElementById('startFaceBtn').style.display='inline-block';
-  document.getElementById('faceScanMsg').textContent='';
-  const v=document.getElementById('faceVideo');
-  if(v.srcObject){ v.srcObject.getTracks().forEach(t=>t.stop()); v.srcObject=null; }
-  v.style.display='none';
-}
-
-// ── FACE SCAN ──
-let _faceStream=null;
-function startFaceScan(){
-  const msg=document.getElementById('faceScanMsg');
-  const btn=document.getElementById('startFaceBtn');
-  const video=document.getElementById('faceVideo');
-  msg.textContent='📷 Opening camera...';
-  btn.style.display='none';
-  navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:140,height:110}})
-    .then(stream=>{
-      _faceStream=stream;
-      video.srcObject=stream;
-      video.style.display='block';
-      msg.style.color='#6ee7b7';
-      msg.textContent='😊 Place your face in front of the camera...';
-      // Auto-verify after 3 seconds of camera being on
-      setTimeout(()=>{
-        // Stop camera
-        stream.getTracks().forEach(t=>t.stop());
-        video.style.display='none';
-        // Show secret key
-        document.getElementById('faceScanSection').style.display='none';
-        document.getElementById('secretKeyReveal').style.display='block';
-      },3000);
-    })
-    .catch(err=>{
-      btn.style.display='inline-block';
-      msg.style.color='#fca5a5';
-      msg.textContent='❌ Camera not found. Please allow browser permission or: '+err.message;
-    });
 }
 
 function resetPassword(){
-  const key   = document.getElementById('secretKeyInput').value.trim();
-  const nw    = document.getElementById('resetNewPass').value;
-  const conf  = document.getElementById('resetConfPass').value;
+  const email = document.getElementById('resetEmailInput').value.trim();
   const msg   = document.getElementById('resetMsg');
   msg.style.display='none';
-  if(key !== SECRET_RECOVERY_KEY){
-    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Wrong recovery key.';return;
+  if(!email){
+    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Please enter your admin email.';return;
   }
-  if(nw.length < 4){
-    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Password too short (min 4 chars).';return;
-  }
-  if(nw !== conf){
-    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Passwords do not match.';return;
-  }
-  adminPassword = nw;
-  localStorage.setItem('rohit_admin_pass', nw);
-  if(localStorage.getItem('rohit_remember_pass')==='1'){
-    localStorage.setItem('rohit_saved_password', nw);
-  }
-  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Password reset! You can now login.';
-  document.getElementById('secretKeyInput').value='';
-  document.getElementById('resetNewPass').value='';
-  document.getElementById('resetConfPass').value='';
+  window.firebaseSendPasswordReset(email)
+    .then(()=>{
+      msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Reset link sent! Check your email inbox (and spam folder).';
+    })
+    .catch((err)=>{
+      msg.style.display='block';msg.style.color='#fca5a5';
+      msg.textContent = err.code === 'auth/user-not-found' ? '❌ No admin account with this email.' : '❌ ' + err.message;
+    });
 }
 
 function applyLogoChange(){
@@ -2824,51 +2852,35 @@ function refreshPremiumQr(upiId, upiName){
 })();
 
 function adminLogin(){
-  const inp = document.getElementById('adminPassInput').value;
+  const email = document.getElementById('adminEmailInput').value.trim();
+  const pass = document.getElementById('adminPassInput').value;
   const err = document.getElementById('loginError');
-  if(inp === adminPassword){
-    document.getElementById('adminLogin').style.display='none';
-    document.getElementById('adminDash').style.display='block';
-    err.style.display='none';
-    if(window.loadOrders) window.loadOrders();
-    // Save password if "Remember" is checked
-    const cb = document.getElementById('rememberPass');
-    if(cb && cb.checked){
-      localStorage.setItem('rohit_saved_password', inp);
-      localStorage.setItem('rohit_remember_pass','1');
-    }
-    // Pre-fill logo inputs with current values
-    const t = localStorage.getItem('rohit_logo_title');
-    const s = localStorage.getItem('rohit_logo_sub');
-    if(t) document.getElementById('logoTextInput').value = t;
-    if(s) document.getElementById('logoSubInput').value = s;
-    // Pre-fill working hours
-    updateWorkingStatus();
-    // Set default bg type
-    window._selectedBgType = 'gradient';
-  } else {
-    err.style.display='block';
-    err.textContent='❌ Incorrect password. Try again.';
-    document.getElementById('adminPassInput').value='';
+  err.style.display='none';
+  if(!email || !pass){
+    err.style.display='block'; err.textContent='❌ Please enter both email and password.'; return;
   }
-}
-function changePassword(){
-  const old=document.getElementById('oldPass').value;
-  const nw=document.getElementById('newPass').value;
-  const conf=document.getElementById('confirmPass').value;
-  const msg=document.getElementById('passMsg');
-  if(old!==adminPassword){msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Current password incorrect.';return;}
-  if(nw!==conf){msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ New passwords do not match.';return;}
-  if(nw.length<4){msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Password too short (min 4 chars).';return;}
-  adminPassword=nw;
-  localStorage.setItem('rohit_admin_pass',nw);
-  // Update saved password too if remember is enabled
-  if(localStorage.getItem('rohit_remember_pass')==='1'){
-    localStorage.setItem('rohit_saved_password',nw);
-    const inp=document.getElementById('adminPassInput');
-    if(inp) inp.value=nw;
-  }
-  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Password updated!';
+  window.firebaseAdminSignIn(email, pass)
+    .then(()=>{
+      document.getElementById('adminLogin').style.display='none';
+      document.getElementById('adminDash').style.display='block';
+      if(window.loadOrders) window.loadOrders();
+      // Pre-fill logo inputs with current values
+      const t = localStorage.getItem('rohit_logo_title');
+      const s = localStorage.getItem('rohit_logo_sub');
+      if(t) document.getElementById('logoTextInput').value = t;
+      if(s) document.getElementById('logoSubInput').value = s;
+      // Pre-fill working hours
+      updateWorkingStatus();
+      // Set default bg type
+      window._selectedBgType = 'gradient';
+      document.getElementById('adminPassInput').value = '';
+    })
+    .catch((e)=>{
+      err.style.display='block';
+      err.textContent = (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found')
+        ? '❌ Incorrect email or password.' : '❌ ' + e.message;
+      document.getElementById('adminPassInput').value='';
+    });
 }
 // updatePrices — handled by Firebase module above
 // ── WORKING HOURS ──
@@ -2971,18 +2983,11 @@ function updateWorkingStatus(){
 })();
 
 function adminLogout(){
+  if(window.firebaseAdminSignOut) window.firebaseAdminSignOut();
   document.getElementById('adminDash').style.display='none';
   document.getElementById('adminLogin').style.display='block';
   document.getElementById('forgotPanel').style.display='none';
-  // Restore saved password if remember is enabled
-  const saved = localStorage.getItem('rohit_remember_pass');
-  const inp   = document.getElementById('adminPassInput');
-  if(saved === '1'){
-    inp.value = localStorage.getItem('rohit_saved_password') || '';
-    document.getElementById('rememberPass').checked = true;
-  } else {
-    inp.value = '';
-  }
+  document.getElementById('adminPassInput').value = '';
   document.getElementById('adminOverlay').style.display='none';
 }
 </script>
