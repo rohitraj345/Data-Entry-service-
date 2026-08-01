@@ -198,6 +198,21 @@ body{background:#ffffff;color:#000000;font-family:'Outfit',sans-serif;overflow-x
 .video-wrap{margin-top:2.5rem;border-radius:20px;overflow:hidden;border:1px solid rgba(0,0,0,0.12);box-shadow:0 20px 60px rgba(0,0,0,.2);max-width:780px;}
 .video-wrap video{width:100%;display:block;max-height:480px;object-fit:cover;}
 
+/* CUSTOMER WORK / PORTFOLIO DOWNLOADS SECTION */
+#customer-work{background:#ffffff;}
+.cw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem;}
+.cw-card{background:#f8f9fa;border:1px solid rgba(0,0,0,0.12);border-radius:16px;padding:1.3rem;display:flex;flex-direction:column;gap:.7rem;transition:all .3s;}
+.cw-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.15);border-color:rgba(59,130,246,.4);}
+.cw-thumb{width:100%;height:150px;border-radius:10px;overflow:hidden;background:rgba(59,130,246,.08);display:flex;align-items:center;justify-content:center;font-size:2.4rem;}
+.cw-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.cw-name{font-size:.88rem;font-weight:700;color:#000000;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cw-desc{font-size:.8rem;color:#666666;line-height:1.6;min-height:2.2em;}
+.cw-dl-btn{background:linear-gradient(135deg,#2563eb,#06b6d4);color:#000000;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-align:center;text-decoration:none;display:block;}
+.cw-stars{display:flex;align-items:center;gap:3px;}
+.cw-star{font-size:1.2rem;cursor:pointer;color:#d1d5db;transition:color .15s;}
+.cw-star.filled{color:#f59e0b;}
+.cw-rating-info{font-size:.72rem;color:#666666;margin-left:6px;}
+
 /* PRICING */
 #pricing{background:#ffffff;}
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem;margin-top:3.5rem;}
@@ -875,6 +890,17 @@ footer p{color:#a3a3b8;}
   </div>
 </section>
 
+<!-- CUSTOMER WORK / PORTFOLIO DOWNLOADS SECTION -->
+<section class="sec" id="customer-work">
+  <div style="max-width:580px;">
+    <div class="sec-eye rv"><div class="eye-bar"></div><span class="eye-txt">Client Work Samples</span></div>
+    <h2 class="sec-title rv d1">Download <em>Real Work</em> Samples</h2>
+    <p class="sec-desc rv d2">Real completed customer files — download and check the quality yourself. Rate the work if you find it helpful!</p>
+  </div>
+  <div class="cw-grid" id="cwGrid">
+    <div style="font-size:.8rem;color:#666666;text-align:center;padding:2rem;grid-column:1/-1;">Loading work samples...</div>
+  </div>
+</section>
 
 <!-- PRICING -->
 <section class="sec" id="pricing">
@@ -1518,7 +1544,7 @@ footer p{color:#a3a3b8;}
   </a>
   <p>© 2026 Rohit Raj · DataPro Services · India</p>
   <p>📱 +91 7456830402 · UPI: rohit0402@ptyes</p>
-  <button onclick="document.getElementById('adminOverlay').style.display='flex'" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:#666666;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border-radius:6px;cursor:pointer;font-family:Outfit,sans-serif;">🔐 Admin</button>
+  <button onclick="document.getElementById('adminOverlay').style.display='block'" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);color:#666666;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border-radius:6px;cursor:pointer;font-family:Outfit,sans-serif;">🔐 Admin</button>
 </footer>
 
 <!-- PAYMENT MODAL 2 -->
@@ -1541,10 +1567,11 @@ footer p{color:#a3a3b8;}
 </div>
 
 <!-- ADMIN OVERLAY -->
-<div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
-  <div style="background:#ffffff;border:1px solid rgba(0,0,0,0.12);box-shadow:0 20px 60px rgba(0,0,0,.15);border-radius:20px;padding:2.5rem;max-width:520px;width:100%;position:relative;margin:auto;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2563eb #f1f5f9;">
-    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:20px 20px 0 0;"></div>
-    <button onclick="document.getElementById('adminOverlay').style.display='none'" style="position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:#666666;font-size:1.3rem;cursor:pointer;">✕</button>
+<div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:#ffffff;overflow-y:auto;padding:7rem 5vw 4rem;">
+  <div style="position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;"></div>
+  <div style="position:fixed;top:15%;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(59,130,246,.08) 0%,transparent 70%);pointer-events:none;z-index:0;"></div>
+  <div style="max-width:900px;width:100%;position:relative;margin:0 auto;z-index:1;">
+    <button onclick="document.getElementById('adminOverlay').style.display='none'" style="position:fixed;top:1.2rem;right:1.5rem;background:#f8f9fa;border:1px solid rgba(0,0,0,0.12);color:#666666;font-size:1.3rem;width:40px;height:40px;border-radius:50%;cursor:pointer;z-index:2001;">✕</button>
     <div id="adminLogin">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;">
         <div style="width:44px;height:44px;background:linear-gradient(135deg,#e3f2fd,#e0f7fa);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">🔐</div>
@@ -1717,6 +1744,38 @@ footer p{color:#a3a3b8;}
           <div style="font-size:.72rem;font-weight:600;color:#0066cc;margin-bottom:.6rem;">📋 Current Gallery Images</div>
           <div id="adminGalleryList" style="display:flex;flex-direction:column;gap:.5rem;max-height:200px;overflow-y:auto;">
             <div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">Loading gallery...</div>
+          </div>
+        </div>
+      </div>
+      <!-- CUSTOMER WORK / PORTFOLIO MANAGEMENT SECTION -->
+      <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
+        <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:1rem;">📁 Manage Customer Work Uploads</div>
+        <p style="font-size:.75rem;color:#666666;margin-bottom:1rem;">Upload completed customer work here (any file — Excel, PDF, Word, image, etc). It shows on the site in real-time, visitors can download it and give it a star rating.</p>
+
+        <!-- Add New Work File -->
+        <div style="background:#f8f9fa;border:1px solid rgba(16,185,129,.15);border-radius:10px;padding:1rem;margin-bottom:1rem;">
+          <div style="font-size:.72rem;font-weight:600;color:#059669;margin-bottom:.6rem;">➕ Add New Work File</div>
+          <div style="display:flex;flex-direction:column;gap:.7rem;">
+            <div style="display:flex;align-items:center;gap:1rem;">
+              <div id="adminCwPreview" style="width:90px;height:60px;border-radius:8px;overflow:hidden;border:2px solid rgba(16,185,129,.3);flex-shrink:0;background:#f8f9fa;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📄</div>
+              <div style="flex:1;">
+                <label for="cwFileInput" style="display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:#059669;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 14px;border-radius:6px;cursor:pointer;">📁 Choose File</label>
+                <input id="cwFileInput" type="file" style="display:none;" onchange="previewCwFile(event)"/>
+                <div id="cwFileName" style="font-size:.72rem;color:#666666;margin-top:.4rem;"></div>
+              </div>
+            </div>
+            <input id="cwNameInput" type="text" placeholder="File title (e.g. Excel Data Entry Sample)" style="width:100%;background:#ffffff;border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
+            <textarea id="cwDescInput" placeholder="Description (what work was done, for the customer to read)" rows="3" style="width:100%;background:#ffffff;border:1px solid rgba(16,185,129,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;resize:vertical;"></textarea>
+            <div id="cwAddMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
+            <button onclick="addCustomerWork()" style="background:linear-gradient(135deg,#10b981,#059669);color:#000000;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">➕ Upload Work File</button>
+          </div>
+        </div>
+
+        <!-- Current Work Files List -->
+        <div style="background:#f8f9fa;border:1px solid rgba(16,185,129,.15);border-radius:10px;padding:1rem;">
+          <div style="font-size:.72rem;font-weight:600;color:#059669;margin-bottom:.6rem;">📋 Current Work Uploads</div>
+          <div id="adminCwList" style="display:flex;flex-direction:column;gap:.5rem;max-height:200px;overflow-y:auto;">
+            <div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">Loading uploads...</div>
           </div>
         </div>
       </div>
@@ -2092,6 +2151,125 @@ footer p{color:#a3a3b8;}
     } catch(e) { alert('Error deleting: ' + e.message); }
   };
 
+  // ─── CUSTOMER WORK: Helpers ───
+  function cwGetVoterId() {
+    let id = localStorage.getItem('rohit_cw_voter_id');
+    if (!id) {
+      id = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem('rohit_cw_voter_id', id);
+    }
+    return id;
+  }
+  function cwFileIcon(fileType, fileName) {
+    if (fileType && fileType.startsWith('image/')) return null; // will show real thumbnail
+    const ext = (fileName || '').split('.').pop().toLowerCase();
+    if (['xls','xlsx','csv'].includes(ext)) return '📊';
+    if (ext === 'pdf') return '📕';
+    if (['doc','docx'].includes(ext)) return '📝';
+    if (['zip','rar'].includes(ext)) return '🗜️';
+    return '📄';
+  }
+  function cwAvgRating(ratings) {
+    if (!ratings) return { avg: 0, count: 0 };
+    const vals = Object.values(ratings);
+    const sum = vals.reduce((a, b) => a + b, 0);
+    return { avg: sum / vals.length, count: vals.length };
+  }
+  function cwStarsHtml(key, avg, count, myRating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      const filled = i <= Math.round(myRating || avg);
+      stars += `<span class="cw-star${filled ? ' filled' : ''}" onclick="rateCustomerWork('${key}',${i})">★</span>`;
+    }
+    return `<div class="cw-stars">${stars}<span class="cw-rating-info">${avg ? avg.toFixed(1) : '0.0'} (${count})</span></div>`;
+  }
+
+  // ─── CUSTOMER WORK: Load from Firebase (real-time) ───
+  function loadCustomerWork() {
+    onValue(ref(db, 'customerWork'), (snap) => {
+      const grid = document.getElementById('cwGrid');
+      const adminList = document.getElementById('adminCwList');
+      if (!grid) return;
+      if (snap.exists()) {
+        const items = snap.val();
+        const voterId = cwGetVoterId();
+        let html = '';
+        let adminHtml = '';
+        Object.entries(items).forEach(([key, w]) => {
+          const { avg, count } = cwAvgRating(w.ratings);
+          const myRating = w.ratings ? w.ratings[voterId] : 0;
+          const isImage = w.fileType && w.fileType.startsWith('image/');
+          const icon = cwFileIcon(w.fileType, w.fileName);
+          html += `<div class="cw-card">
+            <div class="cw-thumb">${isImage ? `<img src="${w.data}" alt="${w.name || 'Work sample'}">` : icon}</div>
+            <div class="cw-name">${w.name || w.fileName || 'Work Sample'}</div>
+            <div class="cw-desc">${w.description || ''}</div>
+            ${cwStarsHtml(key, avg, count, myRating)}
+            <a class="cw-dl-btn" href="${w.data}" download="${w.fileName || 'work-sample'}">⬇️ Download</a>
+          </div>`;
+
+          adminHtml += `<div style="display:flex;align-items:center;gap:.5rem;padding:.5rem;background:rgba(0,0,0,.04);border-radius:6px;">
+            <div style="width:36px;height:28px;border-radius:4px;flex-shrink:0;background:rgba(16,185,129,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;">${isImage ? `<img src="${w.data}" style="width:100%;height:100%;object-fit:cover;border-radius:4px;">` : icon}</div>
+            <div style="flex:1;font-size:.72rem;color:#666666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${w.name || w.fileName || 'No name'} · ⭐${avg.toFixed(1)} (${count})</div>
+            <button onclick="deleteCustomerWork('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#dc2626;border-radius:4px;padding:3px 8px;font-size:.7rem;cursor:pointer;">🗑️</button>
+          </div>`;
+        });
+        grid.innerHTML = html;
+        if (adminList) adminList.innerHTML = adminHtml || '<div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">No uploads yet</div>';
+      } else {
+        grid.innerHTML = '<div style="font-size:.8rem;color:#666666;text-align:center;padding:2rem;grid-column:1/-1;">No work samples uploaded yet. Check back soon!</div>';
+        if (adminList) adminList.innerHTML = '<div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">No uploads yet</div>';
+      }
+    });
+  }
+
+  // ─── CUSTOMER WORK: Add new file to Firebase ───
+  window.addCustomerWork = async function() {
+    const msg = document.getElementById('cwAddMsg');
+    const name = document.getElementById('cwNameInput').value.trim();
+    const description = document.getElementById('cwDescInput').value.trim();
+    if (!window._selectedCwData) {
+      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
+      msg.textContent='❌ Please choose a file first.';return;
+    }
+    try {
+      await push(ref(db, 'customerWork'), {
+        data: window._selectedCwData,
+        fileName: window._selectedCwFileName || 'work-file',
+        fileType: window._selectedCwFileType || '',
+        name: name || window._selectedCwFileName || 'Work Sample',
+        description: description,
+        addedAt: Date.now()
+      });
+      document.getElementById('cwNameInput').value = '';
+      document.getElementById('cwDescInput').value = '';
+      document.getElementById('cwFileName').textContent = '';
+      window._selectedCwData = null;
+      document.getElementById('adminCwPreview').innerHTML = '📄';
+      msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
+      msg.textContent='✅ Work file uploaded!';
+    } catch(e) {
+      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
+      msg.textContent='❌ Error: ' + e.message;
+    }
+  };
+
+  // ─── CUSTOMER WORK: Delete from Firebase ───
+  window.deleteCustomerWork = async function(key) {
+    if (!confirm('Delete this work file?')) return;
+    try {
+      await set(ref(db, 'customerWork/' + key), null);
+    } catch(e) { alert('Error deleting: ' + e.message); }
+  };
+
+  // ─── CUSTOMER WORK: Visitor rating (one vote per browser, changeable) ───
+  window.rateCustomerWork = async function(key, stars) {
+    const voterId = cwGetVoterId();
+    try {
+      await set(ref(db, `customerWork/${key}/ratings/${voterId}`), stars);
+    } catch(e) { alert('Error saving rating: ' + e.message); }
+  };
+
   // ─── ORDERS: Save new order to Firebase ───
   window.saveOrder = async function(orderData) {
     const { screenshot, ...orderWithoutScreenshot } = orderData;
@@ -2278,6 +2456,7 @@ footer p{color:#a3a3b8;}
     loadPrices();
     loadReviews();
     loadGallery();
+    loadCustomerWork();
     loadBackground();
     // Load saved photo from localStorage (or Firebase listener will update it)
     const saved = localStorage.getItem('rohit_profile_photo');
@@ -2598,6 +2777,38 @@ function previewGalleryImage(event) {
     window._selectedGalleryData = e.target.result;
     const preview = document.getElementById('adminGalleryPreview');
     preview.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;"/>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── CUSTOMER WORK FILE ADMIN ──
+window._selectedCwData = null;
+window._selectedCwFileName = null;
+window._selectedCwFileType = null;
+
+function previewCwFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  // Firebase Realtime Database has practical size limits — keep uploads reasonably small
+  if (file.size > 5 * 1024 * 1024) {
+    const msg = document.getElementById('cwAddMsg');
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
+    msg.textContent='❌ File too large (max 5MB). Please choose a smaller file.';
+    event.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    window._selectedCwData = e.target.result;
+    window._selectedCwFileName = file.name;
+    window._selectedCwFileType = file.type;
+    document.getElementById('cwFileName').textContent = '📎 ' + file.name;
+    const preview = document.getElementById('adminCwPreview');
+    if (file.type.startsWith('image/')) {
+      preview.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;"/>`;
+    } else {
+      preview.innerHTML = '📄';
+    }
   };
   reader.readAsDataURL(file);
 }
