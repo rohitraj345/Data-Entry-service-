@@ -107,7 +107,7 @@ body{background:#ffffff;color:#000000;font-family:'Outfit',sans-serif;overflow-x
 
 /* Admin panel scrollbar */
 #adminOverlay > div::-webkit-scrollbar{width:5px;}
-#adminOverlay > div::-webkit-scrollbar-track{background:#1f2937;border-radius:0 20px 20px 0;}
+#adminOverlay > div::-webkit-scrollbar-track{background:#f8f9fa;border-radius:0 20px 20px 0;}
 #adminOverlay > div::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#2563eb,#06b6d4);border-radius:3px;}
 #adminOverlay > div::-webkit-scrollbar-thumb:hover{background:linear-gradient(to bottom,#1d4ed8,#0891b2);}
 
@@ -1542,7 +1542,7 @@ footer p{color:#a3a3b8;}
 
 <!-- ADMIN OVERLAY -->
 <div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;">
-  <div style="background:#111827;border:1px solid rgba(59,130,246,.25);border-radius:20px;padding:2.5rem;max-width:460px;width:100%;position:relative;margin:auto;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2563eb #1f2937;">
+  <div style="background:#ffffff;border:1px solid rgba(0,0,0,0.12);box-shadow:0 20px 60px rgba(0,0,0,.15);border-radius:20px;padding:2.5rem;max-width:520px;width:100%;position:relative;margin:auto;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2563eb #f1f5f9;">
     <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:20px 20px 0 0;"></div>
     <button onclick="document.getElementById('adminOverlay').style.display='none'" style="position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:#666666;font-size:1.3rem;cursor:pointer;">✕</button>
     <div id="adminLogin">
@@ -1556,16 +1556,16 @@ footer p{color:#a3a3b8;}
       <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem;">
         <div>
           <label style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#666666;display:block;margin-bottom:.4rem;">Email</label>
-          <input id="adminEmailInput" type="email" placeholder="Enter admin email" autocomplete="username" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
+          <input id="adminEmailInput" type="email" placeholder="Enter admin email" autocomplete="username" style="width:100%;background:#ffffff;border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
         </div>
         <div>
           <label style="font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#666666;display:block;margin-bottom:.4rem;">Password</label>
           <div style="position:relative;">
-            <input id="adminPassInput" type="password" placeholder="Enter admin password" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 44px 12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
+            <input id="adminPassInput" type="password" placeholder="Enter admin password" autocomplete="current-password" style="width:100%;background:#ffffff;border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:12px 44px 12px 16px;color:#000000;font-family:Outfit,sans-serif;font-size:.92rem;outline:none;"/>
             <button onclick="togglePassView('adminPassInput',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:#666666;" title="Show/Hide">👁️</button>
           </div>
         </div>
-        <div id="loginError" style="display:none;font-size:.8rem;color:#fca5a5;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
+        <div id="loginError" style="display:none;font-size:.8rem;color:#dc2626;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:.6rem 1rem;"></div>
       </div>
       <button onclick="adminLogin()" style="width:100%;background:linear-gradient(135deg,#e3f2fd,#e0f7fa);color:#000000;border:none;border-radius:8px;padding:13px;font-family:Outfit,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Login to Admin Panel</button>
       <div style="text-align:center;margin-top:1rem;">
@@ -1576,7 +1576,7 @@ footer p{color:#a3a3b8;}
         <div style="font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;">🔑 Reset Password</div>
         <div style="font-size:.75rem;color:#666666;margin-bottom:.8rem;">Enter your admin email — Firebase will send a secure password reset link to it.</div>
         <div style="display:flex;flex-direction:column;gap:.7rem;">
-          <input id="resetEmailInput" type="email" placeholder="Your admin email" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+          <input id="resetEmailInput" type="email" placeholder="Your admin email" style="width:100%;background:#ffffff;border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           <div id="resetMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="resetPassword()" style="background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;">Send Reset Link</button>
         </div>
@@ -1614,8 +1614,8 @@ footer p{color:#a3a3b8;}
           </div>
           <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
             <button onclick="toggleBgType('gradient')" id="bgBtnGradient" style="flex:1;background:linear-gradient(135deg,#e3f2fd,#e0f7fa);color:#000000;border:1px solid rgba(99,179,237,.3);border-radius:6px;padding:8px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">🎨 Default Gradient</button>
-            <button onclick="toggleBgType('image')" id="bgBtnImage" style="flex:1;background:rgba(255,255,255,.05);color:#666666;border:1px solid rgba(0,0,0,.15);border-radius:6px;padding:8px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">🖼️ Custom Image</button>
-            <button onclick="toggleBgType('none')" id="bgBtnNone" style="flex:1;background:rgba(255,255,255,.05);color:#666666;border:1px solid rgba(0,0,0,.15);border-radius:6px;padding:8px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">❌ No Background</button>
+            <button onclick="toggleBgType('image')" id="bgBtnImage" style="flex:1;background:#ffffff;color:#666666;border:1px solid rgba(0,0,0,.15);border-radius:6px;padding:8px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">🖼️ Custom Image</button>
+            <button onclick="toggleBgType('none')" id="bgBtnNone" style="flex:1;background:#ffffff;color:#666666;border:1px solid rgba(0,0,0,.15);border-radius:6px;padding:8px;font-family:Outfit,sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;">❌ No Background</button>
           </div>
           <div id="bgMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="applyBackground()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#000000;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Background</button>
@@ -1627,11 +1627,11 @@ footer p{color:#a3a3b8;}
         <div style="display:flex;flex-direction:column;gap:.8rem;">
           <div>
             <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Site Title (Navbar)</label>
-            <input id="logoTextInput" type="text" placeholder="e.g. Rohit Raj" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+            <input id="logoTextInput" type="text" placeholder="e.g. Rohit Raj" style="width:100%;background:#ffffff;border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           </div>
           <div>
             <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Subtitle (below name)</label>
-            <input id="logoSubInput" type="text" placeholder="e.g. Data Entry Expert" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+            <input id="logoSubInput" type="text" placeholder="e.g. Data Entry Expert" style="width:100%;background:#ffffff;border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           </div>
           <div id="logoMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="applyLogoChange()" style="background:linear-gradient(135deg,#e3f2fd,#e0f7fa);color:#000000;border:none;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ Apply Logo Change</button>
@@ -1653,16 +1653,16 @@ footer p{color:#a3a3b8;}
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;">
             <div>
               <label style="font-size:.68rem;color:#666666;display:block;margin-bottom:.3rem;">Opening Time</label>
-              <input type="time" id="openTime" value="09:00" onchange="saveWorkingHours()" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
+              <input type="time" id="openTime" value="09:00" onchange="saveWorkingHours()" style="width:100%;background:#ffffff;border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
             </div>
             <div>
               <label style="font-size:.68rem;color:#666666;display:block;margin-bottom:.3rem;">Closing Time</label>
-              <input type="time" id="closeTime" value="18:00" onchange="saveWorkingHours()" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
+              <input type="time" id="closeTime" value="18:00" onchange="saveWorkingHours()" style="width:100%;background:#ffffff;border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
             </div>
           </div>
           <div>
             <label style="font-size:.68rem;color:#666666;display:block;margin-bottom:.3rem;">Offline Message</label>
-            <input type="text" id="offlineMsg" value="Currently offline, will be back soon 🙏" onchange="saveWorkingHours()" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.82rem;outline:none;"/>
+            <input type="text" id="offlineMsg" value="Currently offline, will be back soon 🙏" onchange="saveWorkingHours()" style="width:100%;background:#ffffff;border:1px solid rgba(16,185,129,.25);border-radius:6px;padding:8px 10px;color:#000000;font-family:Outfit,sans-serif;font-size:.82rem;outline:none;"/>
           </div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div id="workStatusDot" style="width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;"></div>
@@ -1692,7 +1692,7 @@ footer p{color:#a3a3b8;}
         <p style="font-size:.75rem;color:#666666;margin-bottom:1rem;">Add new images to the gallery section below. Images are saved to Firebase and visible to all visitors.</p>
 
         <!-- Add New Gallery Image -->
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(6,182,212,.15);border-radius:10px;padding:1rem;margin-bottom:1rem;">
+        <div style="background:#f8f9fa;border:1px solid rgba(6,182,212,.15);border-radius:10px;padding:1rem;margin-bottom:1rem;">
           <div style="font-size:.72rem;font-weight:600;color:#0066cc;margin-bottom:.6rem;">➕ Add New Image</div>
           <div style="display:flex;flex-direction:column;gap:.7rem;">
             <div style="display:flex;align-items:center;gap:1rem;">
@@ -1702,8 +1702,8 @@ footer p{color:#a3a3b8;}
                 <input id="galleryFileInput" type="file" accept="image/*" style="display:none;" onchange="previewGalleryImage(event)"/>
               </div>
             </div>
-            <input id="galleryLabelInput" type="text" placeholder="Image label (e.g. 📊 Excel Data Entry Work)" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
-            <select id="gallerySizeInput" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;">
+            <input id="galleryLabelInput" type="text" placeholder="Image label (e.g. 📊 Excel Data Entry Work)" style="width:100%;background:#ffffff;border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;"/>
+            <select id="gallerySizeInput" style="width:100%;background:#ffffff;border:1px solid rgba(6,182,212,.2);border-radius:6px;padding:9px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.85rem;outline:none;">
               <option value="normal">Normal Size</option>
               <option value="wide">Wide (2 columns)</option>
             </select>
@@ -1713,7 +1713,7 @@ footer p{color:#a3a3b8;}
         </div>
 
         <!-- Current Gallery List -->
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(6,182,212,.15);border-radius:10px;padding:1rem;">
+        <div style="background:#f8f9fa;border:1px solid rgba(6,182,212,.15);border-radius:10px;padding:1rem;">
           <div style="font-size:.72rem;font-weight:600;color:#0066cc;margin-bottom:.6rem;">📋 Current Gallery Images</div>
           <div id="adminGalleryList" style="display:flex;flex-direction:column;gap:.5rem;max-height:200px;overflow-y:auto;">
             <div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">Loading gallery...</div>
@@ -1724,9 +1724,9 @@ footer p{color:#a3a3b8;}
       <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
         <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0066cc;margin-bottom:1rem;">🔑 Change Password</div>
         <div style="display:flex;flex-direction:column;gap:.8rem;">
-          <input id="oldPass" type="password" placeholder="Current password" style="background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
-          <input id="newPass" type="password" placeholder="New password" style="background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
-          <input id="confirmPass" type="password" placeholder="Confirm new password" style="background:rgba(255,255,255,.05);border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
+          <input id="oldPass" type="password" placeholder="Current password" style="background:#ffffff;border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
+          <input id="newPass" type="password" placeholder="New password" style="background:#ffffff;border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
+          <input id="confirmPass" type="password" placeholder="Confirm new password" style="background:#ffffff;border:1px solid rgba(99,179,237,.15);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;width:100%;"/>
           <div id="passMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="changePassword()" style="background:linear-gradient(135deg,#e3f2fd,#e0f7fa);color:#000000;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">Update Password</button>
         </div>
@@ -1735,12 +1735,12 @@ footer p{color:#a3a3b8;}
       <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
         <div style="font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">💰 Edit Package Prices</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
-          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Basic (₹)</label><input id="ep1" type="number" value="199" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
-          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Standard (₹)</label><input id="ep2" type="number" value="499" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
-          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Premium (₹)</label><input id="ep3" type="number" value="999" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
+          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Basic (₹)</label><input id="ep1" type="number" value="199" style="width:100%;background:#ffffff;border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
+          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Standard (₹)</label><input id="ep2" type="number" value="499" style="width:100%;background:#ffffff;border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
+          <div><label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Premium (₹)</label><input id="ep3" type="number" value="999" style="width:100%;background:#ffffff;border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:8px 12px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/></div>
           <div style="display:flex;align-items:flex-end;"><button onclick="updatePrices()" style="width:100%;background:linear-gradient(135deg,#f59e0b,#d97706);color:#1a0a00;border:none;border-radius:6px;padding:9px;font-family:Outfit,sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;">Update Prices</button></div>
         </div>
-        <div id="priceMsg" style="display:none;font-size:.8rem;margin-top:.8rem;color:#6ee7b7;"></div>
+        <div id="priceMsg" style="display:none;font-size:.8rem;margin-top:.8rem;color:#059669;"></div>
       </div>
       <!-- UPI ID CHANGE SECTION -->
       <div style="background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.22);border-radius:12px;padding:1.5rem;margin-bottom:1rem;">
@@ -1752,17 +1752,17 @@ footer p{color:#a3a3b8;}
           </div>
           <div>
             <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">New UPI ID</label>
-            <input id="newUpiInput" type="text" placeholder="e.g. yourname@okaxis" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/>
+            <input id="newUpiInput" type="text" placeholder="e.g. yourname@okaxis" style="width:100%;background:#ffffff;border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.9rem;outline:none;"/>
           </div>
           <div>
             <label style="font-size:.7rem;color:#666666;display:block;margin-bottom:.3rem;">Account Holder Name</label>
-            <input id="newUpiName" type="text" placeholder="e.g. Rohit Raj · PhonePe · GPay" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
+            <input id="newUpiName" type="text" placeholder="e.g. Rohit Raj · PhonePe · GPay" style="width:100%;background:#ffffff;border:1px solid rgba(124,58,237,.25);border-radius:8px;padding:10px 14px;color:#000000;font-family:Outfit,sans-serif;font-size:.88rem;outline:none;"/>
           </div>
           <div id="upiMsg" style="display:none;font-size:.8rem;border-radius:6px;padding:.5rem 1rem;"></div>
           <button onclick="updateUpiId()" style="background:linear-gradient(135deg,#7c3aed,#4f46e5);color:#000000;border:none;border-radius:8px;padding:11px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">✅ UPI ID Update Karo</button>
         </div>
       </div>
-      <button onclick="adminLogout()" style="width:100%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Logout</button>
+      <button onclick="adminLogout()" style="width:100%;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#dc2626;border-radius:8px;padding:10px;font-family:Outfit,sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;">Logout</button>
     </div>
   </div>
 </div>
@@ -1835,13 +1835,17 @@ footer p{color:#a3a3b8;}
 
   // ─── PRICES: Save to Firebase ───
   window.updatePrices = async function() {
-    const p1 = document.getElementById('ep1').value;
-    const p2 = document.getElementById('ep2').value;
-    const p3 = document.getElementById('ep3').value;
+    const p1 = Number(document.getElementById('ep1').value);
+    const p2 = Number(document.getElementById('ep2').value);
+    const p3 = Number(document.getElementById('ep3').value);
+    const msg = document.getElementById('priceMsg');
+    if (!Number.isFinite(p1) || !Number.isFinite(p2) || !Number.isFinite(p3) || p1 < 0 || p2 < 0 || p3 < 0) {
+      msg.style.display = 'block'; msg.textContent = '❌ Please enter valid numbers only.';
+      return;
+    }
     document.getElementById('p1').textContent = p1;
     document.getElementById('p2').textContent = p2;
     document.getElementById('p3').textContent = p3;
-    const msg = document.getElementById('priceMsg');
     try {
       await set(ref(db, 'prices'), { basic: p1, standard: p2, premium: p3 });
       msg.style.display = 'block'; msg.textContent = '✅ Prices updated on real website!';
@@ -1894,7 +1898,7 @@ footer p{color:#a3a3b8;}
       msg.style.display='block';
       msg.style.background='rgba(239,68,68,.12)';
       msg.style.border='1px solid rgba(239,68,68,.3)';
-      msg.style.color='#fca5a5';
+      msg.style.color='#dc2626';
       msg.textContent='⚠️ Please enter your name and review.';
       return;
     }
@@ -1911,14 +1915,14 @@ footer p{color:#a3a3b8;}
       msg.style.display='block';
       msg.style.background='rgba(16,185,129,.12)';
       msg.style.border='1px solid rgba(16,185,129,.3)';
-      msg.style.color='#6ee7b7';
+      msg.style.color='#059669';
       msg.textContent='✅ Review saved! Visible to everyone now.';
       // Also send to WhatsApp
       const waMsg = `⭐ *NEW REVIEW — DataPro Services*\n\n👤 Name: ${name}\n📍 City: ${city||'Not provided'}\n🔧 Service: ${service}\n⭐ Rating: ${window._currentRating||5}/5\n\n💬 Review:\n"${text}"`;
       window.open(`https://wa.me/917456830402?text=${encodeURIComponent(waMsg)}`, '_blank');
     } catch(e) {
       msg.style.display='block';
-      msg.style.color='#fca5a5';
+      msg.style.color='#dc2626';
       msg.textContent='❌ Error saving review: ' + e.message;
     }
   };
@@ -1930,7 +1934,7 @@ footer p{color:#a3a3b8;}
       msg.style.display='block';
       msg.style.background='rgba(239,68,68,.12)';
       msg.style.border='1px solid rgba(239,68,68,.3)';
-      msg.style.color='#fca5a5';
+      msg.style.color='#dc2626';
       msg.textContent='❌ Please choose a photo first.';
       return;
     }
@@ -1945,11 +1949,11 @@ footer p{color:#a3a3b8;}
       msg.style.display='block';
       msg.style.background='rgba(16,185,129,.12)';
       msg.style.border='1px solid rgba(16,185,129,.3)';
-      msg.style.color='#6ee7b7';
+      msg.style.color='#059669';
       msg.textContent='✅ Profile photo update ho gayi!';
     } catch(e) {
       msg.style.display='block';
-      msg.style.color='#fca5a5';
+      msg.style.color='#dc2626';
       msg.textContent='❌ Error: ' + e.message;
     }
   };
@@ -1968,13 +1972,13 @@ footer p{color:#a3a3b8;}
       msg.style.display='block';
       msg.style.background='rgba(16,185,129,.12)';
       msg.style.border='1px solid rgba(16,185,129,.3)';
-      msg.style.color='#6ee7b7';
+      msg.style.color='#059669';
       msg.textContent='✅ Background updated successfully!';
     } catch(e) {
       msg.style.display='block';
       msg.style.background='rgba(239,68,68,.12)';
       msg.style.border='1px solid rgba(239,68,68,.3)';
-      msg.style.color='#fca5a5';
+      msg.style.color='#dc2626';
       msg.textContent='❌ Error: ' + e.message;
     }
   };
@@ -2038,7 +2042,7 @@ footer p{color:#a3a3b8;}
           adminHtml += `<div style="display:flex;align-items:center;gap:.5rem;padding:.5rem;background:rgba(0,0,0,.2);border-radius:6px;">
             <img src="${img.data}" style="width:40px;height:30px;object-fit:cover;border-radius:4px;flex-shrink:0;">
             <div style="flex:1;font-size:.72rem;color:#666666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${img.label || 'No label'}</div>
-            <button onclick="deleteGalleryImage('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:4px;padding:3px 8px;font-size:.7rem;cursor:pointer;">🗑️</button>
+            <button onclick="deleteGalleryImage('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#dc2626;border-radius:4px;padding:3px 8px;font-size:.7rem;cursor:pointer;">🗑️</button>
           </div>`;
         });
         if (adminList) adminList.innerHTML = adminHtml || '<div style="font-size:.75rem;color:#666666;text-align:center;padding:.5rem;">No gallery images yet</div>';
@@ -2058,7 +2062,7 @@ footer p{color:#a3a3b8;}
     const label = document.getElementById('galleryLabelInput').value.trim();
     const size = document.getElementById('gallerySizeInput').value;
     if (!window._selectedGalleryData) {
-      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
       msg.textContent='❌ Please choose an image first.';return;
     }
     try {
@@ -2072,10 +2076,10 @@ footer p{color:#a3a3b8;}
       document.getElementById('gallerySizeInput').value = 'normal';
       window._selectedGalleryData = null;
       document.getElementById('adminGalleryPreview').innerHTML = '🖼️';
-      msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+      msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
       msg.textContent='✅ Gallery image added!';
     } catch(e) {
-      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+      msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
       msg.textContent='❌ Error: ' + e.message;
     }
   };
@@ -2112,7 +2116,7 @@ footer p{color:#a3a3b8;}
         msg.style.display = 'block';
         msg.style.background = 'rgba(239,68,68,.12)';
         msg.style.border = '1px solid rgba(239,68,68,.3)';
-        msg.style.color = '#fca5a5';
+        msg.style.color = '#dc2626';
         msg.textContent = '⚠️ Order could not be saved to server (but WhatsApp message was sent). Please also confirm via WhatsApp.';
       }
       return false;
@@ -2151,7 +2155,7 @@ footer p{color:#a3a3b8;}
           : pv === 'rejected'
           ? '<span style="background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.3);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;">❌ Rejected</span>'
           : '<span style="background:rgba(245,158,11,.12);color:#b45309;border:1px solid rgba(245,158,11,.3);font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;">🕓 Pending</span>';
-        return `<div style="background:rgba(255,255,255,.03);border:1px solid ${isNew ? 'rgba(239,68,68,.35)' : 'rgba(0,0,0,.1)'};border-radius:10px;padding:1rem;">
+        return `<div style="background:#f8f9fa;border:1px solid ${isNew ? 'rgba(239,68,68,.35)' : 'rgba(0,0,0,.1)'};border-radius:10px;padding:1rem;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;">
             <div>
               <div style="font-weight:700;font-size:.85rem;color:#000000;">${o.name || '—'} ${isNew ? '<span style="background:#ef4444;color:#fff;font-size:.6rem;padding:2px 6px;border-radius:50px;margin-left:6px;">NEW</span>' : ''}</div>
@@ -2159,7 +2163,7 @@ footer p{color:#a3a3b8;}
             </div>
             <div style="display:flex;gap:.4rem;flex-shrink:0;">
               ${isNew ? `<button onclick="markOrderSeen('${key}')" style="background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#059669;border-radius:6px;padding:4px 8px;font-size:.68rem;cursor:pointer;white-space:nowrap;">✓ Seen</button>` : ''}
-              <button onclick="deleteOrder('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;border-radius:6px;padding:4px 8px;font-size:.68rem;cursor:pointer;">🗑️</button>
+              <button onclick="deleteOrder('${key}')" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#dc2626;border-radius:6px;padding:4px 8px;font-size:.68rem;cursor:pointer;">🗑️</button>
             </div>
           </div>
           <div style="font-size:.75rem;margin-top:.6rem;color:#000000;"><b>Service:</b> ${o.service || '—'} &nbsp;·&nbsp; <b>Package:</b> ${o.pkg || '—'}</div>
@@ -2381,7 +2385,7 @@ function handleProjectFileUpload(event){
     msg.style.display='block';
     msg.style.background='rgba(239,68,68,.12)';
     msg.style.border='1px solid rgba(239,68,68,.3)';
-    msg.style.color='#fca5a5';
+    msg.style.color='#dc2626';
     msg.textContent='❌ File is too large. Max 10MB allowed.';
     event.target.value='';
     return;
@@ -2441,7 +2445,7 @@ function submitOrder(){
     msg.style.display='block';
     msg.style.background='rgba(239,68,68,.12)';
     msg.style.border='1px solid rgba(239,68,68,.3)';
-    msg.style.color='#fca5a5';
+    msg.style.color='#dc2626';
     msg.textContent='⚠️ Please fill all required fields (Name, Phone, Service, Package, Description).';
     return;
   }
@@ -2491,7 +2495,7 @@ Please confirm & send UPI payment details.${window._projectFileName ? '\n\n📎 
   msg.style.display='block';
   msg.style.background='rgba(16,185,129,.12)';
   msg.style.border='1px solid rgba(16,185,129,.3)';
-  msg.style.color='#6ee7b7';
+  msg.style.color='#059669';
   msg.textContent='✅ Order details sent to WhatsApp! Complete payment to confirm your project.';
 }
 
@@ -2534,7 +2538,7 @@ function previewBackground(event) {
   if (!file) return;
   if (!file.type.startsWith('image/')) {
     const msg = document.getElementById('bgMsg');
-    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please select an image file only.';return;
   }
   const reader = new FileReader();
@@ -2545,14 +2549,14 @@ function previewBackground(event) {
     preview.innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;"/>`;
     preview.style.borderColor = 'rgba(124,58,237,.6)';
     // Update button states
-    document.getElementById('bgBtnGradient').style.background = 'rgba(255,255,255,.05)';
+    document.getElementById('bgBtnGradient').style.background = '#ffffff';
     document.getElementById('bgBtnGradient').style.color = '#666666';
     document.getElementById('bgBtnImage').style.background = 'linear-gradient(135deg,#e3f2fd,#e0f7fa)';
     document.getElementById('bgBtnImage').style.color = '#000000';
-    document.getElementById('bgBtnNone').style.background = 'rgba(255,255,255,.05)';
+    document.getElementById('bgBtnNone').style.background = '#ffffff';
     document.getElementById('bgBtnNone').style.color = '#666666';
     const msg = document.getElementById('bgMsg');
-    msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+    msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
     msg.textContent='✅ Background image ready! Click Apply.';
   };
   reader.readAsDataURL(file);
@@ -2569,7 +2573,7 @@ function toggleBgType(type) {
       btn.style.background = 'linear-gradient(135deg,#e3f2fd,#e0f7fa)';
       btn.style.color = '#000000';
     } else {
-      btn.style.background = 'rgba(255,255,255,.05)';
+      btn.style.background = '#ffffff';
       btn.style.color = '#666666';
     }
   });
@@ -2586,7 +2590,7 @@ function previewGalleryImage(event) {
   if (!file) return;
   if (!file.type.startsWith('image/')) {
     const msg = document.getElementById('galleryAddMsg');
-    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please select an image file only.';return;
   }
   const reader = new FileReader();
@@ -2609,7 +2613,7 @@ function previewPhoto(event) {
     msg.style.display = 'block';
     msg.style.background = 'rgba(239,68,68,.12)';
     msg.style.border = '1px solid rgba(239,68,68,.3)';
-    msg.style.color = '#fca5a5';
+    msg.style.color = '#dc2626';
     msg.textContent = '❌ Please select an image file only (JPG, PNG, etc.)';
     return;
   }
@@ -2623,7 +2627,7 @@ function previewPhoto(event) {
     msg.style.display = 'block';
     msg.style.background = 'rgba(16,185,129,.12)';
     msg.style.border = '1px solid rgba(16,185,129,.3)';
-    msg.style.color = '#6ee7b7';
+    msg.style.color = '#059669';
     msg.textContent = '✅ Photo ready! "Apply" button dabao.';
   };
   reader.readAsDataURL(file);
@@ -2647,14 +2651,14 @@ function resetPassword(){
   const msg   = document.getElementById('resetMsg');
   msg.style.display='none';
   if(!email){
-    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Please enter your admin email.';return;
+    msg.style.display='block';msg.style.color='#dc2626';msg.textContent='❌ Please enter your admin email.';return;
   }
   window.firebaseSendPasswordReset(email)
     .then(()=>{
-      msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Reset link sent! Check your email inbox (and spam folder).';
+      msg.style.display='block';msg.style.color='#059669';msg.textContent='✅ Reset link sent! Check your email inbox (and spam folder).';
     })
     .catch((err)=>{
-      msg.style.display='block';msg.style.color='#fca5a5';
+      msg.style.display='block';msg.style.color='#dc2626';
       msg.textContent = err.code === 'auth/user-not-found' ? '❌ No admin account with this email.' : '❌ ' + err.message;
     });
 }
@@ -2665,7 +2669,7 @@ function applyLogoChange(){
   const msg      = document.getElementById('logoMsg');
   msg.style.display='none';
   if(!titleVal && !subVal){
-    msg.style.display='block';msg.style.color='#fca5a5';msg.textContent='❌ Kuch toh enter please!';return;
+    msg.style.display='block';msg.style.color='#dc2626';msg.textContent='❌ Kuch toh enter please!';return;
   }
   // Update all logo-text-main and logo-text-sub elements on page
   if(titleVal){
@@ -2686,7 +2690,7 @@ function applyLogoChange(){
     });
     localStorage.setItem('rohit_logo_sub', subVal);
   }
-  msg.style.display='block';msg.style.color='#6ee7b7';msg.textContent='✅ Logo updated on page!';
+  msg.style.display='block';msg.style.color='#059669';msg.textContent='✅ Logo updated on page!';
 }
 
 // ── Restore saved logo on page load ──
@@ -2739,13 +2743,13 @@ function handleScreenshotUpload(event){
   if(!file) return;
   if(!file.type.startsWith('image/')){
     msg.style.display='block';
-    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please select an image file only (JPG, PNG, etc.)';
     return;
   }
   if(file.size > 5 * 1024 * 1024){
     msg.style.display='block';
-    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ File too large! Max 5MB allowed.';
     return;
   }
@@ -2777,7 +2781,7 @@ function handleScreenshotUpload(event){
       fileName.textContent = '✅ ' + file.name;
       area.style.borderColor = 'rgba(16,185,129,.6)';
       msg.style.display='block';
-      msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+      msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
       msg.textContent='✅ Screenshot ready! Submit your order.';
     };
     img.src = e.target.result;
@@ -2791,12 +2795,12 @@ function updateUpiId(){
   const newName = document.getElementById('newUpiName').value.trim();
   const msg = document.getElementById('upiMsg');
   if(!newId){
-    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please enter a UPI ID!';return;
   }
   // Basic UPI validation
   if(!newId.includes('@')){
-    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#fca5a5';
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please enter a valid UPI ID (e.g. name@upi)';return;
   }
   // Save to localStorage
@@ -2807,7 +2811,7 @@ function updateUpiId(){
   document.getElementById('currentUpiDisplay').textContent = newId;
   document.getElementById('newUpiInput').value = '';
   document.getElementById('newUpiName').value = '';
-  msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#6ee7b7';
+  msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
   msg.textContent='✅ UPI ID updated successfully!';
 }
 
