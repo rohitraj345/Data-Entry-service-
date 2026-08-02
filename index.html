@@ -988,15 +988,15 @@ footer p{color:#a3a3b8;}
   </div>
   <div class="pay-inner">
     <div class="pay-methods rv d1">
-      <div class="pay-card">
+      <div class="pay-card" onclick="openPayApp('upi')" style="cursor:pointer;">
         <div class="pay-logo upi">🔷</div>
         <div class="pay-info"><h4>UPI Direct</h4><p>Any UPI app — instant transfer</p></div>
       </div>
-      <div class="pay-card">
+      <div class="pay-card" onclick="openPayApp('gpay')" style="cursor:pointer;">
         <div class="pay-logo gpay">G</div>
         <div class="pay-info"><h4>Google Pay</h4><p>Pay via GPay instantly</p></div>
       </div>
-      <div class="pay-card">
+      <div class="pay-card" onclick="openPayApp('phonepe')" style="cursor:pointer;">
         <div class="pay-logo phone">📱</div>
         <div class="pay-info"><h4>PhonePe / Paytm</h4><p>Scan QR or enter UPI ID</p></div>
       </div>
@@ -1566,6 +1566,27 @@ footer p{color:#a3a3b8;}
   </div>
 </div>
 
+<!-- UNIVERSAL UPI QR MODAL — works on every device (mobile, iPhone, desktop) -->
+<div class="modal-overlay" id="upiQrModal">
+  <div class="modal" style="text-align:center;max-width:380px;">
+    <button class="modal-close" onclick="document.getElementById('upiQrModal').classList.remove('open')">✕</button>
+    <h3 id="upiQrTitle">📲 Scan & Pay</h3>
+    <p style="font-size:.82rem;color:#666666;margin-bottom:1rem;">App seedha nahi khula? Koi baat nahi — is QR code ko kisi bhi UPI app se scan karke pay kar do.</p>
+    <div style="background:#ffffff;border-radius:14px;padding:1rem;display:inline-block;border:1px solid rgba(0,0,0,0.1);margin-bottom:1rem;">
+      <img id="upiQrModalImg" src="" alt="UPI QR Code" style="width:190px;height:190px;display:block;"/>
+    </div>
+    <div class="modal-upi" style="margin-bottom:1rem;">
+      <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#666666;margin-bottom:.4rem;">UPI ID</div>
+      <div class="m-upi-id" id="upiQrModalId">rohit0402@ptyes</div>
+    </div>
+    <div class="modal-btns">
+      <button class="copy-btn" onclick="copyUPI()" style="width:100%;text-align:center;">📋 Copy UPI ID</button>
+      <a id="upiQrModalAppLink" href="#" class="btn btn-primary" style="justify-content:center;width:100%;">🔷 Try Opening UPI App Again</a>
+    </div>
+  </div>
+</div>
+
+
 <!-- ADMIN OVERLAY -->
 <div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:2000;background:#ffffff;overflow-y:auto;padding:7rem 5vw 4rem;">
   <div style="position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0;"></div>
@@ -2054,6 +2075,28 @@ footer p{color:#a3a3b8;}
     } catch(e) { console.log('Background load error:', e); }
   }
 
+  // ─── UPI ID: real-time sync from Firebase (all visitors, all devices, live) ───
+  function loadUpiSettings() {
+    onValue(ref(db, 'settings/upi'), (snap) => {
+      if (!snap.exists()) return;
+      const u = snap.val();
+      window._currentUpiId = u.id;
+      window._currentUpiName = u.name || '';
+      // Keep a local cache too, so the payment cards still work instantly
+      // even before this listener fires (e.g. first paint / offline blip)
+      localStorage.setItem('rohit_upi_id', u.id);
+      if (u.name) localStorage.setItem('rohit_upi_name', u.name);
+      if (typeof applyUpiOnPage === 'function') applyUpiOnPage(u.id, u.name);
+      const cur = document.getElementById('currentUpiDisplay');
+      if (cur) cur.textContent = u.id;
+    });
+  }
+
+  // ─── UPI ID: admin saves the new ID straight to Firebase Realtime Database ───
+  window.saveUpiToFirebase = async function(id, name) {
+    await set(ref(db, 'settings/upi'), { id: id, name: name || '', updatedAt: Date.now() });
+  };
+
   function applyBackgroundOnPage(bgType, imageData) {
     const hero = document.getElementById('hero');
     const gridBg = hero.querySelector('.hero-grid-bg');
@@ -2458,6 +2501,7 @@ footer p{color:#a3a3b8;}
     loadGallery();
     loadCustomerWork();
     loadBackground();
+    loadUpiSettings();
     // Load saved photo from localStorage (or Firebase listener will update it)
     const saved = localStorage.getItem('rohit_profile_photo');
     if (saved) {
@@ -2537,6 +2581,64 @@ function payViaUPI(){
   const amt = amtMatch ? amtMatch[1] : '';
   const upiUrl = `upi://pay?pa=rohit0402@ptyes&pn=RohitRaj${amt ? '&am='+amt : ''}&cu=INR`;
   window.location.href = upiUrl;
+}
+
+function copyUPI(){
+  const upiId = window._currentUpiId || localStorage.getItem('rohit_upi_id') || 'rohit0402@ptyes';
+  navigator.clipboard.writeText(upiId).then(()=>{
+    alert('✅ UPI ID copied: ' + upiId);
+  }).catch(()=>{
+    alert('UPI ID: ' + upiId);
+  });
+}
+
+// ── PAYMENT CARDS: Open the tapped UPI app directly (with guaranteed QR fallback on every device) ──
+function openPayApp(appType){
+  const upiId = window._currentUpiId || localStorage.getItem('rohit_upi_id') || 'rohit0402@ptyes';
+  const rawName = window._currentUpiName || localStorage.getItem('rohit_upi_name') || 'RohitRaj';
+  const name = (rawName.split('·')[0] || 'RohitRaj').replace(/[^a-zA-Z0-9 ]/g,'').trim() || 'RohitRaj';
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const genericUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&cu=INR`;
+
+  // Android package names for direct app targeting
+  const packages = {
+    gpay: 'com.google.android.apps.nbu.paisa.user',
+    phonepe: 'com.phonepe.app'
+  };
+
+  if (isAndroid && packages[appType]) {
+    // Try to open the specific app via Android Intent
+    const intentUrl = `intent://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&cu=INR#Intent;scheme=upi;package=${packages[appType]};end`;
+    window.location.href = intentUrl;
+  } else if (isAndroid || isIOS) {
+    // Generic UPI Direct card, or mobile without a specific package target
+    window.location.href = genericUrl;
+  }
+
+  // GUARANTEED FALLBACK — on every device, show a scannable QR + copy option
+  // shortly after. If the app opened successfully, the tab loses focus and the
+  // user won't even see this; if nothing happened (app missing / desktop /
+  // browser blocked the link), this is what actually lets them pay.
+  const showFallback = () => {
+    if (document.hidden) return; // user already switched to their UPI app
+    showUpiQrModal(upiId, name, genericUrl);
+  };
+  if (isAndroid || isIOS) {
+    setTimeout(showFallback, 1200);
+  } else {
+    showFallback();
+  }
+}
+
+function showUpiQrModal(upiId, name, upiUrl){
+  const qrImg = document.getElementById('upiQrModalImg');
+  if (qrImg) qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(upiUrl);
+  const idEl = document.getElementById('upiQrModalId');
+  if (idEl) idEl.textContent = upiId;
+  const appLink = document.getElementById('upiQrModalAppLink');
+  if (appLink) appLink.href = upiUrl;
+  document.getElementById('upiQrModal').classList.add('open');
 }
 
 function copyModalUPI(){
@@ -3000,8 +3102,8 @@ function handleScreenshotUpload(event){
   reader.readAsDataURL(file);
 }
 
-// ── UPI ID UPDATE (Admin) ──
-function updateUpiId(){
+// ── UPI ID UPDATE (Admin) — saves to Firebase Realtime Database, syncs live to every visitor ──
+async function updateUpiId(){
   const newId = document.getElementById('newUpiInput').value.trim();
   const newName = document.getElementById('newUpiName').value.trim();
   const msg = document.getElementById('upiMsg');
@@ -3014,16 +3116,21 @@ function updateUpiId(){
     msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
     msg.textContent='❌ Please enter a valid UPI ID (e.g. name@upi)';return;
   }
-  // Save to localStorage
-  localStorage.setItem('rohit_upi_id', newId);
-  if(newName) localStorage.setItem('rohit_upi_name', newName);
-  // Update all UPI displays on page
-  applyUpiOnPage(newId, newName || 'Rohit Raj · PhonePe · GPay · Paytm');
-  document.getElementById('currentUpiDisplay').textContent = newId;
-  document.getElementById('newUpiInput').value = '';
-  document.getElementById('newUpiName').value = '';
-  msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
-  msg.textContent='✅ UPI ID updated successfully!';
+  try {
+    const finalName = newName || 'Rohit Raj · PhonePe · GPay · Paytm';
+    await window.saveUpiToFirebase(newId, finalName);
+    // applyUpiOnPage will also run automatically via the real-time listener,
+    // but we call it here too for an instant update on the admin's own screen
+    applyUpiOnPage(newId, finalName);
+    document.getElementById('currentUpiDisplay').textContent = newId;
+    document.getElementById('newUpiInput').value = '';
+    document.getElementById('newUpiName').value = '';
+    msg.style.display='block';msg.style.background='rgba(16,185,129,.12)';msg.style.border='1px solid rgba(16,185,129,.3)';msg.style.color='#059669';
+    msg.textContent='✅ UPI ID updated — live for everyone now!';
+  } catch(e) {
+    msg.style.display='block';msg.style.background='rgba(239,68,68,.12)';msg.style.border='1px solid rgba(239,68,68,.3)';msg.style.color='#dc2626';
+    msg.textContent='❌ Error saving to database: ' + e.message;
+  }
 }
 
 function applyUpiOnPage(upiId, upiName){
